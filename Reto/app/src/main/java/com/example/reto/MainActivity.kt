@@ -24,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.Vista.HomeScreen
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.navigation.AppNavigation
+import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
 
 class MainActivity : ComponentActivity() {

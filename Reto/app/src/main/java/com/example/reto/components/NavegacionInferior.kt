@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.reto.models.ItemsBottomNav.*
 import com.example.reto.navigation.currentRoute
+import com.example.reto.ui.theme.GreenAwaq
 
 @Composable
 fun NavegacionInferior(
@@ -19,8 +20,11 @@ fun NavegacionInferior(
         ItemBottomNav2,
         ItemBottomNav3
     )
+
     BottomAppBar {
-        NavigationBar {
+        NavigationBar(
+            containerColor = GreenAwaq
+        ) {
             menuItems.forEach {item->
                 val selected = currentRoute(navController) == item.ruta
                 NavigationBarItem(

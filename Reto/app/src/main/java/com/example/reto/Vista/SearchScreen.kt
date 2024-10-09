@@ -26,6 +26,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reto.R
+import com.example.reto.ui.theme.Black
+import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
 
 private val messages: List<MyMessage> = listOf(
@@ -61,14 +63,14 @@ fun SearchScreen(messages: List<MyMessage>) {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "Centered Top App Bar",
+                        "Búsqueda",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary
+                    containerColor = GreenAwaq,
+                    titleContentColor = Black
                 ),
                 navigationIcon = {
                     IconButton(onClick = { /* Acción de navegación */ }) {
