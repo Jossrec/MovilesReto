@@ -160,7 +160,7 @@ fun Profile() {
                     contentColor = Color.White          // Color del texto
                 )
             ) {
-                Text("Botón en el fondo")
+                Text("Editar", fontSize = 25.sp)
             }
         }
 
