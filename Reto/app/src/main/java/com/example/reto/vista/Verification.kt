@@ -1,10 +1,7 @@
-package com.example.reto.Vista
+package com.example.reto.vista
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.reto.ui.theme.RetoTheme
 
 @Composable
 fun estas(name: String) {
