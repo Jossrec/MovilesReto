@@ -1,6 +1,7 @@
 package com.example.reto.Vista
 
-
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,6 +32,7 @@ import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
+import com.example.reto.ui.theme.White
 
 private val messages: List<MyMessage> = listOf(
     MyMessage("Hola Jetpack Compose 1", "Preparado?"),
@@ -70,7 +74,8 @@ fun SearchScreen(messages: List<MyMessage>) {
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,
-                    titleContentColor = Black
+                    titleContentColor = Black,
+                    scrolledContainerColor = GreenAwaq
                 ),
                 navigationIcon = {
                     IconButton(onClick = { /* Acción de navegación */ }) {
@@ -105,15 +110,61 @@ fun MyMessages(messages: List<MyMessage>, modifier: Modifier = Modifier) {
     }
 }
 
+
 @Composable
 fun MyComponent(message: MyMessage) {
-    Row(modifier = Modifier
-        .background(MaterialTheme.colorScheme.background)
-        .padding(8.dp)) {
-        MyImage()
-        MyTexts(message)
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 8.dp),
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(containerColor = White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            MyImage()
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
+
+                Text(
+                    text = "#FM00001",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+                Text(
+                    text = "Fauna en Transectos",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+
+                Text(
+                    text = "Date: 07/10/2024 @ 16:37",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    )
+                )
+            }
+
+            IconButton(onClick = { /* Acción del menú */ }) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "Menú"
+                )
+            }
+        }
     }
 }
+
 
 @Composable
 fun MyImage() {
