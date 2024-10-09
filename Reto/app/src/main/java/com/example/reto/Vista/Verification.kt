@@ -7,17 +7,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.reto.ui.theme.RetoTheme
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun estas(name: String) {
     Text(
         text = "Hello $name!",
-        modifier = modifier
-    )
+
+        )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    RetoTheme {
-        com.example.reto.Greeting("Android")
-    }
-}
