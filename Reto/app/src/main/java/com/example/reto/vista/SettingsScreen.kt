@@ -24,7 +24,7 @@ fun SettingsScreen(){
             ),
             contentDescription = null
         )
-        Text(text = "HomeScreen")
+        Text(text = "SettingsScreen")
 
     }
 }
