@@ -18,9 +18,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
-import com.example.reto.vista.HomeScreen
-import com.example.reto.vista.IntroScreen
-import com.example.reto.vista.StartScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
