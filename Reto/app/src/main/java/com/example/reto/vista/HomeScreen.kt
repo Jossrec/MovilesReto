@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.R
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
@@ -53,15 +54,17 @@ fun HomeScreen() {
                 CenterAlignedTopAppBar(
                     title = {
                         Text(
-                            "Inicio",
+                            "Hola, Samantha",
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            color = Color.Black // El texto ahora es blanco para mejor contraste
+                            color = Color.Black,
+
+                            modifier = Modifier.padding(top = 48.dp) // Añadimos el padding superior solo al texto
                         )
                     },
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = Color.Transparent, // Hacemos transparente la barra para que solo se vea el fondo
-                        titleContentColor = Color.Black // Color del título blanco para que contraste con el fondo
+                        titleContentColor = Color.Black // Color del título negro para que contraste con el fondo
                     ),
                     navigationIcon = {
                         // Logo en lugar del ícono de navegación
@@ -78,7 +81,7 @@ fun HomeScreen() {
                             Icon(
                                 imageVector = Icons.Filled.Person,
                                 contentDescription = "Perfil",
-                                tint = Color.Black // Ícono blanco para mejor contraste
+                                tint = Color.Black // Ícono negro para mejor contraste
                             )
                         }
                     },
@@ -106,6 +109,7 @@ fun HomeScreen() {
         }
     )
 }
+
 
 @Composable
 fun HeaderWithImageAndProfileIcon() {
