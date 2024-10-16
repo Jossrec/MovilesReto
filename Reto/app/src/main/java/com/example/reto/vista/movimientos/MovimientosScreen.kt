@@ -1,4 +1,4 @@
-package com.example.reto.vista.tabsSearch
+package com.example.reto.vista.movimientos
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

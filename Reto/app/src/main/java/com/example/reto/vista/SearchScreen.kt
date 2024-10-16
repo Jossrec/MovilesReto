@@ -30,6 +30,7 @@ import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.ui.theme.White
+import com.example.reto.vista.movimientos.MovimientosTabs
 
 private val messages: List<MyMessage> = listOf(
     MyMessage("Hola Jetpack Compose 1", "Preparado?"),
@@ -52,7 +53,6 @@ private val messages: List<MyMessage> = listOf(
 
 
 data class MyMessage(val title: String, val body: String)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(messages: List<MyMessage>) {
@@ -94,9 +94,13 @@ fun SearchScreen(messages: List<MyMessage>) {
             )
         }
     ) { innerPadding ->
-        MyMessages(messages, Modifier.padding(innerPadding))
+        // Aquí agregamos las tabs
+        Column(modifier = Modifier.padding(innerPadding)) {
+            MovimientosTabs() // Integra las tabs aquí
+        }
     }
 }
+
 
 @Composable
 fun MyMessages(messages: List<MyMessage>, modifier: Modifier = Modifier) {
