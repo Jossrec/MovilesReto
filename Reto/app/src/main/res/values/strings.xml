@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Reto</string>
+    <string name="profilename">Samantha Smith\n</string>
+    <string name="startdate">Activo desde Enero 2024\n</string>
+    <string name="correo">samantha@gmail.com\n</string>
+    <string name="contraseña">password\n</string>
+    <string name="numerocel">+52 123 45 67</string>
 </resources>
