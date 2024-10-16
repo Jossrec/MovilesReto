@@ -32,7 +32,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.reto.R
+import com.example.reto.ui.theme.Black
+import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
+import com.example.reto.ui.theme.White
 
 
 @Composable
@@ -41,7 +44,7 @@ fun Profile() {
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp) // Altura del banner
-            .background(color = colorResource(id = R.color.green4CAF50)), // Color de fondo del banner
+            .background(color = GreenAwaq) // Color de fondo del banner
 
     )
     Column (Modifier.padding(start= 20.dp, end = 20.dp).fillMaxSize()){
@@ -156,8 +159,8 @@ fun Profile() {
             Button(onClick = { /* Acción */ },
                 modifier = Modifier.size(200.dp, 70.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Green,  // Color de fondo
-                    contentColor = Color.White          // Color del texto
+                    containerColor = GreenAwaq,  // Color de fondo
+                    contentColor = White          // Color del texto
                 )
             ) {
                 Text("Editar", fontSize = 25.sp)
