@@ -32,7 +32,7 @@ fun RegisterScreen() {
     ) {
         // Imagen de fondo
         Image(
-            painter = painterResource(id = R.drawable.fondo1), // Reemplaza con tu imagen
+            painter = painterResource(id = R.drawable.fondo1),
             contentDescription = null,
             contentScale = ContentScale.Crop,  // Ajusta la imagen para que ocupe todo el espacio sin deformarse
             modifier = Modifier.fillMaxSize()
