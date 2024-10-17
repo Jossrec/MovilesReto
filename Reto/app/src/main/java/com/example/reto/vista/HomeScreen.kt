@@ -69,7 +69,7 @@ fun HomeScreen() {
                     navigationIcon = {
                         // Logo en lugar del ícono de navegación
                         Image(
-                            painter = painterResource(id = R.drawable.semicirculo_removebg_preview), // Reemplaza con tu logo
+                            painter = painterResource(id = R.drawable.awaq_verde_vertical), // Reemplaza con tu logo
                             contentDescription = "Logo",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier.size(40.dp) // Ajusta el tamaño del logo

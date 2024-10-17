@@ -17,11 +17,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
+import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.White
 
 
 @Composable
-fun EditProfile() {
+fun EditProfile(navController: NavController) {
     // Usamos un estado para guardar el valor ingresado por el usuario
     var text by remember { mutableStateOf("") }
 
@@ -85,10 +89,13 @@ fun EditProfile() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Button(onClick = { /* Acción */ },
+                Button(onClick = { navController.navigate("ProfileScreen") },
                     modifier = Modifier
-                        .size(200.dp, 70.dp) // Color del texto
-
+                        .size(200.dp, 70.dp), // Color del texto
+                            colors = ButtonDefaults.buttonColors(
+                            containerColor = GreenAwaq,  // Color de fondo
+                    contentColor = White          // Color del texto
+                )
                 ) {
                     Text("Guardar", fontSize = 25.sp)
                 }
@@ -100,5 +107,6 @@ fun EditProfile() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun EditProfileView() {
-    EditProfile()
+    val navController = rememberNavController()
+    EditProfile(navController)
 }

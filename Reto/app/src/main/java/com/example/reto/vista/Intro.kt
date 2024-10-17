@@ -21,10 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 
 @Composable
-fun IntroScreen() {
+fun IntroScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,5 +87,6 @@ fun IntroScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewIntroScreen() {
-    IntroScreen()
+    var navController = rememberNavController()
+    IntroScreen(navController)
 }
