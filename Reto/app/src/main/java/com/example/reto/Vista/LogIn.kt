@@ -29,13 +29,13 @@ fun LoginScreen() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        // Imagen de fondo
-//        Image(
-//            painter = painterResource(id = R.drawable.fondo1), // Reemplaza con tu imagen
-//            contentDescription = null,
-//            contentScale = ContentScale.Crop,  // Ajusta la imagen para que ocupe todo el espacio sin deformarse
-//            modifier = Modifier.fillMaxSize()
-//        )
+
+        Image(
+            painter = painterResource(id = R.drawable.fondo1), // Reemplaza con tu imagen
+            contentDescription = null,
+            contentScale = ContentScale.Crop,  // Ajusta la imagen para que ocupe todo el espacio sin deformarse
+            modifier = Modifier.fillMaxSize()
+        )
 
         // Caja de contenido sobre la imagen
         Box(
