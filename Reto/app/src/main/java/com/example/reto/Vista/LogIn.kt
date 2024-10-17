@@ -1,7 +1,6 @@
 package com.example.reto.Vista
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -31,12 +30,12 @@ fun LoginScreen() {
             .fillMaxSize()
     ) {
         // Imagen de fondo
-        Image(
-            painter = painterResource(id = R.drawable.fondo1), // Reemplaza con tu imagen
-            contentDescription = null,
-            contentScale = ContentScale.Crop,  // Ajusta la imagen para que ocupe todo el espacio sin deformarse
-            modifier = Modifier.fillMaxSize()
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.fondo1), // Reemplaza con tu imagen
+//            contentDescription = null,
+//            contentScale = ContentScale.Crop,  // Ajusta la imagen para que ocupe todo el espacio sin deformarse
+//            modifier = Modifier.fillMaxSize()
+//        )
 
         // Caja de contenido sobre la imagen
         Box(
