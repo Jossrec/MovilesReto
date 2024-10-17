@@ -125,11 +125,10 @@ fun SettingsScreen(navController: NavController) {
                         fontSize = 20.sp,
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_arrow_forward_ios_24),
-                        contentDescription = "flecha",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(20.dp)
+                    Switch(
+                        checked = false, // Estado inicial (puede ser true o false)
+                        onCheckedChange = null, // No hace nada al cambiar
+                        modifier = Modifier.padding(16.dp)
                     )
                 }
 

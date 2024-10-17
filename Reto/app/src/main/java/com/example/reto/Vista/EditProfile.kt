@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
+import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.White
 
 
 @Composable
@@ -89,8 +91,11 @@ fun EditProfile(navController: NavController) {
 
                 Button(onClick = { navController.navigate("ProfileScreen") },
                     modifier = Modifier
-                        .size(200.dp, 70.dp) // Color del texto
-
+                        .size(200.dp, 70.dp), // Color del texto
+                            colors = ButtonDefaults.buttonColors(
+                            containerColor = GreenAwaq,  // Color de fondo
+                    contentColor = White          // Color del texto
+                )
                 ) {
                     Text("Guardar", fontSize = 25.sp)
                 }
