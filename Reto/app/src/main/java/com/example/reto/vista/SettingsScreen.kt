@@ -2,6 +2,7 @@ package com.example.reto.vista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,13 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(navController: NavController) {
     val scrollState = rememberScrollState()
 
     Scaffold(
@@ -88,7 +90,7 @@ fun SettingsScreen() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Editar Perfil",
+                        text = "Perfil",
                         fontWeight = FontWeight.W400,
                         fontSize = 20.sp,
                         modifier = Modifier.padding(bottom = 10.dp)
@@ -97,30 +99,11 @@ fun SettingsScreen() {
                         painter = painterResource(id = R.drawable.baseline_arrow_forward_ios_24),
                         contentDescription = "flecha",
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp).clickable { navController.navigate("ProfileScreen") }
                     )
                 }
 
-                Divider()
 
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp)
-                ) {
-                    Text(
-                        text = "Cambiar Contraseña",
-                        fontWeight = FontWeight.W400,
-                        fontSize = 20.sp
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_arrow_forward_ios_24),
-                        contentDescription = "flecha",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
 
                 Spacer(modifier = Modifier.height(30.dp))
 
@@ -174,7 +157,7 @@ fun SettingsScreen() {
                         painter = painterResource(id = R.drawable.baseline_arrow_forward_ios_24),
                         contentDescription = "flecha",
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp).clickable { navController.navigate("Intro") }
                     )
                 }
             }
