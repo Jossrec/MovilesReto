@@ -4,15 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.webkit.Profile
-import com.example.reto.Vista.Profile
+import com.example.reto.Vista.EditProfile
+import com.example.reto.Vista.LoginScreen
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MyMessage
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.SettingsScreen
-
-
 
 
 private val messages: List<MyMessage> = listOf(
@@ -40,7 +38,7 @@ fun AppNavigation(
 ){
     NavHost(
         navController = navController,
-        startDestination = NavScreen.Intro.name
+        startDestination = NavScreen.HomeScreen.name
     ) {
         composable(NavScreen.HomeScreen.name){
             HomeScreen()
@@ -52,10 +50,13 @@ fun AppNavigation(
             SettingsScreen(navController)
         }
         composable(NavScreen.ProfileScreen.name) {
-            Profile(navController)
+            EditProfile(navController)
         }
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
+        }
+        composable(NavScreen.Login.name) {
+            LoginScreen(navController)
         }
     }
 }
