@@ -18,6 +18,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
+import com.example.reto.vista.ItemDetails
+import com.example.reto.vista.ItemUiState
+import com.example.reto.vista.RegisterAuxiliarScreen
+import com.example.reto.vista.RegisterBody
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +32,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    MainScreen()
+//                    RegisterBody(itemUiState = ItemUiState(
+//                        ItemDetails(
+//                            nombre = "Item name", email = "example@gmail.com", contraseña = "password"
+//                        )
+//                    ), onItemValueChange = {}, onSaveClick = {})
+                    RegisterAuxiliarScreen()
                 }
             }
         }
@@ -57,6 +66,12 @@ fun MainScreen() {
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewComponent(){
-    MainScreen()
+fun RegisterScreenPreview(){
+    RetoTheme {
+        RegisterBody(itemUiState = ItemUiState(
+            ItemDetails(
+                nombre = "Item name", email = "example@gmail.com", contraseña = "password"
+            )
+        ), onItemValueChange = {}, onSaveClick = {})
+    }
 }
