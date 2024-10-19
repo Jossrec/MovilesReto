@@ -70,7 +70,7 @@ fun RegisterScreenPreview(){
     RetoTheme {
         RegisterBody(itemUiState = ItemUiState(
             ItemDetails(
-                nombre = "Item name", email = "example@gmail.com", contraseña = "password"
+                //nombre = "Item name", email = "example@gmail.com", contraseña = "password"
             )
         ), onItemValueChange = {}, onSaveClick = {})
     }
