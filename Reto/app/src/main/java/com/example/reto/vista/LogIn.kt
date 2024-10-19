@@ -1,6 +1,6 @@
-package com.example.reto.Vista
+package com.example.reto.vista
 
-import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.reto.R
 import com.example.reto.datos.AppDatabase
@@ -125,11 +124,18 @@ fun LoginScreen(navController: NavController) {
                 Button(
                     onClick = {
                         coroutineScope.launch {
-                        withContext(Dispatchers.IO) {
-                            val newUser = User(username = email, password = password)
-                            db.userDao().insertUser(newUser) // Insertamos el usuario en la base de datos
+                            withContext(Dispatchers.IO) {
+                                // Insertamos el usuario directamente, sin verificar si ya existe
+                                val newUser = User(username = email, password = password)
+                                db.userDao().insert(newUser)
+
+                                // Mostrar mensaje de éxito en la UI
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         }
-                    } },
+                    },
                     modifier = Modifier
                         .width(150.dp)
                         .height(48.dp)

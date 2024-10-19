@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.reto.Vista.EditProfile
-import com.example.reto.Vista.LoginScreen
+import com.example.reto.vista.EditProfile
+import com.example.reto.vista.LoginScreen
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MyMessage
@@ -38,7 +38,7 @@ fun AppNavigation(
 ){
     NavHost(
         navController = navController,
-        startDestination = NavScreen.HomeScreen.name
+        startDestination = NavScreen.LogIn.name
     ) {
         composable(NavScreen.HomeScreen.name){
             HomeScreen()
@@ -55,7 +55,7 @@ fun AppNavigation(
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
         }
-        composable(NavScreen.Login.name) {
+        composable(NavScreen.LogIn.name) {
             LoginScreen(navController)
         }
     }

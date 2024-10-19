@@ -6,6 +6,6 @@ enum class NavScreen {
     SettingsScreen,
     ProfileScreen,
     Intro,
-    Login
+    LogIn
 }
 

@@ -1,4 +1,4 @@
-package com.example.reto.Vista
+package com.example.reto.vista
 
 
 import androidx.compose.foundation.Image
