@@ -1,5 +1,6 @@
 package com.example.reto.Vista
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -17,13 +18,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.reto.R
+import com.example.reto.datos.AppDatabase
+import com.example.reto.datos.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(context: Context) {
     // Variables para los campos de texto
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    val db = AppDatabase.getDatabase(context) // Obtener la base de datos usando el contexto
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
@@ -111,7 +119,13 @@ fun LoginScreen() {
 
                 // Botón de Entrar
                 Button(
-                    onClick = { /* Acción no funcional */ },
+                    onClick = {
+                        coroutineScope.launch {
+                        withContext(Dispatchers.IO) {
+                            val newUser = User(username = email, password = password)
+                            db.userDao().insertUser(newUser) // Insertamos el usuario en la base de datos
+                        }
+                    } },
                     modifier = Modifier
                         .width(150.dp)
                         .height(48.dp)
@@ -125,10 +139,4 @@ fun LoginScreen() {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewLoginScreen() {
-    LoginScreen()
-}
 

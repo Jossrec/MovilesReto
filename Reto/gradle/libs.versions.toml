@@ -12,6 +12,9 @@ composeBom = "2024.04.01"
 materialIconsExtended = "1.7.3"
 navigationRuntimeKtx = "2.8.2"
 webkit = "1.12.1"
+roomCommon = "2.6.1"
+roomKtx = "2.6.1"
+runtimeDesktop = "1.7.0"
 
 [libraries]
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeBom" }
@@ -35,6 +38,9 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+androidx-runtime-desktop = { group = "androidx.compose.runtime", name = "runtime-desktop", version.ref = "runtimeDesktop" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
