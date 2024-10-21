@@ -44,34 +44,34 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            NavegacionInferior(navController)
-        }
-    ) {padding->
-        Box(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ){
-            AppNavigation(navController = navController)
-        }
-
-    }
-
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun RegisterScreenPreview(){
-    RetoTheme {
-        RegisterBody(itemUiState = ItemUiState(
-            ItemDetails(
-                //nombre = "Item name", email = "example@gmail.com", contraseña = "password"
-            )
-        ), onItemValueChange = {}, onSaveClick = {})
-    }
-}
+//@Composable
+//fun MainScreen() {
+//    val navController = rememberNavController()
+//    Scaffold(
+//        bottomBar = {
+//            NavegacionInferior(navController)
+//        }
+//    ) {padding->
+//        Box(
+//            modifier = Modifier
+//                .padding(padding)
+//                .fillMaxSize()
+//        ){
+//            AppNavigation(navController = navController)
+//        }
+//
+//    }
+//
+//}
+//
+//@Preview(showSystemUi = true)
+//@Composable
+//fun RegisterScreenPreview(){
+//    RetoTheme {
+//        RegisterBody(itemUiState = ItemUiState(
+//            ItemDetails(
+//                //nombre = "Item name", email = "example@gmail.com", contraseña = "password"
+//            )
+//        ), onItemValueChange = {}, onSaveClick = {})
+//    }
+//}

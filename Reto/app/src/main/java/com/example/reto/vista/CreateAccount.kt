@@ -13,12 +13,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.reto.R
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.RetoTheme
 import kotlinx.coroutines.launch
+import java.util.Currency
+import java.util.Locale
 
 //@OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,6 +46,7 @@ fun RegisterAuxiliarInput(
     itemDetails: ItemDetails,
     onValueChange: (ItemDetails) -> Unit = {},
 ){
+    var passwordVisible by remember { mutableStateOf(false) }
     // Email Input
     OutlinedTextField(
         value = itemDetails.nombre,
@@ -68,7 +73,7 @@ fun RegisterAuxiliarInput(
         value = itemDetails.contraseña,
         onValueChange = { onValueChange(itemDetails.copy(contraseña = it)) },
         label = { Text(text = "Contraseña") },
-        //visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp),
@@ -165,7 +170,7 @@ fun RegisterScreenPreview() {
     RetoTheme {
         RegisterBody(itemUiState = ItemUiState(
             ItemDetails(
-                //nombre = "Item name", email = "example@gmail.com", contraseña = "password"
+                nombre = "Ususario", email = "example@gmail.com", contraseña = "password"
             )
         ), onItemValueChange = {}, onSaveClick = {})
     }
