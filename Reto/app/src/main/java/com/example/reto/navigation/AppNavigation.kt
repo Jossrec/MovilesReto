@@ -4,8 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.webkit.Profile
-import com.example.reto.Vista.Profile
+import com.example.reto.vista.Profile
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MyMessage

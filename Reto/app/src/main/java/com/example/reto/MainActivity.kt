@@ -1,5 +1,6 @@
 package com.example.reto
 
+import FormScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,44 +20,69 @@ import com.example.reto.components.NavegacionInferior
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
 
+//class MainActivity : ComponentActivity() {
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContent {
+//            RetoTheme {
+//                Surface (
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+//                ){
+//                    MainScreen()
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//@Composable
+//fun MainScreen() {
+//    val navController = rememberNavController()
+//    Scaffold(
+//        bottomBar = {
+//            NavegacionInferior(navController)
+//        }
+//    ) {padding->
+//        Box(
+//            modifier = Modifier
+//                .padding(padding)
+//                .fillMaxSize()
+//        ){
+//            AppNavigation(navController = navController)
+//        }
+//
+//    }
+//
+//}
+//
+//@Preview(showSystemUi = true)
+//@Composable
+//fun PreviewComponent(){
+//    MainScreen()
+//
+//}
+
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RetoTheme {
-                Surface (
+                Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ){
-                    MainScreen()
+                ) {
+                    // Muestra directamente la pantalla FormScreen
+                    FormScreen()
                 }
             }
         }
     }
 }
 
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            NavegacionInferior(navController)
-        }
-    ) {padding->
-        Box(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ){
-            AppNavigation(navController = navController)
-        }
-
-    }
-
-}
-
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewComponent(){
-    MainScreen()
+fun PreviewComponent() {
+    FormScreen()
 }
