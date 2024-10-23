@@ -4,10 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.reto.vista.EditProfile
+import com.example.reto.vista.Formulario1
+import com.example.reto.vista.Formulario1_2
 import com.example.reto.vista.LoginScreen
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
+import com.example.reto.vista.MapScreen
 import com.example.reto.vista.MyMessage
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.SettingsScreen
@@ -38,7 +42,7 @@ fun AppNavigation(
 ){
     NavHost(
         navController = navController,
-        startDestination = NavScreen.LogIn.name
+        startDestination = NavScreen.Formulario1_2.name
     ) {
         composable(NavScreen.HomeScreen.name){
             HomeScreen()
@@ -55,8 +59,17 @@ fun AppNavigation(
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
         }
-        composable(NavScreen.LogIn.name) {
-            LoginScreen(navController)
+        composable(NavScreen.LoginScreen.name) {
+            LoginScreen(navController = navController)
+        }
+        composable(NavScreen.MapScreen.name) {
+            MapScreen(navController)
+        }
+        composable(NavScreen.Formulario1.name) {
+            Formulario1()
+        }
+        composable(NavScreen.Formulario1_2.name) {
+            Formulario1_2()
         }
     }
 }

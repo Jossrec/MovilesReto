@@ -72,4 +72,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation (libs.maps.compose)
+    // Google Maps SDK dependency
+    implementation (libs.play.services.maps)
+
+    implementation(libs.androidx.room.runtime)
 }

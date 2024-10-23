@@ -40,7 +40,6 @@ fun MainScreen() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            NavegacionInferior(navController)
         }
     ) {padding->
         Box(

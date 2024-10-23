@@ -1,6 +1,5 @@
 package com.example.reto.vista
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -9,7 +8,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -18,23 +16,15 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+
 import com.example.reto.R
-import com.example.reto.datos.AppDatabase
-import com.example.reto.datos.User
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @Composable
-fun LoginScreen(navController: NavController) {
-
-    // Variables para los campos de texto
-    val context = LocalContext.current
+fun LoginScreen( navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
-    val db = AppDatabase.getDatabase(context) // Obtener la base de datos usando el contexto
-    val coroutineScope = rememberCoroutineScope()
+    var errorMessage by remember { mutableStateOf("") } // Variable para mostrar errores
 
     Box(
         modifier = Modifier
@@ -84,7 +74,7 @@ fun LoginScreen(navController: NavController) {
                     ),
                     modifier = Modifier
                         .padding(bottom = 16.dp)
-                        .padding(top=130.dp)
+                        .padding(top = 130.dp)
                 )
 
                 // Email Input
@@ -120,22 +110,19 @@ fun LoginScreen(navController: NavController) {
                         .padding(bottom = 32.dp)
                 )
 
+                // Mostrar mensaje de error si los campos están vacíos
+                if (errorMessage.isNotEmpty()) {
+                    Text(
+                        text = errorMessage,
+                        color = Color.Red,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                }
+
                 // Botón de Entrar
                 Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            withContext(Dispatchers.IO) {
-                                // Insertamos el usuario directamente, sin verificar si ya existe
-                                val newUser = User(username = email, password = password)
-                                db.userDao().insert(newUser)
-
-                                // Mostrar mensaje de éxito en la UI
-                                withContext(Dispatchers.Main) {
-                                    Toast.makeText(context, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        }
-                    },
+                    onClick = {},
                     modifier = Modifier
                         .width(150.dp)
                         .height(48.dp)
@@ -148,5 +135,3 @@ fun LoginScreen(navController: NavController) {
         }
     }
 }
-
-
