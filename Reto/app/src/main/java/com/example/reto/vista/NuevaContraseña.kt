@@ -24,8 +24,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -52,11 +58,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.reto.R
+import com.example.reto.ui.theme.RetoTheme
 import kotlinx.coroutines.flow.combineTransform
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
-fun NuevaContra(message: String, from: String, modifier: Modifier = Modifier) {
+fun NuevaContra(modifier: Modifier = Modifier) {
     var text by remember { mutableStateOf("") }
     val image = painterResource(R.drawable.vector_5)
     val image2 = painterResource(R.drawable.vector_1)
@@ -83,13 +90,13 @@ fun NuevaContra(message: String, from: String, modifier: Modifier = Modifier) {
                     .size(190.dp)
                     .offset(240.dp)
             )
-            Image(
-                painter = regreso,
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .size(30.dp)
-            )
+            IconButton(onClick = { /* Acción del menú */ }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBackIosNew,
+                    contentDescription = "Descripción del ícono",
+                    tint = Color.White
+                )
+            }
             Text(
                 text = "Crear nueva Contraseña",
                 fontSize = 50.sp,
@@ -175,4 +182,15 @@ fun NuevaContra(message: String, from: String, modifier: Modifier = Modifier) {
         )
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NuevaContraPreview() {
+    RetoTheme {
+        NuevaContra(
+            modifier = Modifier
+                .fillMaxSize()
+        )
+    }
 }
