@@ -27,6 +27,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -53,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,13 +65,21 @@ import com.example.reto.ui.theme.RetoTheme
 import kotlinx.coroutines.flow.combineTransform
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
+
 @Composable
 fun NuevaContra(modifier: Modifier = Modifier) {
-    var text by remember { mutableStateOf("") }
+    var nueva_contra by remember { mutableStateOf("") }
+    var confirmacion by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false)}
     val image = painterResource(R.drawable.vector_5)
     val image2 = painterResource(R.drawable.vector_1)
     val imgage3 = painterResource(R.drawable.vector_3)
-    val regreso = painterResource(R.drawable.keyboard_arrow_left)
+    val icono = if(passwordVisible){
+        Icons.Default.Visibility
+    }
+    else{
+        Icons.Default.VisibilityOff
+    }
     Column (
         modifier = Modifier
     ){
@@ -123,15 +134,32 @@ fun NuevaContra(modifier: Modifier = Modifier) {
             //.border(2.dp, Color.Gray, shape = RoundedCornerShape(6.dp))
         ){
             OutlinedTextField(
-                value = text,
+                value = nueva_contra,
                 onValueChange = { newText ->
-                    text = newText
+                    nueva_contra = newText
                 },
                 label = { Text(text = "Nueva contraseña") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), //Especifca el tipo de teclado
-                visualTransformation = PasswordVisualTransformation() //Para visualiar una contraseña
+                //Para visualiar una contraseña
+                //visualTransformation = PasswordVisualTransformation(),
+                visualTransformation =
+                if(passwordVisible){
+                    VisualTransformation.None
+                }
+                else PasswordVisualTransformation(),
+                trailingIcon = {
+                    if(nueva_contra.isNotBlank()){
+                        IconButton(onClick = {passwordVisible = !passwordVisible}) {
+                            Icon(
+                                imageVector = icono,
+                                contentDescription = ""
+                            )
+                        }
+                    }
+                    else null
+                }
             )
         }
         Box(
@@ -142,16 +170,32 @@ fun NuevaContra(modifier: Modifier = Modifier) {
             //.border(2.dp, Color.Gray, shape = RoundedCornerShape(6.dp))
         ){
             OutlinedTextField(
-                value = text,
+                value = confirmacion,
                 onValueChange = { newText ->
-                    text = newText
+                    confirmacion = newText
                 },
                 label = { Text(text = "Confirmar contraseña") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), //Especifca el tipo de teclado
-                visualTransformation = PasswordVisualTransformation() //Para visualiar una contraseña
-
+                //Para visualiar una contraseña
+                //visualTransformation = PasswordVisualTransformation()
+                visualTransformation =
+                if(passwordVisible){
+                    VisualTransformation.None
+                }
+                else PasswordVisualTransformation(),
+                trailingIcon = {
+                    if(nueva_contra.isNotBlank()){
+                        IconButton(onClick = {passwordVisible = !passwordVisible}) {
+                            Icon(
+                                imageVector = icono,
+                                contentDescription = ""
+                            )
+                        }
+                    }
+                    else null
+                }
             )
         }
     }
