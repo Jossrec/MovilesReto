@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 
 import androidx.compose.foundation.rememberScrollState
@@ -160,7 +161,9 @@ fun Content() {
             ) {
                 IconButton(
                     onClick = { estadoTiempo = "Soleado" },
-                    modifier = Modifier.background(if (estadoTiempo == "Soleado") GreenAwaq else Color.Transparent)
+                    modifier = Modifier
+                        .size(84.dp)
+                        .background(if (estadoTiempo == "Soleado") GreenAwaq else Color.Transparent)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.sol),
@@ -171,7 +174,9 @@ fun Content() {
 
                 IconButton(
                     onClick = { estadoTiempo = "Parcialmente Nublado" },
-                    modifier = Modifier.background(if (estadoTiempo == "Parcialmente Nublado") GreenAwaq else Color.Transparent)
+                    modifier = Modifier
+                        .size(84.dp)
+                        .background(if (estadoTiempo == "Parcialmente Nublado") GreenAwaq else Color.Transparent)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.sol_nube),
@@ -182,7 +187,9 @@ fun Content() {
 
                 IconButton(
                     onClick = { estadoTiempo = "Lluvioso" },
-                    modifier = Modifier.background(if (estadoTiempo == "Lluvioso") GreenAwaq else Color.Transparent)
+                    modifier = Modifier
+                        .background(if (estadoTiempo == "Lluvioso") GreenAwaq else Color.Transparent)
+                        .size(84.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.lluvia),

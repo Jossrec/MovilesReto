@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.sp
 import com.example.reto.ui.theme.BotonAwaq
 
 import androidx.compose.foundation.layout.*
-
 import androidx.compose.ui.Alignment
+
 @Composable
 fun DoubleButton(scrollState: ScrollState) {
     Row(

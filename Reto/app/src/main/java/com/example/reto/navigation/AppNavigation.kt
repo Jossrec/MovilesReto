@@ -42,7 +42,7 @@ fun AppNavigation(
 ){
     NavHost(
         navController = navController,
-        startDestination = NavScreen.Formulario1_2.name
+        startDestination = NavScreen.Formulario1.name
     ) {
         composable(NavScreen.HomeScreen.name){
             HomeScreen()
