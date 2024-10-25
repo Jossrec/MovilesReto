@@ -71,10 +71,17 @@ fun NuevaContra(modifier: Modifier = Modifier) {
     var nueva_contra by remember { mutableStateOf("") }
     var confirmacion by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false)}
+    var passwordVisible2 by remember { mutableStateOf(false)}
     val image = painterResource(R.drawable.vector_5)
     val image2 = painterResource(R.drawable.vector_1)
     val imgage3 = painterResource(R.drawable.vector_3)
     val icono = if(passwordVisible){
+        Icons.Default.Visibility
+    }
+    else{
+        Icons.Default.VisibilityOff
+    }
+    val icono2 = if(passwordVisible2){
         Icons.Default.Visibility
     }
     else{
@@ -181,15 +188,15 @@ fun NuevaContra(modifier: Modifier = Modifier) {
                 //Para visualiar una contraseña
                 //visualTransformation = PasswordVisualTransformation()
                 visualTransformation =
-                if(passwordVisible){
+                if(passwordVisible2){
                     VisualTransformation.None
                 }
                 else PasswordVisualTransformation(),
                 trailingIcon = {
                     if(nueva_contra.isNotBlank()){
-                        IconButton(onClick = {passwordVisible = !passwordVisible}) {
+                        IconButton(onClick = {passwordVisible2 = !passwordVisible2}) {
                             Icon(
-                                imageVector = icono,
+                                imageVector = icono2,
                                 contentDescription = ""
                             )
                         }
