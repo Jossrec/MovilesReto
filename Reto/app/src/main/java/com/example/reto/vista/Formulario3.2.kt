@@ -1,3 +1,4 @@
+package com.example.reto.vista
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,17 +32,20 @@ import com.example.reto.ui.theme.GreenAwaqOscuro
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showSystemUi = true)
 @Composable
-fun FormScreen() {
+fun FormScreen3() {
     var transectNumber by remember { mutableStateOf("") }
     var commonName by remember { mutableStateOf("") }
     var scientificName by remember { mutableStateOf("") }
     var numberOfIndividuals by remember { mutableStateOf("") }
     var selectedAnimal by remember { mutableStateOf("Insecto") }
     var selectedObservationType by remember { mutableStateOf("La Vió") }
+    var selectedZone by remember { mutableStateOf("Bosque") }
+    var selectedAltitude by remember { mutableStateOf("Baja <1mt") }
     var observations by remember { mutableStateOf("") }
     val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
-
+    val zones = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
+    val altitudes = listOf("Baja <1mt", "Media 1-3mt", "Alta >3mt")
     // Scroll state para la pantalla
     val scrollState = rememberScrollState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -64,7 +68,7 @@ fun FormScreen() {
                         )
                     }
                 },
-                
+
                 scrollBehavior = scrollBehavior
             )
         }
@@ -76,16 +80,31 @@ fun FormScreen() {
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
-            // Número de Transecto
-            OutlinedTextField(
-                value = transectNumber,
-                onValueChange = { transectNumber = it },
-                label = { Text("Número de Transecto") },
-                modifier = Modifier.fillMaxWidth()
-            )
+            // Selección de Zona
+            Text("Zona", fontSize = 18.sp)
+            Column(modifier = Modifier.selectableGroup()) {
+                zones.forEach { zone -> // Utiliza cada zona para crear un radio button
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .selectable(
+                                selected = selectedZone == zone,
+                                onClick = { selectedZone = zone }
+                            )
+                            .height(30.dp),
+                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
+                    ) {
+                        RadioButton(
+                            selected = selectedZone == zone,
+                            onClick = { selectedZone = zone }
+                        )
+                        Text(zone)
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
-// Tipo de Animal
+            // Tipo de Animal
             Text("Tipo de Animal", fontSize = 18.sp)
             Column {
                 Row(
@@ -212,7 +231,7 @@ fun FormScreen() {
                                 selected = selectedObservationType == observation,
                                 onClick = { selectedObservationType = observation }
                             )
-                            .padding(0.dp),
+                            .height(30.dp),
                         verticalAlignment = Alignment.CenterVertically // Alineación vertical
                     ) {
                         RadioButton(
@@ -223,11 +242,33 @@ fun FormScreen() {
                     }
                 }
             }
-
+            Spacer(modifier = Modifier.height(16.dp))
+            // Altura de Observación
+            Text("Altura de Observación", fontSize = 18.sp)
+            Column(modifier = Modifier.selectableGroup()) {
+                altitudes.forEach { altitude ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .selectable(
+                                selected = selectedAltitude == altitude,
+                                onClick = { selectedAltitude = altitude }
+                            )
+                            .height(30.dp),
+                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
+                    ) {
+                        RadioButton(
+                            selected = selectedAltitude == altitude,
+                            onClick = { selectedAltitude = altitude }
+                        )
+                        Text(altitude)
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Evidencias (botón para elegir archivo)
+            // Evidencias (botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
             Button(
                 onClick = { /* Acción para elegir archivo */ },
