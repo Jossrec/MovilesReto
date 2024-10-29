@@ -40,10 +40,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
                     //Verificacion()
-                    //SearchScreen(messages)
                     //Forms_6_2()
                     //Forms_7_2()
-                    NuevaContra()
+                    //NuevaContra()
+                    RegisterAuxiliarScreen()
                 }
             }
         }

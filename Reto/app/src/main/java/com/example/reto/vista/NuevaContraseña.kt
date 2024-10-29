@@ -185,8 +185,6 @@ fun NuevaContra(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), //Especifca el tipo de teclado
-                //Para visualiar una contraseña
-                //visualTransformation = PasswordVisualTransformation()
                 visualTransformation =
                 if(passwordVisible2){
                     VisualTransformation.None

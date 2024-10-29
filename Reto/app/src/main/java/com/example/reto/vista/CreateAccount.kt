@@ -2,6 +2,10 @@ package com.example.reto.vista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,6 +52,12 @@ fun RegisterAuxiliarInput(
     onValueChange: (ItemDetails) -> Unit = {},
 ){
     var passwordVisible by remember { mutableStateOf(false) }
+    val icono = if(passwordVisible){
+        Icons.Default.Visibility
+    }
+    else{
+        Icons.Default.VisibilityOff
+    }
     // Email Input
     OutlinedTextField(
         value = itemDetails.nombre,
@@ -62,7 +73,6 @@ fun RegisterAuxiliarInput(
         value = itemDetails.email,
         onValueChange = { onValueChange(itemDetails.copy(email = it)) },
         label = { Text(text = "Email") },
-        //visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp),
@@ -73,11 +83,23 @@ fun RegisterAuxiliarInput(
         value = itemDetails.contraseña,
         onValueChange = { onValueChange(itemDetails.copy(contraseña = it)) },
         label = { Text(text = "Contraseña") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp),
-        singleLine = true
+        singleLine = true,
+        trailingIcon = {
+            if(itemDetails.contraseña.isNotBlank()){
+                IconButton(onClick = {passwordVisible = !passwordVisible}) {
+                    Icon(
+                        imageVector = icono,
+                        contentDescription = ""
+                    )
+                }
+            }
+            else null
+        }
     )
 }
 
