@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.reto.ui.theme.BotonAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 
 @Composable
 fun Boton(scrollState: ScrollState){
@@ -21,7 +21,7 @@ fun Boton(scrollState: ScrollState){
             .fillMaxWidth()
             .padding(horizontal = 100.dp, vertical = 16.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = BotonAwaq // Color personalizado
+            containerColor = GreenAwaqOscuro// Color personalizado
         )
     ) {
         Text(

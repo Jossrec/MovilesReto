@@ -37,14 +37,6 @@ fun HeaderBar() {
                     contentDescription = "Regresar"
                 )
             }
-        },
-        actions = {
-            IconButton(onClick = { /* Acción del menú */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Menú"
-                )
-            }
         }
     )
 }

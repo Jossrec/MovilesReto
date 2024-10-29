@@ -13,11 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.reto.ui.theme.BotonAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
-
 @Composable
 fun DoubleButton(scrollState: ScrollState) {
     Row(
@@ -36,7 +35,7 @@ fun DoubleButton(scrollState: ScrollState) {
                     .fillMaxWidth() // Llenar el ancho disponible
                     .padding(8.dp), // Padding ajustado
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = BotonAwaq // Color personalizado
+                    containerColor = GreenAwaqOscuro // Color personalizado
                 )
             ) {
                 Text(
@@ -58,7 +57,7 @@ fun DoubleButton(scrollState: ScrollState) {
                     .fillMaxWidth() // Llenar el ancho disponible
                     .padding(8.dp), // Padding ajustado
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = BotonAwaq // Color personalizado
+                    containerColor = GreenAwaqOscuro // Color personalizado
                 )
             ) {
                 Text(

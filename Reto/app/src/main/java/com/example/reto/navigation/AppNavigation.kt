@@ -4,10 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.reto.vista.EditProfile
 import com.example.reto.vista.Formulario1
-import com.example.reto.vista.Formulario1_2
 import com.example.reto.vista.LoginScreen
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
@@ -67,9 +65,6 @@ fun AppNavigation(
         }
         composable(NavScreen.Formulario1.name) {
             Formulario1()
-        }
-        composable(NavScreen.Formulario1_2.name) {
-            Formulario1_2()
         }
     }
 }

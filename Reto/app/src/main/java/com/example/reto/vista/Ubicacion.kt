@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.reto.ui.theme.GreenAwaq
 import com.google.maps.android.compose.GoogleMap
 
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -20,7 +19,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.CameraPosition
 
 import androidx.compose.foundation.layout.*
-import com.example.reto.ui.theme.BotonAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 
 
 @Composable
@@ -48,7 +47,7 @@ fun MapScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(horizontal = 100.dp, vertical = 16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = BotonAwaq// Color personalizado
+                    containerColor = GreenAwaqOscuro// Color personalizado
                 )
             ) {
                 Text(

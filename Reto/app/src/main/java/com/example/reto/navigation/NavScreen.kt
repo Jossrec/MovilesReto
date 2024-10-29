@@ -8,7 +8,6 @@ enum class NavScreen {
     Intro,
     LoginScreen,
     MapScreen,
-    Formulario1,
-    Formulario1_2
+    Formulario1
 }
 
