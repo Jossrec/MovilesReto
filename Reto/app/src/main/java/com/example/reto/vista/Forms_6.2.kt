@@ -61,8 +61,7 @@ import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
-import com.example.reto.vista.NuevaContra
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+
 
 data class Zona(val nombre: String, var seleccionado: Boolean = false)
 
