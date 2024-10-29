@@ -255,24 +255,38 @@ fun FormScreen() {
 
             // Botones Atrás y Enviar
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
                     onClick = { /* Acción Atrás */ },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
-                    )
+                    ),
+                    modifier = Modifier
+                        .weight(1f) // Ocupa espacio proporcional
+                        .padding(end = 8.dp) // Espaciado entre botones
                 ) {
-                    Text("ATRÁS")
+                    Text(
+                        "ATRÁS",
+                        color = Color.White
+                    )
                 }
                 Button(
                     onClick = { /* Acción Enviar */ },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
-                    )
+                    ),
+                    modifier = Modifier
+                        .weight(1f) // Ocupa espacio proporcional
+                        .padding(start = 8.dp) // Espaciado entre botones
                 ) {
-                    Text("ENVIAR")
+                    Text(
+                        "ENVIAR",
+                        color = Color.White
+                    )
                 }
             }
 
