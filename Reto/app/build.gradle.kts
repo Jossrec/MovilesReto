@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.webkit)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     implementation(libs.androidx.material.icons.extended)
     androidTestImplementation(libs.androidx.junit)

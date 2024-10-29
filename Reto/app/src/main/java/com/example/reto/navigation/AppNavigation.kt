@@ -51,9 +51,9 @@ fun AppNavigation(
         composable(NavScreen.SettingsScreen.name){
             SettingsScreen(navController)
         }
-        composable(NavScreen.ProfileScreen.name) {
-            Profile(navController)
-        }
+//        composable(NavScreen.ProfileScreen.name) {
+//            Profile(navController)
+//        }
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
         }
