@@ -4,13 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.webkit.Profile
-import com.example.reto.Vista.Profile
+import com.example.reto.vista.EditInfoScreen
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MyMessage
 import com.example.reto.vista.SearchScreen
-import com.example.reto.vista.SettingsScreen
+import com.example.reto.vista.Profile
 
 
 
@@ -48,12 +47,12 @@ fun AppNavigation(
         composable(NavScreen.SearchScreen.name){
             SearchScreen(messages)
         }
-        composable(NavScreen.SettingsScreen.name){
-            SettingsScreen(navController)
+        composable(NavScreen.EditInfoScreen.name){
+            EditInfoScreen(navController)
         }
-//        composable(NavScreen.ProfileScreen.name) {
-//            Profile(navController)
-//        }
+        composable(NavScreen.ProfileScreen.name) {
+            Profile(navController)
+        }
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
         }
