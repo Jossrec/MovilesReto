@@ -141,7 +141,7 @@ fun Profile(navController: NavController) {
                     modifier = Modifier
                         .padding(start = 30.dp, end = 40.dp)
                 )
-                Button(onClick = {  },
+                Button(onClick = { navController.navigate("EditInfoScreen") },
                     modifier = Modifier.size(80.dp, 30.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF9CCC65),  // Color de fondo
