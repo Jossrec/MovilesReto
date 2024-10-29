@@ -38,6 +38,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,7 +57,7 @@ import com.example.reto.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile() {
+fun Profile(navController: NavController) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -78,7 +79,7 @@ fun Profile() {
 
         val borderWidth = 4.dp
 
-        Row (Modifier.padding(top = 100.dp)){
+        Row (Modifier.padding(top = 120.dp)){
             Image(
                 painter = painterResource(id = R.drawable.profilepic),
                 contentDescription = "foto de perfil",
@@ -207,7 +208,6 @@ fun Profile() {
                 Switch(
                     checked = isChecked,
                     onCheckedChange = null, // No hace nada al cambiar
-
                 )
             }
 
@@ -237,26 +237,26 @@ fun Profile() {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Button(onClick = {  },
-                    modifier = Modifier.size(400.dp, 40.dp),
+                    modifier = Modifier.size(400.dp, 40.dp)
+                        .clickable { navController.navigate("Intro") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.LightGray,  // Color de fondo
                         contentColor = Color.White
                     )
 
                 ) {
-                    Text("Cerrar Sesion", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text("Cerrar Sesion",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Black)
                 }
 
             }
         }
 
     }
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            NavegacionInferior(navController)
-        }
-    )
+
+
 
 }
 
@@ -264,6 +264,6 @@ fun Profile() {
 @Composable
 fun showProfile(modifier: Modifier = Modifier){
     val navController = rememberNavController()
-    Profile()
+    Profile(navController)
 
 }

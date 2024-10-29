@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">newreto</string>
-    <string name="numerocel">+52 123 456 7890\n</string>
-    <string name="contraseña">contrasena\n</string>
-    <string name="correo">samantha@awaq.com\n</string>
+    <string name="numerocel">+52 123 456 7890</string>
+    <string name="contraseña">contrasena</string>
+    <string name="correo">samantha@awaq.com</string>
     <string name="startdate">Activo desde Ene 2024\n</string>
     <string name="profilename">Samantha Smith</string>
     <string name="newcontraseña">nuevacontraseña1</string>
