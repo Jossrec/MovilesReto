@@ -28,7 +28,7 @@ sealed class ItemsBottomNav (
     data object ItemBottomNav3: ItemsBottomNav(
         Icons.Outlined.Settings,
         "Settings",
-                NavScreen.SettingsScreen.name
+                NavScreen.ProfileScreen.name
     )
 
 }
