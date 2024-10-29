@@ -43,6 +43,11 @@ fun FormScreen5() {
     var altura by remember { mutableStateOf("") }
     var observations by remember { mutableStateOf("") }
 
+    // Variables de estado para las selecciones
+    var selectedCuadrante by remember { mutableStateOf("A") }
+    var selectedSubCuadrante by remember { mutableStateOf(1) }
+    var selectedHabito by remember { mutableStateOf("Arbolito 1-3 mt") }
+
     // Scroll state para la pantalla
     val scrollState = rememberScrollState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -55,8 +60,18 @@ fun FormScreen5() {
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,
                     titleContentColor = Black,
-                    scrolledContainerColor = GreenAwaq
-                )
+                    scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { /* Acción al presionar atrás */ }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Atrás"
+                        )
+                    }
+                },
+
+                scrollBehavior = scrollBehavior
             )
         }
     ) { innerPadding ->
@@ -77,21 +92,71 @@ fun FormScreen5() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Cuadrante y Sub-Cuadrante
+            // Cuadrante
             Text("Cuadrante", fontSize = 18.sp)
             Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                // Cuadrante A y B
-                Column {
-                    Text("A")
-                    Text("B")
+                // Cuadrantes A y B
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    listOf("A", "B").forEach { cuadrante ->
+                        Box(
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(80.dp, 100.dp)
+                                .background(
+                                    color = if (selectedCuadrante == cuadrante) GreenAwaq else Color.Transparent,
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .border(
+                                    width = 2.dp,
+                                    color = Color.Gray,
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .clickable { selectedCuadrante = cuadrante }
+                                .padding(8.dp)
+                        ) {
+                            Text(
+                                text = cuadrante,
+                                fontSize = 18.sp,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
                 }
-                // Cuadrante C, D, E, F, G
-                Column {
+
+                // Separador
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Text("-", fontSize = 24.sp)
+                }
+
+                // Cuadrantes C, D, E, F, G
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     listOf("C", "D", "E", "F", "G").forEach { letra ->
-                        Text(letra)
+                        Box(
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(60.dp, 40.dp)
+                                .background(
+                                    color = if (selectedCuadrante == letra) GreenAwaq else Color.Transparent,
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .border(
+                                    width = 2.dp,
+                                    color = Color.Gray,
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .clickable { selectedCuadrante = letra }
+                                .padding(4.dp)
+                        ) {
+                            Text(
+                                text = letra,
+                                fontSize = 16.sp,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
                     }
                 }
             }
@@ -105,7 +170,28 @@ fun FormScreen5() {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 (1..4).forEach { numero ->
-                    Text("$numero")
+                    Box(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .size(60.dp, 40.dp)
+                            .background(
+                                color = if (selectedSubCuadrante == numero) GreenAwaq else Color.Transparent,
+                                shape = MaterialTheme.shapes.medium
+                            )
+                            .border(
+                                width = 2.dp,
+                                color = Color.Gray,
+                                shape = MaterialTheme.shapes.medium
+                            )
+                            .clickable { selectedSubCuadrante = numero }
+                            .padding(4.dp)
+                    ) {
+                        Text(
+                            text = "$numero",
+                            fontSize = 16.sp,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
                 }
             }
 
@@ -117,15 +203,37 @@ fun FormScreen5() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                listOf("Arbusto < 1mt", "Arbolito 1-3 mt", "Árbol > 3mt").forEach { tipo ->
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        // Aquí debes reemplazar con las imágenes correctas de tu proyecto
-//                        Image(
-//                            painter = painterResource(id = R.drawable.ic_plant),
-//                            contentDescription = null,
-//                            modifier = Modifier.size(64.dp)
-//                        )
-                        Text(tipo)
+                listOf(
+                    Pair("Arbusto < 1mt", R.drawable.arbusto),
+                    Pair("Arbolito 1-3 mt", R.drawable.arbolito),
+                    Pair("Árbol > 3mt", R.drawable.arbol)
+                ).forEach { (tipo, imageRes) ->
+                    Box(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .size(120.dp, 140.dp)
+                            .background(
+                                color = if (selectedHabito == tipo) GreenAwaq else Color.Transparent,
+                                shape = MaterialTheme.shapes.medium
+                            )
+                            .border(
+                                width = 2.dp,
+                                color = Color.Gray,
+                                shape = MaterialTheme.shapes.medium
+                            )
+                            .clickable { selectedHabito = tipo }
+                            .padding(8.dp)
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Image(
+                                painter = painterResource(id = imageRes),
+                                contentDescription = tipo,
+                                modifier = Modifier.size(80.dp),
+                                contentScale = ContentScale.Fit
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(tipo, fontSize = 14.sp)
+                        }
                     }
                 }
             }
