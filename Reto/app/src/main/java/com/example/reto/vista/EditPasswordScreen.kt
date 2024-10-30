@@ -7,11 +7,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -23,12 +27,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.ui.theme.GreenAwaq
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun modifcont(){
+fun EditPasswordScreen(navController: NavController){
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -42,7 +48,14 @@ fun modifcont(){
             titleContentColor = com.example.reto.ui.theme.Black,
             scrolledContainerColor = GreenAwaq
         ),
-
+        navigationIcon = {
+            IconButton(onClick = { navController.navigate("ProfileScreen") }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Descripción del ícono"
+                )
+            }
+        }
 
         )
 
@@ -104,7 +117,7 @@ fun modifcont(){
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ){
-            Button(onClick = {  },
+            Button(onClick = { navController.navigate("ProfileScreen") },
                 modifier = Modifier.size(200.dp, 70.dp),
 
                 colors = ButtonDefaults.buttonColors(
@@ -122,7 +135,7 @@ fun modifcont(){
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun showModifcont(modifier: Modifier = Modifier){
-
-    modifcont()
+    val navController = rememberNavController()
+    EditPasswordScreen(navController)
 
 }

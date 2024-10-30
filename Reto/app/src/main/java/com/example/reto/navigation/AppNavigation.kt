@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.reto.vista.EditInfoScreen
+import com.example.reto.vista.EditPasswordScreen
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MyMessage
@@ -55,6 +56,9 @@ fun AppNavigation(
         }
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
+        }
+        composable(NavScreen.EditPasswordScreen.name) {
+            EditPasswordScreen(navController)
         }
     }
 }

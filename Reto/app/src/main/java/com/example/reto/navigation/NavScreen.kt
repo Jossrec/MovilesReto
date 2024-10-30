@@ -5,6 +5,7 @@ enum class NavScreen {
     HomeScreen,
     EditInfoScreen,
     ProfileScreen,
-    Intro
+    Intro,
+    EditPasswordScreen
 }
 
