@@ -19,13 +19,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
+import com.example.reto.vista.CreateAccountScreen
 import com.example.reto.vista.Forms_6_2
 import com.example.reto.vista.Forms_7_2
 import com.example.reto.vista.ItemDetails
 import com.example.reto.vista.ItemUiState
-import com.example.reto.vista.MyMessage
 import com.example.reto.vista.NuevaContra
-import com.example.reto.vista.RegisterAuxiliarScreen
 import com.example.reto.vista.RegisterBody
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.Verificacion
@@ -39,11 +38,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    //Verificacion()
-                    //Forms_6_2()
-                    //Forms_7_2()
-                    //NuevaContra()
-                    RegisterAuxiliarScreen()
+                    //CreateAccountScreen()
+                    SearchScreen()
                 }
             }
         }

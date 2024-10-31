@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -25,38 +27,44 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reto.R
+import com.example.reto.data.Item
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.ui.theme.White
 
-private val messages: List<MyMessage> = listOf(
-    MyMessage("Hola Jetpack Compose 1", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 2", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 3", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 4", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 5", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 6", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 7", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 8", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 9", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 10", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 11", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 12", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 13", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 14", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 15", "Preparado?"),
-    MyMessage("Hola Jetpack Compose 16", "Preparado?"),
-)
+//private val messages: List<MyMessage> = listOf(
+//    MyMessage("Hola Jetpack Compose 1", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 2", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 3", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 4", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 5", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 6", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 7", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 8", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 9", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 10", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 11", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 12", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 13", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 14", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 15", "Preparado?"),
+//    MyMessage("Hola Jetpack Compose 16", "Preparado?"),
+//)
 
 
-data class MyMessage(val title: String, val body: String)
+//data class MyMessage(val title: String, val body: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(messages: List<MyMessage>) {
+fun SearchScreen(
+    viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    val searchUiState by viewModel.searchUiState.collectAsState()
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -94,12 +102,12 @@ fun SearchScreen(messages: List<MyMessage>) {
             )
         }
     ) { innerPadding ->
-        MyMessages(messages, Modifier.padding(innerPadding))
+        MyMessages(messages = searchUiState.itemList, Modifier.padding(innerPadding))
     }
 }
 
 @Composable
-fun MyMessages(messages: List<MyMessage>, modifier: Modifier = Modifier) {
+fun MyMessages(messages: List<Item>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(messages) { message ->
             MyComponent(message)
@@ -109,7 +117,7 @@ fun MyMessages(messages: List<MyMessage>, modifier: Modifier = Modifier) {
 
 
 @Composable
-fun MyComponent(message: MyMessage) {
+fun MyComponent(message: Item) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -130,14 +138,16 @@ fun MyComponent(message: MyMessage) {
             ) {
 
                 Text(
-                    text = "#FM00001",
+                    //text = "#FM00001",
+                    text = message.nombre,
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold
                     )
                 )
 
                 Text(
-                    text = "Fauna en Transectos",
+                    //text = "Fauna en Transectos",
+                    text = message.email,
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -176,16 +186,16 @@ fun MyImage() {
 }
 
 @Composable
-fun MyTexts(message: MyMessage) {
+fun MyTexts(message: Item) {
     Column(modifier = Modifier.padding(start = 8.dp)) {
         MyText(
-            message.title,
+            message.nombre,
             MaterialTheme.colorScheme.secondary,
             MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(16.dp))
         MyText(
-            message.body,
+            message.email,
             MaterialTheme.colorScheme.onBackground,
             MaterialTheme.typography.titleSmall
         )
@@ -202,6 +212,6 @@ fun MyText(text: String, color: Color, style: TextStyle) {
 @Composable
 fun PreviewComponent() {
     RetoTheme {
-        SearchScreen(messages)
+        MyMessages(listOf(Item(1, "Luis", "luis@gmail.com","luis123")))
     }
 }

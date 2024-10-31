@@ -18,6 +18,7 @@ package com.example.reto.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Date
 
 /**
  * Entity data class represents a single row in the database.
@@ -30,3 +31,16 @@ data class Item(
     val email: String,
     val contraseña: String
 )
+
+//@Entity(tableName = "Formulario_tipo_1")
+//data class Formulario1(
+//    @PrimaryKey(autoGenerate = true)
+//    val id: Int = 0,
+//    val nombre: String,
+//    val fecha: Date,
+//    val Localidad: String,
+//    val Hora: String,
+//    val Estado_del_Tiempo: String,
+//    val Época: String,
+//    val Tipo_Registro: String
+//)
