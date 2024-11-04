@@ -28,7 +28,7 @@ abstract class InventoryDatabase : RoomDatabase() {
     }
 }
 
-@Database(entities = [Formulario1::class], version = 2, exportSchema = false)
+@Database(entities = [Formulario7::class], version = 2, exportSchema = false)
 abstract class InventoryDatabase2 : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao2

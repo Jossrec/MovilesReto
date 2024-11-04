@@ -29,17 +29,17 @@ interface ItemDao {
 @Dao
 interface ItemDao2 {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(item: Formulario1)
+    suspend fun insert(item: Formulario7)
 
     @Update
-    suspend fun update(item: Formulario1)
+    suspend fun update(item: Formulario7)
 
     @Delete
-    suspend fun delete(item: Formulario1)
+    suspend fun delete(item: Formulario7)
 
-    @Query("SELECT * from formulario_tipo_1 WHERE id = :id")
-    fun getItem(id: Int): Flow<Formulario1>
+    @Query("SELECT * from formulario_tipo_7 WHERE id = :id")
+    fun getItem(id: Int): Flow<Formulario7>
 
-    @Query("SELECT * from formulario_tipo_1 ORDER BY localidad ASC")
-    fun getAllItems(): Flow<List<Formulario1>>
+    @Query("SELECT * from formulario_tipo_7 ORDER BY localidad ASC")
+    fun getAllItems(): Flow<List<Formulario7>>
 }

@@ -32,8 +32,8 @@ data class Item(
     val contraseña: String
 )
 
-@Entity(tableName = "Formulario_tipo_1")
-data class Formulario1(
+@Entity(tableName = "Formulario_tipo_7")
+data class Formulario7(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val nombre: String,

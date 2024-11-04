@@ -36,25 +36,25 @@ interface ItemsRepository2 {
     /**
      * Retrieve all the items from the the given data source.
      */
-    fun getAllItemsStream(): Flow<List<Formulario1>>
+    fun getAllItemsStream(): Flow<List<Formulario7>>
 
     /**
      * Retrieve an item from the given data source that matches with the [id].
      */
-    fun getItemStream(id: Int): Flow<Formulario1?>
+    fun getItemStream(id: Int): Flow<Formulario7?>
 
     /**
      * Insert item in the data source
      */
-    suspend fun insertItem(item: Formulario1)
+    suspend fun insertItem(item: Formulario7)
 
     /**
      * Delete item from the data source
      */
-    suspend fun deleteItem(item: Formulario1)
+    suspend fun deleteItem(item: Formulario7)
 
     /**
      * Update item in the data source
      */
-    suspend fun updateItem(item: Formulario1)
+    suspend fun updateItem(item: Formulario7)
 }
