@@ -1,5 +1,6 @@
 package com.example.reto
 
+import FormScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
+import com.example.reto.vista.FormScreen2
+import com.example.reto.vista.FormScreen3
+import com.example.reto.vista.FormScreen5
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    MainScreen()
+                    FormScreen5()
                 }
             }
         }
@@ -58,4 +62,5 @@ fun MainScreen() {
 @Composable
 fun PreviewComponent(){
     MainScreen()
+
 }
