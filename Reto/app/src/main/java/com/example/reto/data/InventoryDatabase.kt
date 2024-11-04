@@ -27,3 +27,23 @@ abstract class InventoryDatabase : RoomDatabase() {
         }
     }
 }
+
+@Database(entities = [Formulario1::class], version = 2, exportSchema = false)
+abstract class InventoryDatabase2 : RoomDatabase() {
+
+    abstract fun itemDao(): ItemDao2
+
+    companion object {
+        @Volatile
+        private var Instance: InventoryDatabase2? = null
+
+        fun getDatabase(context: Context): InventoryDatabase2 {
+            // if the Instance is not null, return it, otherwise create a new database instance.
+            return Instance ?: synchronized(this) {
+                Room.databaseBuilder(context, InventoryDatabase2::class.java, "item_database")
+                    .build()
+                    .also { Instance = it }
+            }
+        }
+    }
+}

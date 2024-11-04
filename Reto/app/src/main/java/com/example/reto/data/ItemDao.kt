@@ -25,3 +25,21 @@ interface ItemDao {
     @Query("SELECT * from items ORDER BY nombre ASC")
     fun getAllItems(): Flow<List<Item>>
 }
+
+@Dao
+interface ItemDao2 {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(item: Formulario1)
+
+    @Update
+    suspend fun update(item: Formulario1)
+
+    @Delete
+    suspend fun delete(item: Formulario1)
+
+    @Query("SELECT * from formulario_tipo_1 WHERE id = :id")
+    fun getItem(id: Int): Flow<Formulario1>
+
+    @Query("SELECT * from formulario_tipo_1 ORDER BY localidad ASC")
+    fun getAllItems(): Flow<List<Formulario1>>
+}

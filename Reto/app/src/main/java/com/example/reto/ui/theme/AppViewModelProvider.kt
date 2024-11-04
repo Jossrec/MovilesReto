@@ -19,7 +19,7 @@ object AppViewModelProvider {
             CreateAccountViewModel(inventoryApplication().container.itemsRepository)
         }
         initializer {
-            SearchScreenViewModel(inventoryApplication().container.itemsRepository)
+            SearchScreenViewModel(inventoryApplication().container.itemsRepository2)
         }
 
     }

@@ -32,15 +32,15 @@ data class Item(
     val contraseña: String
 )
 
-//@Entity(tableName = "Formulario_tipo_1")
-//data class Formulario1(
-//    @PrimaryKey(autoGenerate = true)
-//    val id: Int = 0,
-//    val nombre: String,
-//    val fecha: Date,
-//    val Localidad: String,
-//    val Hora: String,
-//    val Estado_del_Tiempo: String,
-//    val Época: String,
-//    val Tipo_Registro: String
-//)
+@Entity(tableName = "Formulario_tipo_1")
+data class Formulario1(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val nombre: String,
+    val fecha: String,
+    val Localidad: String,
+    val Hora: Int,
+    val Estado_del_Tiempo: String,
+    val Época: String,
+    val Tipo_Registro: String
+)
