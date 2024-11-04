@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.reto.Vista.FormScreen42
 import com.example.reto.vista.EditInfoScreen
 import com.example.reto.vista.EditPasswordScreen
 import com.example.reto.vista.HomeScreen
@@ -11,7 +12,6 @@ import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MyMessage
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.Profile
-
 
 
 
@@ -59,6 +59,9 @@ fun AppNavigation(
         }
         composable(NavScreen.EditPasswordScreen.name) {
             EditPasswordScreen(navController)
+        }
+        composable (NavScreen.Formulario42Screen.name) {
+            FormScreen42(navController)
         }
     }
 }
