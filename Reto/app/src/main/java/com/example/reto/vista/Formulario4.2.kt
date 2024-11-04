@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 
 @OptIn(ExperimentalMaterial3Api::class)
 
@@ -260,7 +261,7 @@ fun FormScreen42(navController: NavController) {
                 Button(
                     onClick = { navController.navigate(route = "") },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaq
+                        containerColor = GreenAwaqOscuro
                     ),
                     modifier = Modifier
                         .weight(1f) // Ocupa espacio proporcional
@@ -274,7 +275,7 @@ fun FormScreen42(navController: NavController) {
                 Button(
                     onClick = { /* Acción Enviar */ },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaq
+                        containerColor = GreenAwaqOscuro
                     ),
                     modifier = Modifier
                         .weight(1f) // Ocupa espacio proporcional
@@ -290,7 +291,7 @@ fun FormScreen42(navController: NavController) {
         }
     }
 }
-@Preview( showBackground = true)
+@Preview( )
 @Composable
 fun showform42 (modifier: Modifier = Modifier){
     val navController = rememberNavController()
