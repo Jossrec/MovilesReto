@@ -11,7 +11,10 @@ enum class NavScreen {
     Formulario1,
     Formulario12,
     Formulario22,
+    Formulario42,
     Formulario32,
-    Formulario52
+    Formulario52,
+    Formulario62,
+    Formulario72
 }
 
