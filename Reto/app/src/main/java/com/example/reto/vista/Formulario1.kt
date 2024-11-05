@@ -44,18 +44,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 import com.example.reto.R
 import com.example.reto.components.Boton
 import com.example.reto.components.HeaderBar
+import com.example.reto.navigation.NavScreen
 
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 
 
 @Composable
-fun Formulario1() {
+fun Formulario1(navController: NavHostController) {
     val scrollState = rememberScrollState()
+    var tipoRegistro by remember { mutableStateOf("Fauna en Transcetos") }
 
     Scaffold(
         topBar = { HeaderBar() }
@@ -68,16 +73,21 @@ fun Formulario1() {
                 .padding(16.dp)
         ) {
             // Primer componente desplazable
-            Content()
+            Content(navController = navController, tipoRegistro = tipoRegistro, onTipoRegistroChange = { selectedTipoRegistro ->
+                tipoRegistro = selectedTipoRegistro
+            })
+
             // Botón al final del contenido
-            Boton(scrollState)
+
+            Boton(scrollState = scrollState, tipoRegistro = tipoRegistro, navController = navController)
+
         }
     }
 }
 
 
 @Composable
-fun Content(modifier: Modifier = Modifier) {
+fun Content(modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit) {
     val nombre = remember { mutableStateOf("") }
     val fecha = remember { mutableStateOf("") }
     val localidad = remember { mutableStateOf("") }
@@ -227,34 +237,29 @@ fun Content(modifier: Modifier = Modifier) {
         Text(text = "Tipo de Registro:")
         Column {
             val tiposRegistro = listOf(
-                "Fauna en Transectos",
-                "Fauna en Punto de Conteo",
-                "Fauna Búsqueda Libre",
-                "Validación de Cobertura",
-                "Parcela de Vegetación",
-                "Cámaras Trampa",
-                "Variables Climáticas"
+                "Fauna en Transectos" to NavScreen.Formulario12.name,
+                "Fauna en Punto de Conteo" to NavScreen.Formulario22.name,
+                "Fauna Búsqueda Libre" to NavScreen.Formulario32.name,
+                "Validación de Cobertura" to "",
+                "Parcela de Vegetación" to NavScreen.Formulario52.name,
+                "Cámaras Trampa" to "",
+                "Variables Climáticas" to ""
             )
-            tiposRegistro.forEach { tipo ->
+            tiposRegistro.forEach { (texto, ruta) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
-                        selected = tipoRegistro == tipo,
-                        onClick = { tipoRegistro = tipo }
+                        selected = tipoRegistro == ruta,
+                        onClick = { tipoRegistro = ruta }
                     )
-                    Text(text = tipo)
+                    Text(text = texto)
                 }
             }
         }
     }
 }
-
-
-
-
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewFormulario1(){
-    Formulario1()
+    val navController = rememberNavController()
+    Formulario1(navController)
 }

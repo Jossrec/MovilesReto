@@ -25,14 +25,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showSystemUi = true)
+
 @Composable
-fun FormScreen5() {
+fun FormScreen5(navController: NavController) {
     var codigo by remember { mutableStateOf("") }
     var nombreComunEspecie by remember { mutableStateOf("") }
     var nombreCientifico by remember { mutableStateOf("") }
@@ -63,7 +65,7 @@ fun FormScreen5() {
                     scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción al presionar atrás */ }) {
+                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Atrás"
@@ -348,7 +350,7 @@ fun FormScreen5() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { /* Acción Atrás */ },
+                    onClick = { navController.navigate(route = "Formulario1")},
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
@@ -362,7 +364,7 @@ fun FormScreen5() {
                     )
                 }
                 Button(
-                    onClick = { /* Acción Enviar */ },
+                    onClick = { navController.navigate(route = "SearchScreen") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
@@ -379,4 +381,11 @@ fun FormScreen5() {
 
         }
     }
+}
+
+
+@Composable
+fun showFormScreen5(navController: NavController){
+    val navController = rememberNavController()
+    FormScreen5(navController)
 }

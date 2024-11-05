@@ -1,10 +1,14 @@
 package com.example.reto.navigation
 
+import FormScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.reto.vista.EditProfile
+import com.example.reto.vista.FormScreen2
+import com.example.reto.vista.FormScreen3
+import com.example.reto.vista.FormScreen5
 import com.example.reto.vista.Formulario1
 import com.example.reto.vista.LoginScreen
 import com.example.reto.vista.HomeScreen
@@ -13,6 +17,8 @@ import com.example.reto.vista.MapScreen
 import com.example.reto.vista.MyMessage
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.SettingsScreen
+
+
 
 
 private val messages: List<MyMessage> = listOf(
@@ -64,7 +70,19 @@ fun AppNavigation(
             MapScreen(navController)
         }
         composable(NavScreen.Formulario1.name) {
-            Formulario1()
+            Formulario1(navController)
+        }
+        composable(NavScreen.Formulario12.name){
+            FormScreen(navController)
+        }
+        composable(NavScreen.Formulario22.name){
+            FormScreen2(navController)
+        }
+        composable(NavScreen.Formulario32.name){
+            FormScreen3(navController)
+        }
+        composable(NavScreen.Formulario52.name){
+            FormScreen5(navController)
         }
     }
 }

@@ -24,15 +24,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showSystemUi = true)
+
 @Composable
-fun FormScreen3() {
+fun FormScreen3(navController: NavController) {
     var transectNumber by remember { mutableStateOf("") }
     var commonName by remember { mutableStateOf("") }
     var scientificName by remember { mutableStateOf("") }
@@ -61,7 +63,7 @@ fun FormScreen3() {
                     scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción al presionar atrás */ }) {
+                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Atrás"
@@ -302,7 +304,7 @@ fun FormScreen3() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { /* Acción Atrás */ },
+                    onClick = { navController.navigate(route = "Formulario1") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
@@ -316,7 +318,7 @@ fun FormScreen3() {
                     )
                 }
                 Button(
-                    onClick = { /* Acción Enviar */ },
+                    onClick = { navController.navigate(route = "SearchScreen") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
@@ -333,4 +335,11 @@ fun FormScreen3() {
 
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun showFormScreen3 (modifier: Modifier = Modifier){
+    var navController = rememberNavController()
+    FormScreen3(navController)
 }
