@@ -10,6 +10,8 @@ import com.example.reto.vista.EditProfile
 import com.example.reto.vista.FormScreen2
 import com.example.reto.vista.FormScreen3
 import com.example.reto.vista.FormScreen5
+import com.example.reto.vista.FormScreen6
+import com.example.reto.vista.FormScreen7
 import com.example.reto.vista.Formulario1
 import com.example.reto.vista.LoginScreen
 import com.example.reto.vista.HomeScreen
@@ -87,6 +89,12 @@ fun AppNavigation(
         }
         composable(NavScreen.Formulario52.name){
             FormScreen5(navController)
+        }
+        composable(NavScreen.Formulario62.name){
+            FormScreen6(navController)
+        }
+        composable(NavScreen.Formulario72.name){
+            FormScreen7(navController)
         }
     }
 }

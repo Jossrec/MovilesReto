@@ -246,10 +246,10 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
                 "Fauna en Transectos" to NavScreen.Formulario12.name,
                 "Fauna en Punto de Conteo" to NavScreen.Formulario22.name,
                 "Fauna Búsqueda Libre" to NavScreen.Formulario32.name,
-                "Validación de Cobertura" to ""/*NavScreen.Formulario42.name*/,
+                "Validación de Cobertura" to NavScreen.Formulario42.name,
                 "Parcela de Vegetación" to NavScreen.Formulario52.name,
-                "Cámaras Trampa" to ""/*NavScreen.Formulario62.name*/,
-                "Variables Climáticas" to "" /*NavScreen.Formulario72.name*/
+                "Cámaras Trampa" to NavScreen.Formulario62.name,
+                "Variables Climáticas" to  NavScreen.Formulario72.name
             )
             tiposRegistro.forEach { (texto, ruta) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
