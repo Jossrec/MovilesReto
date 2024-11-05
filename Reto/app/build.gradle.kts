@@ -72,11 +72,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(kotlin("script-runtime"))
-
-
     implementation(libs.coil.compose)
+
     implementation(libs.camerax.core)
-    implementation(libs.camerax.camera2)
     implementation(libs.camerax.lifecycle)
     implementation(libs.camerax.video)
     implementation(libs.camerax.view)

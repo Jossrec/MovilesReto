@@ -1,5 +1,11 @@
 [versions]
 agp = "8.6.0"
+cameraCamera2 = "1.2.2"
+cameraCore = "1.2.2"
+cameraExtensions = "1.2.2"
+cameraLifecycle = "1.2.2"
+cameraVideo = "1.2.2"
+cameraView = "1.2.2"
 coilCompose = "2.1.0"
 hiltNavigationCompose = "1.2.0"
 kotlin = "1.9.0"
@@ -14,8 +20,10 @@ materialIconsExtended = "1.7.3"
 navigationRuntimeKtx = "2.8.2"
 webkit = "1.12.1"
 camerax = "1.1.0-beta01"
+camerax_version = "1.4.0"
 
 [libraries]
+
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeBom" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "composeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,12 +46,13 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
-camerax-core = { module = "androidx.camera:camera-core", version.ref = "camerax" }
-camerax-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
-camerax-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
-camerax-video = { module = "androidx.camera:camera-video", version.ref = "camerax" }
-camerax-view = { module = "androidx.camera:camera-view", version.ref = "camerax" }
-camerax-extensions = { module = "androidx.camera:camera-extensions", version.ref = "camerax" }
+
+
+camerax-core = { group="androidx.camera" , name = "camera-core", version.ref = "camerax_version"}
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax_version" }
+camerax-video = { group = "androidx.camera", name = "camera-video", version.ref = "camerax" }
+camerax-view = { group = "androidx.camera",name = "camera-view", version.ref = "camerax_version" }
+camerax-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "camerax_version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

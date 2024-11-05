@@ -39,6 +39,8 @@
                 android:resource="@xml/path_provider"
                 />
         </provider>
+
+
     </application>
 
 </manifest>

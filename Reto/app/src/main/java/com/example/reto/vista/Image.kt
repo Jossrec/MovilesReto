@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.rememberImagePainter
-import com.example.reto.Manifest
 import com.example.reto.R
 import java.io.File
 import java.text.SimpleDateFormat
@@ -43,7 +42,7 @@ fun ImageCaptureFromCamera()
     val file = context.createImageFile()
     val uri = FileProvider.getUriForFile(
         Objects.requireNonNull(context),
-        context.packageName+ "provider", file
+        context.packageName+ ".provider", file
     )
 
     var capturedImageUri by remember {
