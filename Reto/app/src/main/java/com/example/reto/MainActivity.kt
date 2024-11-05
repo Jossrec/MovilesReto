@@ -23,41 +23,23 @@ import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.vista.FormScreen2
 import com.example.reto.vista.FormScreen3
 import com.example.reto.vista.FormScreen5
+import com.example.reto.vista.Formulario1
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            RetoTheme {
-                Surface (
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ){
-                    FormScreen5(navController = rememberNavController())
-                }
-            }
+            MainScreen()
         }
+
     }
 }
-
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-        }
-    ) {padding->
-        Box(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ){
-            AppNavigation(navController = navController)
-        }
-
-    }
-
+    AppNavigation(navController = navController)
 }
+
 
 @Preview(showSystemUi = true)
 @Composable

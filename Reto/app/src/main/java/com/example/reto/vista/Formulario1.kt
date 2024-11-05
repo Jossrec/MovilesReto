@@ -73,8 +73,14 @@ fun Formulario1(navController: NavHostController) {
                 .padding(16.dp)
         ) {
             // Primer componente desplazable
-            Content(navController = navController, tipoRegistro = tipoRegistro, onTipoRegistroChange = { selectedTipoRegistro ->
+            Content(
+                navController = navController,
+                tipoRegistro = tipoRegistro,
+                onTipoRegistroChange = { selectedTipoRegistro ->
                 tipoRegistro = selectedTipoRegistro
+                    if (selectedTipoRegistro.isNotEmpty()){
+                        navController.navigate(selectedTipoRegistro)
+                        }
             })
 
             // Botón al final del contenido
@@ -94,7 +100,7 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
     val hora = remember { mutableStateOf("") }
     var estadoTiempo by remember { mutableStateOf("Soleado") }
     var epoca by remember { mutableStateOf("Verano/Seca") }
-    var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") }
+
 
     Column(
         modifier = modifier
@@ -249,7 +255,7 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
                         selected = tipoRegistro == ruta,
-                        onClick = { tipoRegistro = ruta }
+                        onClick = { onTipoRegistroChange(ruta) }
                     )
                     Text(text = texto)
                 }
