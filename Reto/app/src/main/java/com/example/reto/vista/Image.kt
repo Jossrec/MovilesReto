@@ -6,6 +6,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,8 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Objects
+
+
 
 @Composable
 fun ImageCaptureFromCamera()
@@ -73,14 +76,14 @@ fun ImageCaptureFromCamera()
     ){
         Button(onClick = {
             val permissionCheckResult =
-                ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
 
             if (permissionCheckResult == PackageManager.PERMISSION_GRANTED)
             {
                 cameraLauncher.launch(uri)
             }
             else{
-                permissionLauncher.launch(Manifest.permission.CAMERA)
+                permissionLauncher.launch(android.Manifest.permission.CAMERA)
             }
         }){
             Text(text = "Capture Image")

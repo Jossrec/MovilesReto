@@ -22,6 +22,7 @@ import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.vista.FormScreen2
 import com.example.reto.vista.FormScreen3
 import com.example.reto.vista.FormScreen5
+import com.example.reto.vista.ImageCaptureFromCamera
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    FormScreen()
+                    ImageCaptureFromCamera()
                 }
             }
         }
@@ -58,6 +59,8 @@ fun MainScreen() {
     }
 
 }
+
+
 
 @Preview(showSystemUi = true)
 @Composable

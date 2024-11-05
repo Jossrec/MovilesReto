@@ -30,7 +30,7 @@
         </activity>
 
         <provider
-            android:authorities="$ {applicationId}.provider"
+            android:authorities="${applicationId}.provider"
             android:name = "androidx.core.content.FileProvider"
             android:exported ="false"
             android:grantUriPermissions="true">

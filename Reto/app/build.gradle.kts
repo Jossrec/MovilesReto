@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding=true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -72,5 +73,12 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(kotlin("script-runtime"))
 
+
     implementation(libs.coil.compose)
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.video)
+    implementation(libs.camerax.view)
+    implementation(libs.camerax.extensions)
 }
