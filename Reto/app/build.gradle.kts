@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.webkit)
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     implementation(libs.androidx.material.icons.extended)
     androidTestImplementation(libs.androidx.junit)
