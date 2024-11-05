@@ -22,6 +22,7 @@ import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.vista.CreateAccountScreen
 import com.example.reto.vista.Forms_6_2
 import com.example.reto.vista.Forms_7_2
+import com.example.reto.vista.Formulario1
 import com.example.reto.vista.ItemDetails
 import com.example.reto.vista.ItemUiState
 import com.example.reto.vista.NuevaContra
@@ -38,8 +39,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    CreateAccountScreen()
+                    //CreateAccountScreen()
                     //SearchScreen()
+                    //Formulario1()
+                    Forms_7_2()
                 }
             }
         }

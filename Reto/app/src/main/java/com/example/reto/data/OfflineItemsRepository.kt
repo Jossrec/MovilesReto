@@ -15,13 +15,27 @@ class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
 }
 
 class OfflineItemsRepository2(private val itemDao: ItemDao2) : ItemsRepository2 {
-    override fun getAllItemsStream(): Flow<List<Formulario7>> = itemDao.getAllItems()
+    override fun getAllItemsStream(): Flow<List<Formulario_base>> = itemDao.getAllItems()
 
-    override fun getItemStream(id: Int): Flow<Formulario7?> = itemDao.getItem(id)
+    override fun getItemStream(id: Int): Flow<Formulario_base?> = itemDao.getItem(id)
 
-    override suspend fun insertItem(item: Formulario7) = itemDao.insert(item)
+    override suspend fun getLastFormularioBaseId(): Int?= itemDao.getLastFormularioBaseId()
 
-    override suspend fun deleteItem(item: Formulario7) = itemDao.delete(item)
+    override suspend fun insertItem(item: Formulario_base) = itemDao.insert(item)
 
-    override suspend fun updateItem(item: Formulario7) = itemDao.update(item)
+    override suspend fun deleteItem(item: Formulario_base) = itemDao.delete(item)
+
+    override suspend fun updateItem(item: Formulario_base) = itemDao.update(item)
+}
+
+class OfflineItemsRepository3(private val itemDao: ItemDao3) : ItemsRepository3 {
+    override fun getAllItemsStream(): Flow<List<Formulario_7>> = itemDao.getAllItems()
+
+    override fun getItemStream(id: Int): Flow<Formulario_7?> = itemDao.getItem(id)
+
+    override suspend fun insertItem(item: Formulario_7) = itemDao.insert(item)
+
+    override suspend fun deleteItem(item: Formulario_7) = itemDao.delete(item)
+
+    override suspend fun updateItem(item: Formulario_7) = itemDao.update(item)
 }

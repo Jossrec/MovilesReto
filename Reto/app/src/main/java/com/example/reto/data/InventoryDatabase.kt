@@ -21,6 +21,7 @@ abstract class InventoryDatabase : RoomDatabase() {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, InventoryDatabase::class.java, "item_database")
+                    .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
             }
@@ -28,10 +29,11 @@ abstract class InventoryDatabase : RoomDatabase() {
     }
 }
 
-@Database(entities = [Formulario7::class], version = 2, exportSchema = false)
+@Database(entities = [Formulario_base::class, Formulario_7::class], version = 2, exportSchema = false)
 abstract class InventoryDatabase2 : RoomDatabase() {
 
-    abstract fun itemDao(): ItemDao2
+    abstract fun itemDaobase(): ItemDao2
+    abstract fun itemDao7(): ItemDao3
 
     companion object {
         @Volatile
@@ -41,9 +43,30 @@ abstract class InventoryDatabase2 : RoomDatabase() {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, InventoryDatabase2::class.java, "item_database")
+                    .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
             }
         }
     }
 }
+
+//@Database(entities = [Formulario_7::class], version = 3, exportSchema = false)
+//abstract class InventoryDatabase3 : RoomDatabase() {
+//
+//    abstract fun itemDao(): ItemDao3
+//
+//    companion object {
+//        @Volatile
+//        private var Instance: InventoryDatabase3? = null
+//
+//        fun getDatabase(context: Context): InventoryDatabase3 {
+//            // if the Instance is not null, return it, otherwise create a new database instance.
+//            return Instance ?: synchronized(this) {
+//                Room.databaseBuilder(context, InventoryDatabase3::class.java, "item_database")
+//                    .build()
+//                    .also { Instance = it }
+//            }
+//        }
+//    }
+//}

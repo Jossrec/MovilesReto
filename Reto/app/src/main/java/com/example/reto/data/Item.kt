@@ -16,9 +16,12 @@
 
 package com.example.reto.data
 
+import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.util.Date
+import androidx.room.Relation
 
 /**
  * Entity data class represents a single row in the database.
@@ -32,8 +35,18 @@ data class Item(
     val contraseña: String
 )
 
-@Entity(tableName = "Formulario_tipo_7")
-data class Formulario7(
+data class Formulario(
+    @Embedded val formularioBase: Formulario_base,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "formId"
+    )
+    val ventanasB: Formulario_7
+    //val ventanasB: val ventanasB: Formulario_7
+)
+
+@Entity(tableName = "formularios_base")
+data class Formulario_base(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val nombre: String,
@@ -43,4 +56,30 @@ data class Formulario7(
     val Estado_del_Tiempo: String,
     val Época: String,
     val Tipo_Registro: String
+)
+
+@Entity(
+    tableName = "formularios_7",
+    foreignKeys = [
+        ForeignKey(
+            entity = Formulario_base::class,
+            parentColumns = ["id"],
+            childColumns = ["formId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["formId"])]  // Esto ayuda a optimizar las búsquedas por la clave foránea
+)
+
+data class Formulario_7(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val formId: Int,
+    val zona: String,
+    val Pluviosidad: String,
+    val Temperatura_maxima: String,
+    val Humedad_maxima: String,
+    val Temperatura_minima: String,
+    val Humedad_minima: String,
+    val Nivel_Quebrada: String
 )

@@ -1,6 +1,7 @@
 package com.example.reto.vista
 
 
+import android.view.View.OnClickListener
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 
@@ -36,6 +37,7 @@ import androidx.compose.runtime.getValue
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 
 import androidx.compose.ui.Alignment
@@ -44,10 +46,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 import com.example.reto.R
 import com.example.reto.components.Boton
 import com.example.reto.components.HeaderBar
+import com.example.reto.ui.theme.AppViewModelProvider
 
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
@@ -77,11 +81,18 @@ fun Formulario1() {
 
 
 @Composable
-fun Content(modifier: Modifier = Modifier) {
-    val nombre = remember { mutableStateOf("") }
-    val fecha = remember { mutableStateOf("") }
-    val localidad = remember { mutableStateOf("") }
-    val hora = remember { mutableStateOf("") }
+fun Content(
+    modifier: Modifier = Modifier,
+    viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    //Room
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
+
+//    val nombre = remember { mutableStateOf("") }
+//    val fecha = remember { mutableStateOf("") }
+//    val localidad = remember { mutableStateOf("") }
+//    val hora = remember { mutableStateOf("") }
     var estadoTiempo by remember { mutableStateOf("Soleado") }
     var epoca by remember { mutableStateOf("Verano/Seca") }
     var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") }
@@ -93,8 +104,8 @@ fun Content(modifier: Modifier = Modifier) {
     ) {
         // Nombre
         OutlinedTextField(
-            value = nombre.value,
-            onValueChange = { nombre.value = it },
+            value = valores.nombre,
+            onValueChange = { Cambio(valores.copy(nombre = it)) },
             label = { Text("Nombre") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -103,8 +114,8 @@ fun Content(modifier: Modifier = Modifier) {
 
         // Fecha
         OutlinedTextField(
-            value = fecha.value,
-            onValueChange = { fecha.value = it },
+            value = valores.fecha,
+            onValueChange = { Cambio(valores.copy(fecha = it)) },
             label = { Text("Fecha") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -117,8 +128,8 @@ fun Content(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
-                value = localidad.value,
-                onValueChange = { localidad.value = it },
+                value = valores.Localidad,
+                onValueChange = { Cambio(valores.copy(Localidad = it)) },
                 label = { Text("Localidad") },
                 modifier = Modifier.weight(1f)
             )
@@ -141,8 +152,8 @@ fun Content(modifier: Modifier = Modifier) {
 
         // Hora
         OutlinedTextField(
-            value = hora.value,
-            onValueChange = { hora.value = it },
+            value = valores.Hora,
+            onValueChange = { Cambio(valores.copy(Hora = it))},
             label = { Text("Hora") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -156,7 +167,8 @@ fun Content(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
             IconButton(
-                onClick = { estadoTiempo = "Soleado" },
+                onClick = { estadoTiempo = "Soleado"
+                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
                 modifier = Modifier
                     .size(100.dp)
                     .background(if (estadoTiempo == "Soleado") GreenAwaq else Color.Transparent)
@@ -170,7 +182,8 @@ fun Content(modifier: Modifier = Modifier) {
             }
 
             IconButton(
-                onClick = { estadoTiempo = "Parcialmente Nublado" },
+                onClick = { estadoTiempo = "Parcialmente Nublado"
+                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
                 modifier = Modifier
                     .size(100.dp)
                     .background(if (estadoTiempo == "Parcialmente Nublado") GreenAwaq else Color.Transparent)
@@ -184,7 +197,8 @@ fun Content(modifier: Modifier = Modifier) {
             }
 
             IconButton(
-                onClick = { estadoTiempo = "Lluvioso" },
+                onClick = { estadoTiempo = "Lluvioso"
+                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
                 modifier = Modifier
                     .background(if (estadoTiempo == "Lluvioso") GreenAwaq else Color.Transparent)
                     .size(100.dp)
@@ -208,7 +222,8 @@ fun Content(modifier: Modifier = Modifier) {
         ) {
             RadioButton(
                 selected = epoca == "Verano/Seca",
-                onClick = { epoca = "Verano/Seca" }
+                onClick = { epoca = "Verano/Seca"
+                    Cambio(valores.copy( Época = epoca))}
             )
             Text(text = "Verano/Seca")
 
@@ -216,7 +231,9 @@ fun Content(modifier: Modifier = Modifier) {
 
             RadioButton(
                 selected = epoca == "Invierno/Lluviosa",
-                onClick = { epoca = "Invierno/Lluviosa" }
+                onClick = { epoca = "Invierno/Lluviosa"
+                    Cambio(valores.copy( Época = epoca))
+                }
             )
             Text(text = "Invierno/Lluviosa")
         }
@@ -239,7 +256,8 @@ fun Content(modifier: Modifier = Modifier) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
                         selected = tipoRegistro == tipo,
-                        onClick = { tipoRegistro = tipo }
+                        onClick = { tipoRegistro = tipo
+                            Cambio(valores.copy( Tipo_Registro = tipoRegistro))}
                     )
                     Text(text = tipo)
                 }

@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reto.R
 import com.example.reto.data.Item
-import com.example.reto.data.Formulario7
+import com.example.reto.data.Formulario_base
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
@@ -108,7 +108,7 @@ fun SearchScreen(
 }
 
 @Composable
-fun MyMessages(messages: List<Formulario7>, modifier: Modifier = Modifier) {
+fun MyMessages(messages: List<Formulario_base>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(messages) { message ->
             MyComponent(message)
@@ -118,7 +118,7 @@ fun MyMessages(messages: List<Formulario7>, modifier: Modifier = Modifier) {
 
 
 @Composable
-fun MyComponent(message: Formulario7) {
+fun MyComponent(message: Formulario_base) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -213,6 +213,6 @@ fun MyText(text: String, color: Color, style: TextStyle) {
 @Composable
 fun PreviewComponent() {
     RetoTheme {
-        MyMessages(listOf(Formulario7(1, "Luis", "10/3/24","Monterrey", 3, "lluvia", "Invierno/Lluviosa", "Fauna de Trnasectos")))
+        MyMessages(listOf(Formulario_base(1, "Luis", "10/3/24","Monterrey", 3, "lluvia", "Invierno/Lluviosa", "Fauna de Trnasectos")))
     }
 }

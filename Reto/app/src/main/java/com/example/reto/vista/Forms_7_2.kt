@@ -42,6 +42,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 
@@ -57,11 +58,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reto.R
+import com.example.reto.data.ItemDao2
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.vista.NuevaContra
+import kotlinx.coroutines.launch
 
 
 //Opcion unica de los circulos con su relleno
@@ -83,13 +88,22 @@ private fun ZonaItem(zona: Zona, onSelected: Boolean, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Forms_7_2(modifier: Modifier = Modifier) {
-    var pluviosidad by remember { mutableStateOf("") }
-    var Temperatura_max by remember { mutableStateOf("") }
-    var Humedad_max by remember { mutableStateOf("") }
-    var Temperatura_min by remember { mutableStateOf("") }
-    var Humedad_min by remember { mutableStateOf("") }
-    var Quebrada by remember { mutableStateOf("") }
+fun Forms_7_2(
+    modifier: Modifier = Modifier,
+    viewModel: Forms_7_2ViewModel = viewModel(factory = AppViewModelProvider.Factory),
+
+) {
+    //Room
+    val coroutineScope = rememberCoroutineScope()
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
+
+//    var pluviosidad by remember { mutableStateOf("") }
+//    var Temperatura_max by remember { mutableStateOf("") }
+//    var Humedad_max by remember { mutableStateOf("") }
+//    var Temperatura_min by remember { mutableStateOf("") }
+//    var Humedad_min by remember { mutableStateOf("") }
+//    var Quebrada by remember { mutableStateOf("") }
 
     var zonaSeleccionada by remember { mutableStateOf<Zona?>(null) }
     val listaZonas = remember{
@@ -147,15 +161,15 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
                     listaZonas.forEach { zona ->
                         ZonaItem(zona = zona, onSelected = zona == zonaSeleccionada){
                             zonaSeleccionada = zona
+                            Cambio(valores.copy(zona = zona.nombre))
                         }
                     }
                 }
             }
             item{
                 OutlinedTextField(
-                    value = pluviosidad,
-                    onValueChange = { newText ->
-                        pluviosidad = newText
+                    value = valores.Pluviosidad,
+                    onValueChange = { Cambio(valores.copy(Pluviosidad = it))
                     },
                     label = { Text(text = "Pluviosidad (mm)") },
                     modifier = Modifier
@@ -166,9 +180,8 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
             }
             item{
                 OutlinedTextField(
-                    value = Temperatura_max,
-                    onValueChange = { newText ->
-                        Temperatura_max = newText
+                    value = valores.Temperatura_maxima,
+                    onValueChange = { Cambio(valores.copy(Temperatura_maxima = it))
                     },
                     label = { Text(text = "Temperatura máxima") },
                     modifier = Modifier
@@ -179,9 +192,8 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
             }
             item{
                 OutlinedTextField(
-                    value = Humedad_max,
-                    onValueChange = { newText ->
-                        Humedad_max = newText
+                    value = valores.Humedad_maxima,
+                    onValueChange = { Cambio(valores.copy(Humedad_maxima = it))
                     },
                     label = { Text(text = "Humedad máxima") },
                     modifier = Modifier
@@ -192,9 +204,8 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
             }
             item{
                 OutlinedTextField(
-                    value = Temperatura_min,
-                    onValueChange = { newText ->
-                        Temperatura_min = newText
+                    value = valores.Temperatura_minima,
+                    onValueChange = { Cambio(valores.copy(Temperatura_minima = it))
                     },
                     label = { Text(text = "Temperatura mínima") },
                     modifier = Modifier
@@ -205,9 +216,8 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
             }
             item{
                 OutlinedTextField(
-                    value = Humedad_min,
-                    onValueChange = { newText ->
-                        Humedad_min = newText
+                    value = valores.Humedad_minima,
+                    onValueChange = { Cambio(valores.copy(Humedad_minima = it))
                     },
                     label = { Text(text = "Humedad mínima") },
                     modifier = Modifier
@@ -218,9 +228,8 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
             }
             item{
                 OutlinedTextField(
-                    value = Quebrada,
-                    onValueChange = { newText ->
-                        Quebrada = newText
+                    value = valores.Nivel_Quebrada,
+                    onValueChange = {Cambio(valores.copy(Nivel_Quebrada = it))
                     },
                     label = { Text(text = "Nivel Quebrada (mt)") },
                     modifier = Modifier
@@ -229,7 +238,6 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
                     singleLine = true,
                 )
             }
-            //Opcion multiple de checkboxes
             item{
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -249,7 +257,12 @@ fun Forms_7_2(modifier: Modifier = Modifier) {
                         )
                     }
                     Button(
-                        onClick = { },
+                        onClick = {
+                            coroutineScope.launch {
+                                Cambio(valores.copy(formId = viewModel.getfromID()))
+                                viewModel.saveItem()
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = colorResource(id = R.color.green_black)
                         ),

@@ -33,28 +33,18 @@ interface ItemsRepository {
 }
 
 interface ItemsRepository2 {
-    /**
-     * Retrieve all the items from the the given data source.
-     */
-    fun getAllItemsStream(): Flow<List<Formulario7>>
+    fun getAllItemsStream(): Flow<List<Formulario_base>>
+    fun getItemStream(id: Int): Flow<Formulario_base?>
+    suspend fun getLastFormularioBaseId(): Int?
+    suspend fun insertItem(item: Formulario_base)
+    suspend fun deleteItem(item: Formulario_base)
+    suspend fun updateItem(item: Formulario_base)
+}
 
-    /**
-     * Retrieve an item from the given data source that matches with the [id].
-     */
-    fun getItemStream(id: Int): Flow<Formulario7?>
-
-    /**
-     * Insert item in the data source
-     */
-    suspend fun insertItem(item: Formulario7)
-
-    /**
-     * Delete item from the data source
-     */
-    suspend fun deleteItem(item: Formulario7)
-
-    /**
-     * Update item in the data source
-     */
-    suspend fun updateItem(item: Formulario7)
+interface ItemsRepository3 {
+    fun getAllItemsStream(): Flow<List<Formulario_7>>
+    fun getItemStream(id: Int): Flow<Formulario_7?>
+    suspend fun insertItem(item: Formulario_7)
+    suspend fun deleteItem(item: Formulario_7)
+    suspend fun updateItem(item: Formulario_7)
 }

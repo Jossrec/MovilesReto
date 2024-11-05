@@ -2,7 +2,7 @@ package com.example.reto.vista
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.reto.data.Formulario7
+import com.example.reto.data.Formulario_base
 import com.example.reto.data.Item
 import com.example.reto.data.ItemsRepository
 import com.example.reto.data.ItemsRepository2
@@ -36,4 +36,4 @@ class SearchScreenViewModel(itemsRepository: ItemsRepository2) : ViewModel() {
 /**
  * Ui State for HomeScreen
  */
-data class SearchUiState(val itemList: List<Formulario7> = listOf())
+data class SearchUiState(val itemList: List<Formulario_base> = listOf())
