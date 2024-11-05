@@ -24,12 +24,20 @@ import com.example.reto.vista.FormScreen2
 import com.example.reto.vista.FormScreen3
 import com.example.reto.vista.FormScreen5
 import com.example.reto.vista.Formulario1
+import com.example.reto.vista.ImageCaptureFromCamera
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen()
+            RetoTheme {
+                Surface (
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ){
+                    ImageCaptureFromCamera()
+                }
+            }
         }
 
     }

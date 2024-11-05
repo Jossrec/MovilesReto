@@ -1,5 +1,13 @@
+
 [versions]
 agp = "8.6.0"
+cameraCamera2 = "1.2.2"
+cameraCore = "1.2.2"
+cameraExtensions = "1.2.2"
+cameraLifecycle = "1.2.2"
+cameraVideo = "1.2.2"
+cameraView = "1.2.2"
+coilCompose = "2.1.0"
 hiltNavigationCompose = "1.2.0"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
@@ -15,17 +23,21 @@ navigationRuntimeKtx = "2.8.2"
 playServicesMaps = "19.0.0"
 roomRuntime = "2.6.1"
 webkit = "1.12.1"
+camerax = "1.1.0-beta01"
+camerax_version = "1.4.0"
 roomCommon = "2.6.1"
 roomKtx = "2.6.1"
 runtimeDesktop = "1.7.0"
 
 [libraries]
+
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeBom" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "composeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-material = { module = "androidx.compose.material:material" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -47,6 +59,13 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-runtime-desktop = { group = "androidx.compose.runtime", name = "runtime-desktop", version.ref = "runtimeDesktop" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+
+
+camerax-core = { group="androidx.camera" , name = "camera-core", version.ref = "camerax_version"}
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax_version" }
+camerax-video = { group = "androidx.camera", name = "camera-video", version.ref = "camerax" }
+camerax-view = { group = "androidx.camera",name = "camera-view", version.ref = "camerax_version" }
+camerax-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "camerax_version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
