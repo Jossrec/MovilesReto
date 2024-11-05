@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.reto.Vista.FormScreen42
 import com.example.reto.vista.EditProfile
 import com.example.reto.vista.FormScreen2
 import com.example.reto.vista.FormScreen3
@@ -80,6 +81,9 @@ fun AppNavigation(
         }
         composable(NavScreen.Formulario32.name){
             FormScreen3(navController)
+        }
+        composable(NavScreen.Formulario42.name){
+            FormScreen42(navController)
         }
         composable(NavScreen.Formulario52.name){
             FormScreen5(navController)
