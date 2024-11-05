@@ -52,7 +52,7 @@ data class Formulario_base(
     val nombre: String,
     val fecha: String,
     val Localidad: String,
-    val Hora: Int,
+    val Hora: String,
     val Estado_del_Tiempo: String,
     val Época: String,
     val Tipo_Registro: String

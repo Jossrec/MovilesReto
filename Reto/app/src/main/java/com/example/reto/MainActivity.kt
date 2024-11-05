@@ -40,9 +40,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
                     //CreateAccountScreen()
-                    //SearchScreen()
                     //Formulario1()
                     Forms_7_2()
+                    //SearchScreen()
                 }
             }
         }

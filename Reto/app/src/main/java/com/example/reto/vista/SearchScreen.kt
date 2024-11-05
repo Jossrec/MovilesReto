@@ -148,7 +148,7 @@ fun MyComponent(message: Formulario_base) {
 
                 Text(
                     //text = "Fauna en Transectos",
-                    text = message.Hora.toString(),
+                    text = message.Hora,
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -213,6 +213,6 @@ fun MyText(text: String, color: Color, style: TextStyle) {
 @Composable
 fun PreviewComponent() {
     RetoTheme {
-        MyMessages(listOf(Formulario_base(1, "Luis", "10/3/24","Monterrey", 3, "lluvia", "Invierno/Lluviosa", "Fauna de Trnasectos")))
+        MyMessages(listOf(Formulario_base(1, "Luis", "10/3/24","Monterrey", "10:30", "lluvia", "Invierno/Lluviosa", "Fauna de Trnasectos")))
     }
 }
