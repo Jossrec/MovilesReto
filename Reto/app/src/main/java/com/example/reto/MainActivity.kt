@@ -41,8 +41,9 @@ class MainActivity : ComponentActivity() {
                 ){
                     //CreateAccountScreen()
                     //Formulario1()
-                    Forms_7_2()
+                    //Forms_7_2()
                     //SearchScreen()
+                    Forms_6_2()
                 }
             }
         }

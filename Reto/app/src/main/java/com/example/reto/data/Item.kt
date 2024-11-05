@@ -83,3 +83,112 @@ data class Formulario_7(
     val Humedad_minima: String,
     val Nivel_Quebrada: String
 )
+
+@Entity(
+    tableName = "formularios_6",
+    foreignKeys = [
+        ForeignKey(
+            entity = Formulario_base::class,
+            parentColumns = ["id"],
+            childColumns = ["formId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["formId"])]  // Esto ayuda a optimizar las búsquedas por la clave foránea
+)
+
+data class Formulario_6(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val formId: Int,
+    val codigo: String,
+    val zona: String,
+    val nombreCamara: String,
+    val placaCamara: String,
+    val placaGuaya: String,
+    val anchoCamino: String,
+    val fechaInstalacion: String,
+    val alturaLente: String,
+    val chequeo: List<Int>,
+    val observaciones: String
+)
+
+data class Formulario_5(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val formId: Int,
+    val codigo: String,
+    val zona: String,
+    val nombreCamara: String,
+    val placaCamara: String,
+    val placaGuaya: String,
+    val anchoCamino: String,
+    val fechaInstalacion: String,
+    val alturaLente: String,
+    val chequeo: List<Int>,
+    val observaciones: String
+)
+
+data class Formulario_4(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val formId: Int,
+    val codigo: String,
+    val zona: String,
+    val nombreCamara: String,
+    val placaCamara: String,
+    val placaGuaya: String,
+    val anchoCamino: String,
+    val fechaInstalacion: String,
+    val alturaLente: String,
+    val chequeo: List<Int>,
+    val observaciones: String
+)
+
+data class Formulario_3(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val formId: Int,
+    val codigo: String,
+    val zona: String,
+    val nombreCamara: String,
+    val placaCamara: String,
+    val placaGuaya: String,
+    val anchoCamino: String,
+    val fechaInstalacion: String,
+    val alturaLente: String,
+    val chequeo: List<Int>,
+    val observaciones: String
+)
+
+data class Formulario_2(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val formId: Int,
+    val codigo: String,
+    val zona: String,
+    val nombreCamara: String,
+    val placaCamara: String,
+    val placaGuaya: String,
+    val anchoCamino: String,
+    val fechaInstalacion: String,
+    val alturaLente: String,
+    val chequeo: List<Int>,
+    val observaciones: String
+)
+
+data class Formulario_1(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val formId: Int,
+    val codigo: String,
+    val zona: String,
+    val nombreCamara: String,
+    val placaCamara: String,
+    val placaGuaya: String,
+    val anchoCamino: String,
+    val fechaInstalacion: String,
+    val alturaLente: String,
+    val chequeo: List<Int>,
+    val observaciones: String
+)
