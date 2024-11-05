@@ -1,23 +1,8 @@
 package com.example.reto.vista
 
-
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.ui.unit.dp
-
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -30,37 +15,26 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-
 import com.example.reto.R
 import com.example.reto.components.Boton
 import com.example.reto.components.HeaderBar
 import com.example.reto.navigation.NavScreen
-
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
-
 
 @Composable
 fun Formulario1(navController: NavHostController) {
     val scrollState = rememberScrollState()
-    var tipoRegistro by remember { mutableStateOf("Fauna en Transcetos") }
+    var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") } // Inicializa con uno por defecto
 
     Scaffold(
         topBar = { HeaderBar() }
@@ -77,20 +51,38 @@ fun Formulario1(navController: NavHostController) {
                 navController = navController,
                 tipoRegistro = tipoRegistro,
                 onTipoRegistroChange = { selectedTipoRegistro ->
-                tipoRegistro = selectedTipoRegistro
-                    if (selectedTipoRegistro.isNotEmpty()){
-                        navController.navigate(selectedTipoRegistro)
-                        }
-            })
+                    tipoRegistro = selectedTipoRegistro
+                }
+            )
 
             // Botón al final del contenido
-
-            Boton(scrollState = scrollState, tipoRegistro = tipoRegistro, navController = navController)
-
+            Boton(
+                scrollState = scrollState,
+                tipoRegistro = tipoRegistro,
+                navController = navController,
+                onNextClicked = {
+                    // Navega a la pantalla correspondiente según el tipo de registro seleccionado
+                    navController.navigate(tipoRegistro)
+                }
+            )
         }
     }
 }
 
+@Composable
+fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHostController, onNextClicked: () -> Unit) {
+    Button(
+        onClick = {
+            // Llama a la función para navegar a la siguiente pantalla
+            onNextClicked()
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp)
+    ) {
+        Text(text = "Siguiente")
+    }
+}
 
 @Composable
 fun Content(modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit) {
@@ -100,7 +92,6 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
     val hora = remember { mutableStateOf("") }
     var estadoTiempo by remember { mutableStateOf("Soleado") }
     var epoca by remember { mutableStateOf("Verano/Seca") }
-
 
     Column(
         modifier = modifier
@@ -249,13 +240,13 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
                 "Validación de Cobertura" to NavScreen.Formulario42.name,
                 "Parcela de Vegetación" to NavScreen.Formulario52.name,
                 "Cámaras Trampa" to NavScreen.Formulario62.name,
-                "Variables Climáticas" to  NavScreen.Formulario72.name
+                "Variables Climáticas" to NavScreen.Formulario72.name
             )
             tiposRegistro.forEach { (texto, ruta) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
                         selected = tipoRegistro == ruta,
-                        onClick = { onTipoRegistroChange(ruta) }
+                        onClick = { onTipoRegistroChange(ruta) } // Solo actualiza el estado
                     )
                     Text(text = texto)
                 }
@@ -263,9 +254,10 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
         }
     }
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewFormulario1(){
+fun PreviewFormulario1() {
     val navController = rememberNavController()
     Formulario1(navController)
 }

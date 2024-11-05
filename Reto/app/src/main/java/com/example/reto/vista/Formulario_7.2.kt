@@ -120,7 +120,7 @@ fun FormScreen7(navController: NavController,
                     scrolledContainerColor = GreenAwaq
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción de navegación */ }) {
+                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Descripción del ícono"

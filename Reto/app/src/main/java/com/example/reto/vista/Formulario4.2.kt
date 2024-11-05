@@ -86,7 +86,7 @@ fun FormScreen42(navController: NavController) {
                     scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(route = "") }) {
+                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Atrás"
@@ -259,7 +259,7 @@ fun FormScreen42(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { navController.navigate(route = "") },
+                    onClick = { navController.navigate(route = "Formulario1") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
@@ -273,7 +273,7 @@ fun FormScreen42(navController: NavController) {
                     )
                 }
                 Button(
-                    onClick = { /* Acción Enviar */ },
+                    onClick = { navController.navigate(route = "HomeScreen") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),

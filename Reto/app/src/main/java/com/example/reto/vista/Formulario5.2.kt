@@ -364,7 +364,7 @@ fun FormScreen5(navController: NavController) {
                     )
                 }
                 Button(
-                    onClick = { navController.navigate(route = "SearchScreen") },
+                    onClick = { navController.navigate(route = "HomeScreen") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
