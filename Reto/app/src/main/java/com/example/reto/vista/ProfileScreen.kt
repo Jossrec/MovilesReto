@@ -91,6 +91,7 @@ fun Profile(navController: NavController) {
                         color = Black,
                         modifier = Modifier.padding(start = 20.dp)
                     )
+                    
                     Text(
                         text = stringResource(R.string.startdate),
                         fontWeight = FontWeight.W400,
@@ -194,7 +195,34 @@ fun Profile(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Color.LightGray,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    onClick = { navController.navigate("Intro") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.LightGray,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        "Cerrar Sesion",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Black
+                    )
+                }
             }
         }
     }
