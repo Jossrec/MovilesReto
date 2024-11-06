@@ -7,14 +7,13 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.reto.models.ItemsBottomNav.*
 import com.example.reto.navigation.currentRoute
 import com.example.reto.ui.theme.GreenAwaq
 
 @Composable
 fun NavegacionInferior(
-    navController: NavHostController
+    navController: NavController
 ){
     val menuItems = listOf(
         ItemBottomNav1,

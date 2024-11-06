@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
-import com.example.reto.components.Boton
 import com.example.reto.components.HeaderBar
 import com.example.reto.navigation.NavScreen
 import com.example.reto.ui.theme.GreenAwaq

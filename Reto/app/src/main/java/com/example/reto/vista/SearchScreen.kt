@@ -24,7 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
+import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
@@ -54,7 +57,7 @@ private val messages: List<MyMessage> = listOf(
 data class MyMessage(val title: String, val body: String)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(messages: List<MyMessage>) {
+fun SearchScreen(navController: NavController) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
@@ -91,7 +94,10 @@ fun SearchScreen(messages: List<MyMessage>) {
                 },
                 scrollBehavior = scrollBehavior
             )
-        }
+        },
+        bottomBar = {
+            NavegacionInferior(navController)
+        },
     ) { innerPadding ->
         // Aquí agregamos las tabs
         Column(modifier = Modifier.padding(innerPadding)) {
@@ -205,6 +211,6 @@ fun MyText(text: String, color: Color, style: TextStyle) {
 @Composable
 fun PreviewComponent() {
     RetoTheme {
-        SearchScreen(messages)
+        SearchScreen(navController = rememberNavController())
     }
 }
