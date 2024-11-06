@@ -38,7 +38,7 @@ fun HomeScreen(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp) // Ajusta la altura del TopBar con el semicírculo
-                    .background(Color(0xFFF1F8E9))
+                    .background(color = White)
             ) {
                 // Imagen de fondo (el semicírculo)
                 Image(
@@ -48,7 +48,7 @@ fun HomeScreen(navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.TopCenter) // Alinea la imagen en la parte superior
-                        .background(Color(0xFFF1F8E9))
+                        .background(color = White)
                 )
 
                 // Contenido de la TopAppBar
@@ -78,7 +78,7 @@ fun HomeScreen(navController: NavHostController) {
                     },
                     actions = {
                         // Icono de perfil a la derecha
-                        IconButton(onClick = { /* Acción del perfil */ }) {
+                        IconButton(onClick =  { navController.navigate("ProfileScreen") }) {
                             Icon(
                                 imageVector = Icons.Filled.Person,
                                 contentDescription = "Perfil",
@@ -91,8 +91,7 @@ fun HomeScreen(navController: NavHostController) {
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                // Aquí iría la navegación para agregar un nuevo formulario
+            FloatingActionButton(onClick = { navController.navigate("Formulario1")
             }) {
                 Icon(Icons.Filled.Add, contentDescription = "Nuevo formulario")
             }
@@ -105,7 +104,7 @@ fun HomeScreen(navController: NavHostController) {
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
-                    .background(Color(0xFFF1F8E9))
+                    .background(color = White)
             ) {
 
                 DashboardContent(Modifier.padding(top = 32.dp))

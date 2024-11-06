@@ -76,22 +76,6 @@ fun SearchScreen(navController: NavController) {
                     titleContentColor = Black,
                     scrolledContainerColor = GreenAwaq
                 ),
-                navigationIcon = {
-                    IconButton(onClick = { /* Acción de navegación */ }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Descripción del ícono"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { /* Acción del menú */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Descripción del ícono"
-                        )
-                    }
-                },
                 scrollBehavior = scrollBehavior
             )
         },

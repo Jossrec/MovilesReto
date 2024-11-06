@@ -42,7 +42,7 @@ fun MapScreen(navController: NavController) {
             verticalArrangement = Arrangement.Bottom // Colocar el botón en la parte inferior
         ) {
             Button(
-                onClick = { /* Acción del botón */ },
+                onClick = { navController.navigate("Formulario1" )},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 100.dp, vertical = 16.dp),

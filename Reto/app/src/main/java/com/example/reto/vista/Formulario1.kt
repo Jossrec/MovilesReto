@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
@@ -36,7 +37,7 @@ fun Formulario1(navController: NavHostController) {
     var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") } // Inicializa con uno por defecto
 
     Scaffold(
-        topBar = { HeaderBar() }
+        topBar = { HeaderBar(navController) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -77,7 +78,9 @@ fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHost
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp)
+            .padding(vertical = 16.dp) ,
+            colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
+
     ) {
         Text(text = "Siguiente")
     }
@@ -132,7 +135,7 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
-                onClick = { /* Acción de Localización */ },
+                onClick = { navController.navigate("MapScreen")},
                 colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
             ) {
                 Icon(

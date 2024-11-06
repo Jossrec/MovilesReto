@@ -11,12 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HeaderBar() {
+fun HeaderBar(navController: NavHostController) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -31,7 +33,8 @@ fun HeaderBar() {
             scrolledContainerColor = GreenAwaq
         ),
         navigationIcon = {
-            IconButton(onClick = { /* Acción de navegación */ }) {
+            IconButton(onClick = { navController.navigate("HomeScreen")
+            } ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Regresar"
