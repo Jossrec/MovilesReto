@@ -91,7 +91,7 @@ fun Profile(navController: NavController) {
                         color = Black,
                         modifier = Modifier.padding(start = 20.dp)
                     )
-                    
+
                     Text(
                         text = stringResource(R.string.startdate),
                         fontWeight = FontWeight.W400,
@@ -117,12 +117,13 @@ fun Profile(navController: NavController) {
                 }
                 Divider()
 
-                Row(modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)) {
+                Row(modifier = Modifier.padding(top = 20.dp, bottom = 10.dp, ), verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(id = R.drawable.baseline_smartphone_24),
                         contentDescription = "contraseña",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.size(30.dp)
+
                     )
                     Text(
                         text = stringResource(R.string.numerocel),
@@ -131,7 +132,7 @@ fun Profile(navController: NavController) {
                     )
                     Button(
                         onClick = { navController.navigate("EditInfoScreen") },
-                        modifier = Modifier.size(80.dp, 30.dp),
+                        modifier = Modifier.size(120.dp, 40.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF9CCC65),
                             contentColor = Color.White
