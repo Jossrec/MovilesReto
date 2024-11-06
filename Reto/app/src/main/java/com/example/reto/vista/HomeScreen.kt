@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.R
+import com.example.reto.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -150,7 +151,7 @@ fun DashboardContent(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFF1F8E9))
+            .background(color = White)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

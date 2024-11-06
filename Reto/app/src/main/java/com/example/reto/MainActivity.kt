@@ -24,6 +24,7 @@ import com.example.reto.vista.FormScreen2
 import com.example.reto.vista.FormScreen3
 import com.example.reto.vista.FormScreen5
 import com.example.reto.vista.Formulario1
+import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.ImageCaptureFromCamera
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    ImageCaptureFromCamera()
+                    MainScreen()
                 }
             }
         }
@@ -45,7 +46,20 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    AppNavigation(navController = navController)
+        Scaffold(
+            bottomBar = {
+                NavegacionInferior(navController)
+            }
+        ) {padding->
+            Box(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize()
+            ){
+                AppNavigation(navController = navController)
+            }
+        }
+
 }
 
 
