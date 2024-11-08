@@ -2,6 +2,10 @@ package com.example.reto.vista
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,16 +19,99 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.reto.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.reto.ui.theme.AppViewModelProvider
+import com.example.reto.ui.theme.RetoTheme
+import kotlinx.coroutines.launch
+import java.util.Currency
+import java.util.Locale
+
+//@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CreateAccountScreen(
+    viewModel: CreateAccountViewModel = viewModel(factory = AppViewModelProvider.Factory)
+){
+    val coroutineScope = rememberCoroutineScope()
+    RegisterBody(
+        itemUiState = viewModel.itemUiState,
+        onItemValueChange = viewModel::updateUiState,
+        onSaveClick = {
+            coroutineScope.launch {
+                viewModel.saveItem()
+            }
+        },
+    )
+}
 
 @Composable
-fun RegisterScreen() {
-    // Variables para los campos de texto
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun RegisterAuxiliarInput(
+    itemDetails: ItemDetails,
+    onValueChange: (ItemDetails) -> Unit = {},
+){
     var passwordVisible by remember { mutableStateOf(false) }
+    val icono = if(passwordVisible){
+        Icons.Default.Visibility
+    }
+    else{
+        Icons.Default.VisibilityOff
+    }
+    // Email Input
+    OutlinedTextField(
+        value = itemDetails.nombre,
+        onValueChange = { onValueChange(itemDetails.copy(nombre = it)) },
+        label = { Text(text = "Nombre") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        singleLine = true
+    )
+    // Contraseña Input
+    OutlinedTextField(
+        value = itemDetails.email,
+        onValueChange = { onValueChange(itemDetails.copy(email = it)) },
+        label = { Text(text = "Email") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        singleLine = true
+    )
+    // Contraseña Input
+    OutlinedTextField(
+        value = itemDetails.contraseña,
+        onValueChange = { onValueChange(itemDetails.copy(contraseña = it)) },
+        label = { Text(text = "Contraseña") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        singleLine = true,
+        trailingIcon = {
+            if(itemDetails.contraseña.isNotBlank()){
+                IconButton(onClick = {passwordVisible = !passwordVisible}) {
+                    Icon(
+                        imageVector = icono,
+                        contentDescription = ""
+                    )
+                }
+            }
+            else null
+        }
+    )
+}
 
+@Composable
+fun RegisterBody(
+    itemUiState: ItemUiState,
+    onItemValueChange: (ItemDetails) -> Unit,
+    onSaveClick: () -> Unit,
+) {
+    // Variables para los campos de texto
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -75,44 +162,18 @@ fun RegisterScreen() {
                         .padding(bottom = 16.dp)
                         .padding(top=130.dp)
                 )
-
-                // Email Input
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    label = { Text(text = "Nombre") },
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                RegisterAuxiliarInput(
+                    itemDetails = itemUiState.itemDetails,
+                    onValueChange = onItemValueChange
                 )
-
-                // Contraseña Input
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text(text = "Email") },
-                    singleLine = true,
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp)
-                )
-                // Contraseña Input
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text(text = "Contraseña") },
-                    singleLine = true,
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp)
-                )
-
                 // Botón de Entrar
                 Button(
-                    onClick = { /* Acción no funcional */ },
+//                    onClick = {
+//                        coroutineScope.launch {
+//                            viewModel.saveItem()
+//                        }
+//                    },
+                    onClick = onSaveClick,
                     modifier = Modifier
                         .width(150.dp)
                         .height(48.dp)
@@ -129,7 +190,13 @@ fun RegisterScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewRegisterScreen() {
-    RegisterScreen()
+fun RegisterScreenPreview() {
+    RetoTheme {
+        RegisterBody(itemUiState = ItemUiState(
+            ItemDetails(
+                nombre = "Ususario", email = "example@gmail.com", contraseña = "password"
+            )
+        ), onItemValueChange = {}, onSaveClick = {})
+    }
 }
 

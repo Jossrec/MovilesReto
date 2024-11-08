@@ -13,8 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,6 +40,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.reto.R
+import com.example.reto.ui.theme.RetoTheme
+import kotlinx.coroutines.flow.combineTransform
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun DigitBox(value: String, onValueChange: (String) -> Unit) {
@@ -68,7 +77,7 @@ fun DigitBox(value: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun Verificacion(message: String, from: String, modifier: Modifier = Modifier) {
+fun Verificacion(modifier: Modifier = Modifier) {
     val correo  by remember { mutableStateOf("example@gmail.com") }
     val image = painterResource(R.drawable.vector_5)
     val image2 = painterResource(R.drawable.vector_1)
@@ -99,13 +108,13 @@ fun Verificacion(message: String, from: String, modifier: Modifier = Modifier) {
                     .size(190.dp)
                     .offset(240.dp)
             )
-            Image(
-                painter = regreso,
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .size(30.dp)
-            )
+            IconButton(onClick = { /* Acción del menú */ }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBackIosNew,
+                    contentDescription = "Descripción del ícono",
+                    tint = Color.White
+                )
+            }
             Text(
                 text = "Verificación",
                 fontSize = 50.sp,
@@ -170,4 +179,14 @@ fun Verificacion(message: String, from: String, modifier: Modifier = Modifier) {
         )
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun VerificaciónPreview() {
+    RetoTheme {
+        Verificacion(
+            modifier = Modifier.fillMaxSize()
+        )
+    }
 }

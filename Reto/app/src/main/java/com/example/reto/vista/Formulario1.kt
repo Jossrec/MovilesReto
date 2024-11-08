@@ -3,6 +3,25 @@ package com.example.reto.vista
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+
+import android.view.View.OnClickListener
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.unit.dp
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -16,6 +35,15 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +56,17 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.components.HeaderBar
 import com.example.reto.navigation.NavScreen
+import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
+
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+import com.example.reto.R
+import com.example.reto.components.Boton
+import com.example.reto.components.HeaderBar
+import com.example.reto.ui.theme.AppViewModelProvider
+
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 
@@ -87,11 +126,18 @@ fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHost
 }
 
 @Composable
-fun Content(modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit) {
-    val nombre = remember { mutableStateOf("") }
-    val fecha = remember { mutableStateOf("") }
-    val localidad = remember { mutableStateOf("") }
-    val hora = remember { mutableStateOf("") }
+fun Content(
+    modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit
+    viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    //Room
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
+
+//    val nombre = remember { mutableStateOf("") }
+//    val fecha = remember { mutableStateOf("") }
+//    val localidad = remember { mutableStateOf("") }
+//    val hora = remember { mutableStateOf("") }
     var estadoTiempo by remember { mutableStateOf("Soleado") }
     var epoca by remember { mutableStateOf("Verano/Seca") }
 
@@ -102,8 +148,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
     ) {
         // Nombre
         OutlinedTextField(
-            value = nombre.value,
-            onValueChange = { nombre.value = it },
+            value = valores.nombre,
+            onValueChange = { Cambio(valores.copy(nombre = it)) },
             label = { Text("Nombre") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -112,8 +158,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
 
         // Fecha
         OutlinedTextField(
-            value = fecha.value,
-            onValueChange = { fecha.value = it },
+            value = valores.fecha,
+            onValueChange = { Cambio(valores.copy(fecha = it)) },
             label = { Text("Fecha") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -126,8 +172,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
-                value = localidad.value,
-                onValueChange = { localidad.value = it },
+                value = valores.Localidad,
+                onValueChange = { Cambio(valores.copy(Localidad = it)) },
                 label = { Text("Localidad") },
                 modifier = Modifier.weight(1f)
             )
@@ -150,8 +196,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
 
         // Hora
         OutlinedTextField(
-            value = hora.value,
-            onValueChange = { hora.value = it },
+            value = valores.Hora,
+            onValueChange = { Cambio(valores.copy(Hora = it))},
             label = { Text("Hora") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -165,7 +211,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
             IconButton(
-                onClick = { estadoTiempo = "Soleado" },
+                onClick = { estadoTiempo = "Soleado"
+                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
                 modifier = Modifier
                     .size(100.dp)
                     .background(if (estadoTiempo == "Soleado") GreenAwaq else Color.Transparent)
@@ -179,7 +226,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
             }
 
             IconButton(
-                onClick = { estadoTiempo = "Parcialmente Nublado" },
+                onClick = { estadoTiempo = "Parcialmente Nublado"
+                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
                 modifier = Modifier
                     .size(100.dp)
                     .background(if (estadoTiempo == "Parcialmente Nublado") GreenAwaq else Color.Transparent)
@@ -193,7 +241,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
             }
 
             IconButton(
-                onClick = { estadoTiempo = "Lluvioso" },
+                onClick = { estadoTiempo = "Lluvioso"
+                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
                 modifier = Modifier
                     .background(if (estadoTiempo == "Lluvioso") GreenAwaq else Color.Transparent)
                     .size(100.dp)
@@ -217,7 +266,8 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
         ) {
             RadioButton(
                 selected = epoca == "Verano/Seca",
-                onClick = { epoca = "Verano/Seca" }
+                onClick = { epoca = "Verano/Seca"
+                    Cambio(valores.copy( Época = epoca))}
             )
             Text(text = "Verano/Seca")
 
@@ -225,7 +275,9 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
 
             RadioButton(
                 selected = epoca == "Invierno/Lluviosa",
-                onClick = { epoca = "Invierno/Lluviosa" }
+                onClick = { epoca = "Invierno/Lluviosa"
+                    Cambio(valores.copy( Época = epoca))
+                }
             )
             Text(text = "Invierno/Lluviosa")
         }
@@ -244,11 +296,13 @@ fun Content(modifier: Modifier = Modifier, navController: NavHostController, tip
                 "Cámaras Trampa" to NavScreen.Formulario62.name,
                 "Variables Climáticas" to NavScreen.Formulario72.name
             )
-            tiposRegistro.forEach { (texto, ruta) ->
+            tiposRegistro.forEach { (texto, ruta, tipo) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
-                        selected = tipoRegistro == ruta,
-                        onClick = { onTipoRegistroChange(ruta) } // Solo actualiza el estado
+                        selected = tipoRegistro == ruta == tipo,
+                        onClick = { onTipoRegistroChange(ruta)
+                        Cambio(valores.copy( Tipo_Registro = tipoRegistro))
+                        } // Solo actualiza el estado
                     )
                     Text(text = texto)
                 }

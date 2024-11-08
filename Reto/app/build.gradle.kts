@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
 }
 
 android {
     namespace = "com.example.reto"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.example.reto"
         minSdk = 24
@@ -50,7 +50,6 @@ android {
     }
 }
 
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -65,6 +64,8 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.material3.android)
+    implementation(libs.support.annotations)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     implementation(libs.androidx.material.icons.extended)
     androidTestImplementation(libs.androidx.junit)
@@ -87,4 +88,5 @@ dependencies {
     implementation(libs.camerax.video)
     implementation(libs.camerax.view)
     implementation(libs.camerax.extensions)
+    ksp(libs.androidx.room.compiler)
 }

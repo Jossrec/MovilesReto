@@ -10,8 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.reto.R
+import com.example.reto.ui.theme.RetoTheme
+import kotlinx.coroutines.flow.combineTransform
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 @Composable
@@ -70,14 +79,13 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(10.dp, 50.dp)
             )
-            Image(
-                painter = regreso,
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .size(40.dp)
-                    .absolutePadding(0.dp, 20.dp, 0.dp, 0.dp)
-            )
+            IconButton(onClick = { /* Acción del menú */ }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBackIosNew,
+                    contentDescription = "Descripción del ícono",
+                    tint = Color.White
+                )
+            }
         }
         Text(
             text = from,
@@ -133,4 +141,17 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
         )
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingTextPreview() {
+    RetoTheme {
+        GreetingText(
+            message = "Olvidaste la contraseña?",
+            from = "Por favor escribe tu email para poder recibir un código de verificación.",
+            modifier = Modifier
+                .fillMaxSize()
+        )
+    }
 }
