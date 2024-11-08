@@ -108,9 +108,28 @@ data class Formulario_6(
     val placaGuaya: String,
     val anchoCamino: String,
     val fechaInstalacion: String,
+    val distanciaObjetivo: String,
     val alturaLente: String,
-    val chequeo: List<Int>,
+    val programada: Boolean,
+    val memoria: Boolean,
+    val pruebaDeGateo: Boolean,
+    val instalada: Boolean,
+    val letreroDeCamara: Boolean,
+    val prendida: Boolean,
     val observaciones: String
+)
+
+@Entity(
+    tableName = "formularios_5",
+    foreignKeys = [
+        ForeignKey(
+            entity = Formulario_base::class,
+            parentColumns = ["id"],
+            childColumns = ["formId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["formId"])]  // Esto ayuda a optimizar las búsquedas por la clave foránea
 )
 
 data class Formulario_5(
@@ -118,15 +137,30 @@ data class Formulario_5(
     val id: Int = 0,
     val formId: Int,
     val codigo: String,
-    val zona: String,
-    val nombreCamara: String,
-    val placaCamara: String,
-    val placaGuaya: String,
-    val anchoCamino: String,
-    val fechaInstalacion: String,
-    val alturaLente: String,
-    val chequeo: List<Int>,
+    val cuadrante: String,
+    val subcuadrante: String,
+    val habitoCrecimiento: String,
+    val nombreComunEspecie: String,
+    val nombreCientifico: String,
+    val Placa: String,
+    val Circunferencia: String,
+    val Distancia: String,
+    val estaturaBiomonitor: String,
+    val Altura: String,
     val observaciones: String
+)
+
+@Entity(
+    tableName = "formularios_4",
+    foreignKeys = [
+        ForeignKey(
+            entity = Formulario_base::class,
+            parentColumns = ["id"],
+            childColumns = ["formId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["formId"])]  // Esto ayuda a optimizar las búsquedas por la clave foránea
 )
 
 data class Formulario_4(
@@ -134,61 +168,65 @@ data class Formulario_4(
     val id: Int = 0,
     val formId: Int,
     val codigo: String,
-    val zona: String,
-    val nombreCamara: String,
-    val placaCamara: String,
-    val placaGuaya: String,
-    val anchoCamino: String,
-    val fechaInstalacion: String,
-    val alturaLente: String,
-    val chequeo: List<Int>,
+    val Seguimiento: String,
+    //val Seguimiento: Boolean,
+    val Cambio: String,
+    val Cobertura: String,
+    val tipoCultivo: String,
+    val Disturbio: String,
     val observaciones: String
+)
+
+//Tambien servira para el formulario 2
+@Entity(
+    tableName = "formularios_3",
+    foreignKeys = [
+        ForeignKey(
+            entity = Formulario_base::class,
+            parentColumns = ["id"],
+            childColumns = ["formId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["formId"])]  // Esto ayuda a optimizar las búsquedas por la clave foránea
 )
 
 data class Formulario_3(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val formId: Int,
-    val codigo: String,
     val zona: String,
-    val nombreCamara: String,
-    val placaCamara: String,
-    val placaGuaya: String,
-    val anchoCamino: String,
-    val fechaInstalacion: String,
-    val alturaLente: String,
-    val chequeo: List<Int>,
+    val tipoAnimal: String,
+    val nombreComun: String,
+    val nombreCientifico: String,
+    val numeroIndividuos: Int,
+    val TipoObservacion: String,
+    val AlturaObservacion: String,
     val observaciones: String
 )
 
-data class Formulario_2(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val formId: Int,
-    val codigo: String,
-    val zona: String,
-    val nombreCamara: String,
-    val placaCamara: String,
-    val placaGuaya: String,
-    val anchoCamino: String,
-    val fechaInstalacion: String,
-    val alturaLente: String,
-    val chequeo: List<Int>,
-    val observaciones: String
+@Entity(
+    tableName = "formularios_1",
+    foreignKeys = [
+        ForeignKey(
+            entity = Formulario_base::class,
+            parentColumns = ["id"],
+            childColumns = ["formId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["formId"])]  // Esto ayuda a optimizar las búsquedas por la clave foránea
 )
 
 data class Formulario_1(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val formId: Int,
-    val codigo: String,
-    val zona: String,
-    val nombreCamara: String,
-    val placaCamara: String,
-    val placaGuaya: String,
-    val anchoCamino: String,
-    val fechaInstalacion: String,
-    val alturaLente: String,
-    val chequeo: List<Int>,
+    val numeroTransecto: String,
+    val tipoAnimal: String,
+    val nombreComun: String,
+    val nombreCientifico: String,
+    val numeroIndividuos: Int,
+    val TipoObservacion: String,
     val observaciones: String
 )

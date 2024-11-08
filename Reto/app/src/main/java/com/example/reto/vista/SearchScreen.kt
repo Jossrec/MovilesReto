@@ -155,7 +155,7 @@ fun MyComponent(message: Formulario_base) {
 
 
                 Text(
-                    text = "Date: 07/10/2024 @ 16:37",
+                    text = message.fecha,
                     style = MaterialTheme.typography.bodySmall.copy(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)

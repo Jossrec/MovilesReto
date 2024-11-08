@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.reto.InventoryApplication
 import com.example.reto.vista.CreateAccountViewModel
-import com.example.reto.vista.Forms_7_2
+import com.example.reto.vista.Forms_6_2ViewModel
 import com.example.reto.vista.Forms_7_2ViewModel
 import com.example.reto.vista.Formulario_1ViewModel
 import com.example.reto.vista.SearchScreenViewModel
@@ -29,6 +29,9 @@ object AppViewModelProvider {
         }
         initializer {
             Formulario_1ViewModel(inventoryApplication().container.itemsRepository2)
+        }
+        initializer {
+            Forms_6_2ViewModel(inventoryApplication().container.itemsRepository4, inventoryApplication().container.itemsRepository2)
         }
 
     }

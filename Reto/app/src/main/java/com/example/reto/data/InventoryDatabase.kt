@@ -29,11 +29,18 @@ abstract class InventoryDatabase : RoomDatabase() {
     }
 }
 
-@Database(entities = [Formulario_base::class, Formulario_7::class], version = 2, exportSchema = false)
+@Database(entities = [Formulario_base::class, Formulario_7::class, Formulario_6::class,
+    Formulario_5::class, Formulario_4::class, Formulario_3::class, Formulario_1::class],
+    version = 2, exportSchema = false)
 abstract class InventoryDatabase2 : RoomDatabase() {
 
     abstract fun itemDaobase(): ItemDao2
     abstract fun itemDao7(): ItemDao3
+    abstract fun itemDao6(): ItemDao4
+    abstract fun itemDao5(): ItemDao5
+    abstract fun itemDao4(): ItemDao6
+    abstract fun itemDao32(): ItemDao7
+    abstract fun itemDao1(): ItemDao8
 
     companion object {
         @Volatile

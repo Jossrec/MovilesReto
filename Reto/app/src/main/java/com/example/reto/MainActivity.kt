@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.components.NavegacionInferior
+import com.example.reto.models.ItemsTabsMovimientos
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.vista.CreateAccountScreen
@@ -29,6 +30,8 @@ import com.example.reto.vista.NuevaContra
 import com.example.reto.vista.RegisterBody
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.Verificacion
+import com.example.reto.vista.movimientos.MovimientosTabs
+import com.example.reto.vista.movimientos.Todos
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +45,6 @@ class MainActivity : ComponentActivity() {
                     //CreateAccountScreen()
                     //Formulario1()
                     //Forms_7_2()
-                    //SearchScreen()
                     Forms_6_2()
                 }
             }

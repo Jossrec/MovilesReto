@@ -48,3 +48,43 @@ interface ItemsRepository3 {
     suspend fun deleteItem(item: Formulario_7)
     suspend fun updateItem(item: Formulario_7)
 }
+
+interface ItemsRepository4 {
+    fun getAllItemsStream(): Flow<List<Formulario_6>>
+    fun getItemStream(id: Int): Flow<Formulario_6?>
+    suspend fun insertItem(item: Formulario_6)
+    suspend fun deleteItem(item: Formulario_6)
+    suspend fun updateItem(item: Formulario_6)
+}
+
+interface ItemsRepository5 {
+    fun getAllItemsStream(): Flow<List<Formulario_5>>
+    fun getItemStream(id: Int): Flow<Formulario_5?>
+    suspend fun insertItem(item: Formulario_5)
+    suspend fun deleteItem(item: Formulario_5)
+    suspend fun updateItem(item: Formulario_5)
+}
+
+interface ItemsRepository6 {
+    fun getAllItemsStream(): Flow<List<Formulario_4>>
+    fun getItemStream(id: Int): Flow<Formulario_4?>
+    suspend fun insertItem(item: Formulario_4)
+    suspend fun deleteItem(item: Formulario_4)
+    suspend fun updateItem(item: Formulario_4)
+}
+
+interface ItemsRepository7 {
+    fun getAllItemsStream(): Flow<List<Formulario_3>>
+    fun getItemStream(id: Int): Flow<Formulario_3?>
+    suspend fun insertItem(item: Formulario_3)
+    suspend fun deleteItem(item: Formulario_3)
+    suspend fun updateItem(item: Formulario_3)
+}
+
+interface ItemsRepository8 {
+    fun getAllItemsStream(): Flow<List<Formulario_1>>
+    fun getItemStream(id: Int): Flow<Formulario_1?>
+    suspend fun insertItem(item: Formulario_1)
+    suspend fun deleteItem(item: Formulario_1)
+    suspend fun updateItem(item: Formulario_1)
+}
