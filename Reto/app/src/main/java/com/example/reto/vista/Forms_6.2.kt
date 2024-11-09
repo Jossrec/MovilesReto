@@ -67,11 +67,11 @@ import com.example.reto.ui.theme.RetoTheme
 import kotlinx.coroutines.launch
 
 
-data class Zona(val nombre: String, var seleccionado: Boolean = false)
+data class Zona2(val nombre: String, var seleccionado: Boolean = false)
 
 //Opcion unica de los circulos con su relleno
 @Composable
-private fun ZonaItem(zona: Zona, onSelected: Boolean, onClick: () -> Unit) {
+private fun ZonaItem(zona: Zona2, onSelected: Boolean, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,23 +96,23 @@ fun Forms_6_2(
     val valores = viewModel.itemUiState.itemDetails
     val Cambio = viewModel::updateUiState
 
-    var zonaSeleccionada by remember { mutableStateOf<Zona?>(null) }
+    var zonaSeleccionada by remember { mutableStateOf<Zona2?>(null) }
     val listaZonas = remember{
         mutableStateListOf(
-            Zona("Bosque"),
-            Zona("Arreglo Agroforestal"),
-            Zona("Cultivos Transitorios"),
-            Zona("Cultivos Permanentes")
+            Zona2("Bosque"),
+            Zona2("Arreglo Agroforestal"),
+            Zona2("Cultivos Transitorios"),
+            Zona2("Cultivos Permanentes")
         )
     }
     val listaChequeo = remember{
         mutableStateListOf(
-            Zona("Programada"),
-            Zona("Memoria"),
-            Zona("Prueba de gateo"),
-            Zona("Instalada"),
-            Zona("Letrero de cámara"),
-            Zona("Prendida")
+            Zona2("Programada"),
+            Zona2("Memoria"),
+            Zona2("Prueba de gateo"),
+            Zona2("Instalada"),
+            Zona2("Letrero de cámara"),
+            Zona2("Prendida")
         )
     }
     val listaDatos = remember{

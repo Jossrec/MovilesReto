@@ -31,7 +31,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.components.NavegacionInferior
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.reto.data.Item
 import com.example.reto.data.Formulario_base
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
@@ -65,7 +64,8 @@ import com.example.reto.vista.movimientos.MovimientosTabs
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    navController: NavController
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val searchUiState by viewModel.searchUiState.collectAsState()
@@ -94,9 +94,9 @@ fun SearchScreen(
         },
     ) { innerPadding ->
         // Aquí agregamos las tabs
-        Column(modifier = Modifier.padding(innerPadding)) {
-            MovimientosTabs() // Integra las tabs aquí
-        }
+//        Column(modifier = Modifier.padding(innerPadding)) {
+//            MovimientosTabs() // Integra las tabs aquí
+//        }
         MyMessages(messages = searchUiState.itemList, Modifier.padding(innerPadding))
     }
 }
@@ -181,22 +181,22 @@ fun MyImage() {
     )
 }
 
-@Composable
-fun MyTexts(message: Item) {
-    Column(modifier = Modifier.padding(start = 8.dp)) {
-        MyText(
-            message.nombre,
-            MaterialTheme.colorScheme.secondary,
-            MaterialTheme.typography.titleMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        MyText(
-            message.email,
-            MaterialTheme.colorScheme.onBackground,
-            MaterialTheme.typography.titleSmall
-        )
-    }
-}
+//@Composable
+//fun MyTexts(message: Item) {
+//    Column(modifier = Modifier.padding(start = 8.dp)) {
+//        MyText(
+//            message.nombre,
+//            MaterialTheme.colorScheme.secondary,
+//            MaterialTheme.typography.titleMedium
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//        MyText(
+//            message.email,
+//            MaterialTheme.colorScheme.onBackground,
+//            MaterialTheme.typography.titleSmall
+//        )
+//    }
+//}
 
 @Composable
 fun MyText(text: String, color: Color, style: TextStyle) {

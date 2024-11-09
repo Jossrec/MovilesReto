@@ -1,6 +1,5 @@
 package com.example.reto.vista
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 
@@ -48,7 +47,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -62,7 +60,6 @@ import com.example.reto.ui.theme.GreenAwaqOscuro
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-import com.example.reto.R
 import com.example.reto.components.Boton
 import com.example.reto.components.HeaderBar
 import com.example.reto.ui.theme.AppViewModelProvider
@@ -127,7 +124,7 @@ fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHost
 
 @Composable
 fun Content(
-    modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit
+    modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
     viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     //Room
@@ -296,12 +293,12 @@ fun Content(
                 "Cámaras Trampa" to NavScreen.Formulario62.name,
                 "Variables Climáticas" to NavScreen.Formulario72.name
             )
-            tiposRegistro.forEach { (texto, ruta, tipo) ->
+            tiposRegistro.forEach { (texto, ruta) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
-                        selected = tipoRegistro == ruta == tipo,
+                        selected = tipoRegistro == ruta,
                         onClick = { onTipoRegistroChange(ruta)
-                        Cambio(valores.copy( Tipo_Registro = tipoRegistro))
+                        Cambio(valores.copy( Tipo_Registro = texto))
                         } // Solo actualiza el estado
                     )
                     Text(text = texto)

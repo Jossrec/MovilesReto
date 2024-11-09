@@ -3,7 +3,6 @@ package com.example.reto.vista
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.reto.data.Formulario_base
-import com.example.reto.data.Item
 import com.example.reto.data.ItemsRepository
 import com.example.reto.data.ItemsRepository2
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 /**
  * ViewModel to retrieve all items in the Room database.
  */
-class SearchScreenViewModel(itemsRepository: ItemsRepository2) : ViewModel() {
+class SearchScreenViewModel(itemsRepository: ItemsRepository) : ViewModel() {
 
     /**
      * Holds home ui state. The list of items are retrieved from [ItemsRepository] and mapped to

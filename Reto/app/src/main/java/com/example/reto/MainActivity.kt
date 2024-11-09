@@ -1,5 +1,6 @@
 package com.example.reto
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,14 +21,12 @@ import com.example.reto.components.NavegacionInferior
 import com.example.reto.models.ItemsTabsMovimientos
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
-import com.example.reto.vista.CreateAccountScreen
 import com.example.reto.vista.Forms_6_2
 import com.example.reto.vista.Forms_7_2
 import com.example.reto.vista.Formulario1
 import com.example.reto.vista.ItemDetails
 import com.example.reto.vista.ItemUiState
 import com.example.reto.vista.NuevaContra
-import com.example.reto.vista.RegisterBody
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.Verificacion
 import com.example.reto.vista.movimientos.MovimientosTabs
@@ -52,6 +51,7 @@ class MainActivity : ComponentActivity() {
 
     }
 }
+
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -73,5 +73,4 @@ fun MainScreen() {
 @Composable
 fun PreviewComponent(){
     MainScreen()
-
 }

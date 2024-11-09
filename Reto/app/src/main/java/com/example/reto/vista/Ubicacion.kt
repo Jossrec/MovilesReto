@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.CameraPosition
 
 import androidx.compose.foundation.layout.*
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import com.google.android.gms.maps.GoogleMap
 
 
 @Composable

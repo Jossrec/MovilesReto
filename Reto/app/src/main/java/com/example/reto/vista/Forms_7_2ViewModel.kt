@@ -5,15 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.reto.data.Formulario_7
-import com.example.reto.data.Item
 import com.example.reto.data.ItemsRepository
 import com.example.reto.data.ItemsRepository2
 import com.example.reto.data.ItemsRepository3
+import com.example.reto.data.ItemsRepository7
 
 /**
  * ViewModel to validate and insert items in the Room database.
  */
-class Forms_7_2ViewModel(private val itemsRepository: ItemsRepository3, private val itemsRepositorybase: ItemsRepository2) : ViewModel() {
+class Forms_7_2ViewModel(private val itemsRepository: ItemsRepository7, private val itemsRepositorybase: ItemsRepository) : ViewModel() {
 
     /**
      * Holds current item ui state

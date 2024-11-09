@@ -18,20 +18,20 @@ import com.example.reto.vista.SearchScreenViewModel
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         // Initializer for ItemEntryViewModel
+//        initializer {
+//            CreateAccountViewModel(inventoryApplication().container.itemsRepository)
+//        }
         initializer {
-            CreateAccountViewModel(inventoryApplication().container.itemsRepository)
+            SearchScreenViewModel(inventoryApplication().container.itemsRepository)
         }
         initializer {
-            SearchScreenViewModel(inventoryApplication().container.itemsRepository2)
+            Forms_7_2ViewModel(inventoryApplication().container.itemsRepository7, inventoryApplication().container.itemsRepository)
         }
         initializer {
-            Forms_7_2ViewModel(inventoryApplication().container.itemsRepository3, inventoryApplication().container.itemsRepository2)
+            Formulario_1ViewModel(inventoryApplication().container.itemsRepository)
         }
         initializer {
-            Formulario_1ViewModel(inventoryApplication().container.itemsRepository2)
-        }
-        initializer {
-            Forms_6_2ViewModel(inventoryApplication().container.itemsRepository4, inventoryApplication().container.itemsRepository2)
+            Forms_6_2ViewModel(inventoryApplication().container.itemsRepository6, inventoryApplication().container.itemsRepository)
         }
 
     }

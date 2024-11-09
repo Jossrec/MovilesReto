@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.reto.data.Formulario_7
 import com.example.reto.data.Formulario_base
-import com.example.reto.data.Item
 import com.example.reto.data.ItemsRepository
 import com.example.reto.data.ItemsRepository2
 import com.example.reto.data.ItemsRepository3
@@ -14,7 +13,7 @@ import com.example.reto.data.ItemsRepository3
 /**
  * ViewModel to validate and insert items in the Room database.
  */
-class Formulario_1ViewModel(private val itemsRepository: ItemsRepository2) : ViewModel() {
+class Formulario_1ViewModel(private val itemsRepository: ItemsRepository) : ViewModel() {
 
     /**
      * Holds current item ui state
