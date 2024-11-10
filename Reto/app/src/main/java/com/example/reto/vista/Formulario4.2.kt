@@ -64,11 +64,15 @@ fun FormScreen42(
 
     var observations by remember { mutableStateOf("") }
     var selectedOption by remember{ mutableStateOf(value = "Si") }
+    Cambio(valores.copy(Seguimiento = selectedOption))
     var selectedCambio by remember{ mutableStateOf(value = "Si") }
+    Cambio(valores.copy(Cambio = selectedCambio))
     var selectedCobertura by remember { mutableStateOf(value = "BD") }
+    Cambio(valores.copy(Cobertura = selectedCobertura))
     var codigo by remember { mutableStateOf(value = "" ) }
     var cropType by remember { mutableStateOf(value = "") }
     var selectedDisturbance by remember { mutableStateOf(value = "Inundación") }
+    Cambio(valores.copy(Disturbio = selectedDisturbance))
     val option = listOf("Si", "No")
     val cobertura = listOf("BD", "RA", "RB", "PA", "PL", "CP", "CT", "VH", "TD", "IF")
     val disturbance = listOf("Inundación", "Quema", "Tala", "Erosión", "Mineria", "Carretera", "Más plantas acuáticas", "Otro")

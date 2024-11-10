@@ -50,9 +50,13 @@ fun FormScreen3(
     var scientificName by remember { mutableStateOf("") }
     var numberOfIndividuals by remember { mutableStateOf("") }
     var selectedAnimal by remember { mutableStateOf("Insecto") }
+    Cambio(valores.copy(tipoAnimal = selectedAnimal))
     var selectedObservationType by remember { mutableStateOf("La Vió") }
+    Cambio(valores.copy(TipoObservacion = selectedObservationType))
     var selectedZone by remember { mutableStateOf("Bosque") }
+    Cambio(valores.copy(zona = selectedZone))
     var selectedAltitude by remember { mutableStateOf("Baja <1mt") }
+    Cambio(valores.copy(AlturaObservacion = selectedAltitude))
     var observations by remember { mutableStateOf("") }
     val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
