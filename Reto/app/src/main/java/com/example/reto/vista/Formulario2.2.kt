@@ -24,17 +24,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun FormScreen2(navController : NavController) {
+fun FormScreen2(
+    navController : NavController,
+    viewModel: Formulario_2_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    //Room
+    val coroutineScope = rememberCoroutineScope()
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
+
     var transectNumber by remember { mutableStateOf("") }
     var commonName by remember { mutableStateOf("") }
     var scientificName by remember { mutableStateOf("") }
@@ -48,6 +59,7 @@ fun FormScreen2(navController : NavController) {
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
     val zones = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
     val altitudes = listOf("Baja <1mt", "Media 1-3mt", "Alta >3mt")
+
     // Scroll state para la pantalla
     val scrollState = rememberScrollState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -98,7 +110,9 @@ fun FormScreen2(navController : NavController) {
                     ) {
                         RadioButton(
                             selected = selectedZone == zone,
-                            onClick = { selectedZone = zone }
+                            onClick = { selectedZone = zone
+                                Cambio(valores.copy(zona = selectedZone))
+                            }
                         )
                         Text(zone)
                     }
@@ -126,7 +140,9 @@ fun FormScreen2(navController : NavController) {
                                     color = Color.Gray,
                                     shape = MaterialTheme.shapes.medium
                                 )
-                                .clickable { selectedAnimal = animal } // Cambiar la selección al hacer clic
+                                .clickable { selectedAnimal = animal
+                                    Cambio(valores.copy(tipoAnimal = selectedAnimal))
+                                } // Cambiar la selección al hacer clic
                                 .padding(8.dp) // Espacio dentro de la caja
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -164,7 +180,9 @@ fun FormScreen2(navController : NavController) {
                                     color = Color.Gray,
                                     shape = MaterialTheme.shapes.medium
                                 )
-                                .clickable { selectedAnimal = animal } // Cambiar la selección al hacer clic
+                                .clickable { selectedAnimal = animal
+                                    Cambio(valores.copy(tipoAnimal = selectedAnimal))
+                                } // Cambiar la selección al hacer clic
                                 .padding(8.dp) // Espacio dentro de la caja
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -193,8 +211,8 @@ fun FormScreen2(navController : NavController) {
 
             // Nombre Común
             OutlinedTextField(
-                value = commonName,
-                onValueChange = { commonName = it },
+                value = valores.nombreComun,
+                onValueChange = { Cambio(valores.copy(nombreComun = it)) },
                 label = { Text("Nombre Común") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -203,8 +221,8 @@ fun FormScreen2(navController : NavController) {
 
             // Nombre Científico
             OutlinedTextField(
-                value = scientificName,
-                onValueChange = { scientificName = it },
+                value = valores.nombreCientifico,
+                onValueChange = { Cambio(valores.copy(nombreCientifico = it)) },
                 label = { Text("Nombre Científico (Opcional)") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -213,8 +231,8 @@ fun FormScreen2(navController : NavController) {
 
             // Número de Individuos
             OutlinedTextField(
-                value = numberOfIndividuals,
-                onValueChange = { numberOfIndividuals = it },
+                value = valores.numeroIndividuos,
+                onValueChange = { Cambio(valores.copy(numeroIndividuos = it)) },
                 label = { Text("Número de Individuos") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -238,7 +256,9 @@ fun FormScreen2(navController : NavController) {
                     ) {
                         RadioButton(
                             selected = selectedObservationType == observation,
-                            onClick = { selectedObservationType = observation }
+                            onClick = { selectedObservationType = observation
+                                Cambio(valores.copy(TipoObservacion = selectedObservationType))
+                            }
                         )
                         Text(observation)
                     }
@@ -261,7 +281,9 @@ fun FormScreen2(navController : NavController) {
                     ) {
                         RadioButton(
                             selected = selectedAltitude == altitude,
-                            onClick = { selectedAltitude = altitude }
+                            onClick = { selectedAltitude = altitude
+                                Cambio(valores.copy(AlturaObservacion = selectedAltitude))
+                            }
                         )
                         Text(altitude)
                     }
@@ -286,8 +308,8 @@ fun FormScreen2(navController : NavController) {
 
             // Observaciones
             OutlinedTextField(
-                value = observations,
-                onValueChange = { observations = it },
+                value = valores.observaciones,
+                onValueChange = { Cambio(valores.copy(observaciones = it)) },
                 label = { Text("Observaciones") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -318,7 +340,13 @@ fun FormScreen2(navController : NavController) {
                     )
                 }
                 Button(
-                    onClick = { navController.navigate(route = "SearchScreen") },
+                    onClick = {
+                        navController.navigate(route = "SearchScreen")
+                        coroutineScope.launch {
+                            Cambio(valores.copy(formId = viewModel.getfromID()))
+                            viewModel.saveItem()
+                        }
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),

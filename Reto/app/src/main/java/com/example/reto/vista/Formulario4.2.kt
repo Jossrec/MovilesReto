@@ -31,6 +31,7 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,18 +42,29 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun FormScreen42(navController: NavController) {
+fun FormScreen42(
+    navController: NavController,
+    viewModel: Formulario_4_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    //Room
+    val coroutineScope = rememberCoroutineScope()
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
 
     var observations by remember { mutableStateOf("") }
     var selectedOption by remember{ mutableStateOf(value = "Si") }
+    var selectedCambio by remember{ mutableStateOf(value = "Si") }
     var selectedCobertura by remember { mutableStateOf(value = "BD") }
     var codigo by remember { mutableStateOf(value = "" ) }
     var cropType by remember { mutableStateOf(value = "") }
@@ -95,8 +107,8 @@ fun FormScreen42(navController: NavController) {
                 .verticalScroll(scrollState)
         ) {
             OutlinedTextField(
-                value = codigo,
-                onValueChange = { codigo = it },
+                value = valores.codigo,
+                onValueChange = { Cambio(valores.copy(codigo = it)) },
                 label = { Text("Código") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -119,7 +131,10 @@ fun FormScreen42(navController: NavController) {
                     ) {
                         RadioButton(
                             selected = selectedOption == option,
-                            onClick = { selectedOption = option }
+                            onClick = {
+                                selectedOption = option
+                                Cambio(valores.copy(Seguimiento = selectedOption))
+                            }
                         )
                         Text(option)
                     }
@@ -136,15 +151,18 @@ fun FormScreen42(navController: NavController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .selectable(
-                                selected = selectedOption == option,
-                                onClick = { selectedOption = option }
+                                selected = selectedCambio == option,
+                                onClick = { selectedCambio = option }
                             )
                             .height(30.dp),
                         verticalAlignment = Alignment.CenterVertically // Alineación vertical
                     ) {
                         RadioButton(
-                            selected = selectedOption == option,
-                            onClick = { selectedOption = option }
+                            selected = selectedCambio == option,
+                            onClick = {
+                                selectedCambio = option
+                                Cambio(valores.copy(Cambio = selectedCambio))
+                            }
                         )
                         Text(option)
                     }
@@ -169,7 +187,10 @@ fun FormScreen42(navController: NavController) {
                     ) {
                         RadioButton(
                             selected = selectedCobertura == cobertura,
-                            onClick = { selectedCobertura = cobertura }
+                            onClick = {
+                                selectedCobertura = cobertura
+                                Cambio(valores.copy(Cobertura = selectedCobertura))
+                            }
                         )
                         Text(cobertura)
                     }
@@ -180,8 +201,8 @@ fun FormScreen42(navController: NavController) {
 
             // Número de Individuos
             OutlinedTextField(
-                value = cropType,
-                onValueChange = { cropType = it },
+                value = valores.tipoCultivo,
+                onValueChange = { Cambio(valores.copy(tipoCultivo = it)) },
                 label = { Text("Tipos de cultivos") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -205,7 +226,10 @@ fun FormScreen42(navController: NavController) {
                     ) {
                         RadioButton(
                             selected = selectedDisturbance == disturbance,
-                            onClick = { selectedDisturbance = disturbance }
+                            onClick = {
+                                selectedDisturbance = disturbance
+                                Cambio(valores.copy(Disturbio = selectedDisturbance))
+                            }
                         )
                         Text(disturbance)
                     }
@@ -230,8 +254,8 @@ fun FormScreen42(navController: NavController) {
 
             // Observaciones
             OutlinedTextField(
-                value = observations,
-                onValueChange = { observations = it },
+                value = valores.observaciones,
+                onValueChange = { Cambio(valores.copy(observaciones = it)) },
                 label = { Text("Observaciones") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -262,7 +286,12 @@ fun FormScreen42(navController: NavController) {
                     )
                 }
                 Button(
-                    onClick = { navController.navigate(route = "HomeScreen") },
+                    onClick = { navController.navigate(route = "SearchScreen")
+                        coroutineScope.launch {
+                            Cambio(valores.copy(formId = viewModel.getfromID()))
+                            viewModel.saveItem()
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),

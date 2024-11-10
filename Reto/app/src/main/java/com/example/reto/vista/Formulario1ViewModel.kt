@@ -4,11 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.reto.data.Formulario_7
 import com.example.reto.data.Formulario_base
 import com.example.reto.data.ItemsRepository
-import com.example.reto.data.ItemsRepository2
-import com.example.reto.data.ItemsRepository3
 
 /**
  * ViewModel to validate and insert items in the Room database.

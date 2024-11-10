@@ -6,8 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.reto.data.Formulario_7
 import com.example.reto.data.ItemsRepository
-import com.example.reto.data.ItemsRepository2
-import com.example.reto.data.ItemsRepository3
 import com.example.reto.data.ItemsRepository7
 
 /**

@@ -66,11 +66,16 @@ import com.example.reto.ui.theme.AppViewModelProvider
 
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import kotlinx.coroutines.launch
 
 @Composable
-fun Formulario1(navController: NavHostController) {
+fun Formulario1(
+    navController: NavHostController,
+    viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val scrollState = rememberScrollState()
     var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") } // Inicializa con uno por defecto
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = { HeaderBar(navController) }
@@ -99,6 +104,9 @@ fun Formulario1(navController: NavHostController) {
                 onNextClicked = {
                     // Navega a la pantalla correspondiente según el tipo de registro seleccionado
                     navController.navigate(tipoRegistro)
+                    coroutineScope.launch {
+                        viewModel.saveItem()
+                    }
                 }
             )
         }

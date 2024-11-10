@@ -77,10 +77,10 @@ interface ItemDao2 {
     @Delete
     suspend fun delete(item: Formulario_2)
 
-    @Query("SELECT * from formularios_3 WHERE id = :id")
+    @Query("SELECT * from formularios_2 WHERE id = :id")
     fun getItem(id: Int): Flow<Formulario_2>
 
-    @Query("SELECT * from formularios_3 ORDER BY zona ASC")
+    @Query("SELECT * from formularios_2 ORDER BY zona ASC")
     fun getAllItems(): Flow<List<Formulario_2>>
 }
 

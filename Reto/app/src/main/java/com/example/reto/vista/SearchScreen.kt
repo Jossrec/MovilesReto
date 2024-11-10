@@ -64,8 +64,8 @@ import com.example.reto.vista.movimientos.MovimientosTabs
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    navController: NavController
+    navController: NavController,
+    viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val searchUiState by viewModel.searchUiState.collectAsState()

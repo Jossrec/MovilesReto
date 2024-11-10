@@ -19,16 +19,28 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import kotlinx.coroutines.launch
+
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun FormScreen5(navController: NavController) {
+fun FormScreen5(
+    navController: NavController,
+    viewModel: Formulario_5_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    //Room
+    val coroutineScope = rememberCoroutineScope()
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
+
     var codigo by remember { mutableStateOf("") }
     var nombreComunEspecie by remember { mutableStateOf("") }
     var nombreCientifico by remember { mutableStateOf("") }
@@ -80,8 +92,8 @@ fun FormScreen5(navController: NavController) {
         ) {
             // Código
             OutlinedTextField(
-                value = codigo,
-                onValueChange = { codigo = it },
+                value = valores.codigo,
+                onValueChange = { Cambio(valores.copy(codigo = it)) },
                 label = { Text("Código") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -110,7 +122,9 @@ fun FormScreen5(navController: NavController) {
                                     color = Color.Gray,
                                     shape = MaterialTheme.shapes.medium
                                 )
-                                .clickable { selectedCuadrante = cuadrante }
+                                .clickable { selectedCuadrante = cuadrante
+                                    Cambio(valores.copy(cuadrante = selectedCuadrante))
+                                }
                                 .padding(8.dp)
                         ) {
                             Text(
@@ -144,7 +158,9 @@ fun FormScreen5(navController: NavController) {
                                     color = Color.Gray,
                                     shape = MaterialTheme.shapes.medium
                                 )
-                                .clickable { selectedCuadrante = letra }
+                                .clickable { selectedCuadrante = letra
+                                    Cambio(valores.copy(cuadrante = selectedCuadrante))
+                                }
                                 .padding(4.dp)
                         ) {
                             Text(
@@ -179,7 +195,9 @@ fun FormScreen5(navController: NavController) {
                                 color = Color.Gray,
                                 shape = MaterialTheme.shapes.medium
                             )
-                            .clickable { selectedSubCuadrante = numero }
+                            .clickable { selectedSubCuadrante = numero
+                                Cambio(valores.copy(subcuadrante = selectedSubCuadrante.toString()))
+                            }
                             .padding(4.dp)
                     ) {
                         Text(
@@ -217,7 +235,9 @@ fun FormScreen5(navController: NavController) {
                                 color = Color.Gray,
                                 shape = MaterialTheme.shapes.medium
                             )
-                            .clickable { selectedHabito = tipo }
+                            .clickable { selectedHabito = tipo
+                                Cambio(valores.copy(habitoCrecimiento = selectedHabito))
+                            }
                             .padding(8.dp)
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -238,8 +258,8 @@ fun FormScreen5(navController: NavController) {
 
             // Nombre Común Especie
             OutlinedTextField(
-                value = nombreComunEspecie,
-                onValueChange = { nombreComunEspecie = it },
+                value = valores.nombreComunEspecie,
+                onValueChange = { Cambio(valores.copy(nombreComunEspecie = it)) },
                 label = { Text("Nombre Común Especie") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -248,8 +268,8 @@ fun FormScreen5(navController: NavController) {
 
             // Nombre Científico
             OutlinedTextField(
-                value = nombreCientifico,
-                onValueChange = { nombreCientifico = it },
+                value = valores.nombreCientifico,
+                onValueChange = { Cambio(valores.copy(nombreCientifico = it)) },
                 label = { Text("Nombre Científico") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -258,8 +278,8 @@ fun FormScreen5(navController: NavController) {
 
             // Placa
             OutlinedTextField(
-                value = placa,
-                onValueChange = { placa = it },
+                value = valores.Placa,
+                onValueChange = { Cambio(valores.copy(Placa = it)) },
                 label = { Text("Placa") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -268,8 +288,8 @@ fun FormScreen5(navController: NavController) {
 
             // Circunferencia en cm (CL)
             OutlinedTextField(
-                value = circunferencia,
-                onValueChange = { circunferencia = it },
+                value = valores.Circunferencia,
+                onValueChange = { Cambio(valores.copy(Circunferencia = it)) },
                 label = { Text("Circunferencia en cm (CL)") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -278,8 +298,8 @@ fun FormScreen5(navController: NavController) {
 
             // Distancia en mt
             OutlinedTextField(
-                value = distancia,
-                onValueChange = { distancia = it },
+                value = valores.Distancia,
+                onValueChange = { Cambio(valores.copy(Distancia = it)) },
                 label = { Text("Distancia en mt") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -288,8 +308,8 @@ fun FormScreen5(navController: NavController) {
 
             // Estatura Biomonitor en mt
             OutlinedTextField(
-                value = estaturaBiomonitor,
-                onValueChange = { estaturaBiomonitor = it },
+                value = valores.estaturaBiomonitor,
+                onValueChange = { Cambio(valores.copy(estaturaBiomonitor = it)) },
                 label = { Text("Estatura Biomonitor en mt") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -298,8 +318,8 @@ fun FormScreen5(navController: NavController) {
 
             // Altura en mt
             OutlinedTextField(
-                value = altura,
-                onValueChange = { altura = it },
+                value = valores.Altura,
+                onValueChange = { Cambio(valores.copy(Altura = it)) },
                 label = { Text("Altura en mt") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -323,8 +343,8 @@ fun FormScreen5(navController: NavController) {
 
             // Observaciones
             OutlinedTextField(
-                value = observations,
-                onValueChange = { observations = it },
+                value = valores.observaciones,
+                onValueChange = { Cambio(valores.copy(observaciones = it)) },
                 label = { Text("Observaciones") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -358,7 +378,13 @@ fun FormScreen5(navController: NavController) {
                     )
                 }
                 Button(
-                    onClick = { navController.navigate(route = "HomeScreen") },
+                    onClick = {
+                        navController.navigate(route = "SearchScreen")
+                        coroutineScope.launch{
+                            Cambio(valores.copy(formId = viewModel.getfromID()))
+                            viewModel.saveItem()
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),

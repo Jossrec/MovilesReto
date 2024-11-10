@@ -59,6 +59,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.data.ItemDao2
 import com.example.reto.ui.theme.AppViewModelProvider
@@ -90,8 +92,8 @@ private fun ZonaItem(zona: Zona, onSelected: Boolean, onClick: () -> Unit) {
 @Composable
 fun Forms_7_2(
     modifier: Modifier = Modifier,
-    viewModel: Forms_7_2ViewModel = viewModel(factory = AppViewModelProvider.Factory),
-
+    navController: NavController,
+    viewModel: Forms_7_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     //Room
     val coroutineScope = rememberCoroutineScope()
@@ -132,7 +134,7 @@ fun Forms_7_2(
                     scrolledContainerColor = GreenAwaq
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción de navegación */ }) {
+                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Descripción del ícono"
@@ -244,7 +246,9 @@ fun Forms_7_2(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = {
+                            navController.navigate(route = "Formulario1")
+                        },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = colorResource(id = R.color.green_black)
                         ),
@@ -258,6 +262,7 @@ fun Forms_7_2(
                     }
                     Button(
                         onClick = {
+                            navController.navigate(route = "SearchScreen")
                             coroutineScope.launch {
                                 Cambio(valores.copy(formId = viewModel.getfromID()))
                                 viewModel.saveItem()
@@ -284,7 +289,9 @@ fun Forms_7_2(
 @Composable
 fun Forms_7_2Preview() {
     RetoTheme {
+        val navController = rememberNavController()
         Forms_7_2(
+            navController = navController,
             modifier = Modifier
                 .fillMaxSize()
         )

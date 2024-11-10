@@ -6,10 +6,14 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.reto.InventoryApplication
-import com.example.reto.vista.CreateAccountViewModel
 import com.example.reto.vista.Forms_6_2ViewModel
 import com.example.reto.vista.Forms_7_2ViewModel
 import com.example.reto.vista.Formulario_1ViewModel
+import com.example.reto.vista.Formulario_1_2ViewModel
+import com.example.reto.vista.Formulario_2_2ViewModel
+import com.example.reto.vista.Formulario_3_2ViewModel
+import com.example.reto.vista.Formulario_4_2ViewModel
+import com.example.reto.vista.Formulario_5_2ViewModel
 import com.example.reto.vista.SearchScreenViewModel
 
 /**
@@ -33,7 +37,21 @@ object AppViewModelProvider {
         initializer {
             Forms_6_2ViewModel(inventoryApplication().container.itemsRepository6, inventoryApplication().container.itemsRepository)
         }
-
+        initializer {
+            Formulario_5_2ViewModel(inventoryApplication().container.itemsRepository5, inventoryApplication().container.itemsRepository)
+        }
+        initializer {
+            Formulario_4_2ViewModel(inventoryApplication().container.itemsRepository4, inventoryApplication().container.itemsRepository)
+        }
+        initializer {
+            Formulario_3_2ViewModel(inventoryApplication().container.itemsRepository3, inventoryApplication().container.itemsRepository)
+        }
+        initializer {
+            Formulario_2_2ViewModel(inventoryApplication().container.itemsRepository2, inventoryApplication().container.itemsRepository)
+        }
+        initializer {
+            Formulario_1_2ViewModel(inventoryApplication().container.itemsRepository1, inventoryApplication().container.itemsRepository)
+        }
     }
 }
 

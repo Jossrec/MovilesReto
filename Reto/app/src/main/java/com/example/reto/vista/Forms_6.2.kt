@@ -59,6 +59,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
@@ -90,8 +92,9 @@ private fun ZonaItem(zona: Zona2, onSelected: Boolean, onClick: () -> Unit) {
 @Composable
 fun Forms_6_2(
     modifier: Modifier = Modifier,
-    viewModel: Forms_6_2ViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    ) {
+    navController: NavController,
+    viewModel: Forms_6_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val coroutineScope = rememberCoroutineScope()
     val valores = viewModel.itemUiState.itemDetails
     val Cambio = viewModel::updateUiState
@@ -115,16 +118,6 @@ fun Forms_6_2(
             Zona2("Prendida")
         )
     }
-    val listaDatos = remember{
-        mutableStateListOf(
-            valores.programada,
-            valores.memoria,
-            valores.pruebaDeGateo,
-            valores.instalada,
-            valores.letreroDeCamara,
-            valores.prendida
-        )
-    }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -143,7 +136,7 @@ fun Forms_6_2(
                     scrolledContainerColor = GreenAwaq
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción de navegación */ }) {
+                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Descripción del ícono"
@@ -342,7 +335,7 @@ fun Forms_6_2(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = { navController.navigate(route = "Formulario1") },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = colorResource(id = R.color.green_black)
                         ),
@@ -356,6 +349,7 @@ fun Forms_6_2(
                     }
                     Button(
                         onClick = {
+                            navController.navigate(route = "SearchScreen")
                             coroutineScope.launch {
                                 Cambio(valores.copy(formId = viewModel.getfromID()))
                                 viewModel.saveItem()
@@ -382,7 +376,9 @@ fun Forms_6_2(
 @Composable
 fun Forms_6_2Preview() {
     RetoTheme {
+        val navController = rememberNavController()
         Forms_6_2(
+            navController = navController,
             modifier = Modifier
                 .fillMaxSize()
         )

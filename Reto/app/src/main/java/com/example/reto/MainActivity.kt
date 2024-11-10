@@ -24,8 +24,6 @@ import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.vista.Forms_6_2
 import com.example.reto.vista.Forms_7_2
 import com.example.reto.vista.Formulario1
-import com.example.reto.vista.ItemDetails
-import com.example.reto.vista.ItemUiState
 import com.example.reto.vista.NuevaContra
 import com.example.reto.vista.SearchScreen
 import com.example.reto.vista.Verificacion
@@ -44,7 +42,8 @@ class MainActivity : ComponentActivity() {
                     //CreateAccountScreen()
                     //Formulario1()
                     //Forms_7_2()
-                    Forms_6_2()
+                    //Forms_6_2()
+                    MainScreen()
                 }
             }
         }
@@ -52,6 +51,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -65,7 +65,6 @@ fun MainScreen() {
                 AppNavigation(navController = navController)
             }
         }
-
 }
 
 

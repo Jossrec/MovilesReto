@@ -18,9 +18,7 @@ import com.example.reto.vista.EditPasswordScreen
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MapScreen
-import com.example.reto.vista.MyMessage
 import com.example.reto.vista.Profile
-import com.example.reto.vista.SettingsScreen
 import com.example.reto.vista.SearchScreen
 
 

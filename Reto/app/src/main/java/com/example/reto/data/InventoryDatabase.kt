@@ -30,7 +30,7 @@ import androidx.room.RoomDatabase
 //}
 
 @Database(entities = [Formulario_base::class, Formulario_7::class, Formulario_6::class,
-    Formulario_5::class, Formulario_4::class, Formulario_3::class, Formulario_1::class],
+    Formulario_5::class, Formulario_4::class, Formulario_3::class, Formulario_2::class, Formulario_1::class],
     version = 1, exportSchema = false)
 abstract class InventoryDatabase : RoomDatabase() {
 
