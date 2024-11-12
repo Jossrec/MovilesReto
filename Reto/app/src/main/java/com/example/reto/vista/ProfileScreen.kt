@@ -87,7 +87,7 @@ fun Profile(navController: NavController) {
                     Text(
                         text = stringResource(R.string.profilename),
                         fontWeight = FontWeight.W500,
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Black,
                         modifier = Modifier.padding(start = 20.dp)
                     )

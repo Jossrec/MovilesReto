@@ -60,7 +60,7 @@ fun HomeScreen(navController: NavHostController) {
                             overflow = TextOverflow.Ellipsis,
                             color = Color.Black,
 
-                            modifier = Modifier.padding(top = 48.dp) // Añadimos el padding superior solo al texto
+                            //modifier = Modifier.padding(top = 48.dp) // Añadimos el padding superior solo al texto
                         )
                     },
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
