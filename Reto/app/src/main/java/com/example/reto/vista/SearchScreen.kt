@@ -94,10 +94,10 @@ fun SearchScreen(
         },
     ) { innerPadding ->
         // Aquí agregamos las tabs
-//        Column(modifier = Modifier.padding(innerPadding)) {
-//            MovimientosTabs() // Integra las tabs aquí
-//        }
-        MyMessages(messages = searchUiState.itemList, Modifier.padding(innerPadding))
+        Column(modifier = Modifier.padding(innerPadding)) {
+            MovimientosTabs() // Integra las tabs aquí
+        }
+        //MyMessages(messages = searchUiState.itemList, Modifier.padding(innerPadding))
     }
 }
 
