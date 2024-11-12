@@ -1,4 +1,10 @@
 package com.example.reto.vista
+import android.content.Context
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,19 +22,26 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 
@@ -47,19 +60,49 @@ fun FormScreen3(navController: NavController) {
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
     val zones = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
     val altitudes = listOf("Baja <1mt", "Media 1-3mt", "Alta >3mt")
-    // Scroll state para la pantalla
-    val scrollState = rememberScrollState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+
+    // Estado para URI de imagen capturada o seleccionada
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val file = context.createImageFile()
+    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+
+    // Lanzador para la cámara
+    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) capturedImageUri = uri
+    }
+
+    // Lanzador para la galería
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { selectedUri ->
+        capturedImageUri = selectedUri
+    }
+
+    // Lanzador para permisos de cámara
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            cameraLauncher.launch(uri)
+        } else {
+            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Función para seleccionar imagen (cámara o galería)
+    fun selectImageOption() {
+        val permissionCheckResult = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+            cameraLauncher.launch(uri) // Lanzar la cámara si el permiso está concedido
+        } else {
+            permissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
+    }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Formulario", maxLines = 1) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,
-                    titleContentColor = Black,
-                    scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
+                    titleContentColor = Black
                 ),
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
@@ -69,8 +112,6 @@ fun FormScreen3(navController: NavController) {
                         )
                     }
                 },
-
-                scrollBehavior = scrollBehavior
             )
         }
     ) { innerPadding ->
@@ -79,7 +120,7 @@ fun FormScreen3(navController: NavController) {
                 .padding(innerPadding)
                 .padding(16.dp)
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(rememberScrollState())
         ) {
             // Selección de Zona
             Text("Zona", fontSize = 18.sp)
@@ -269,15 +310,25 @@ fun FormScreen3(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Evidencias (botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
             Button(
-                onClick = { /* Acción para elegir archivo */ },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = GreenAwaqOscuro
-                )
+                onClick = { selectImageOption() },
+                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Elige archivo")
+            }
+
+            // Vista previa de la imagen seleccionada
+            capturedImageUri?.let { uri ->
+                Image(
+                    painter = rememberImagePainter(uri),
+                    contentDescription = "Imagen seleccionada",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .height(200.dp)
+                )
             }
 
 
@@ -334,6 +385,14 @@ fun FormScreen3(navController: NavController) {
 
         }
     }
+}
+
+
+// Función para crear un archivo temporal de imagen
+fun Context.createImageFile(): File {
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+    val imageFileName = "JPEG_${timeStamp}_"
+    return File.createTempFile(imageFileName, ".jpg", externalCacheDir)
 }
 
 @Preview(showSystemUi = true)
