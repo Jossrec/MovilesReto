@@ -25,15 +25,49 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 
-@OptIn(ExperimentalMaterial3Api::class)
+import android.content.Context
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.verticalScroll
 
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import coil.compose.rememberImagePainter
+import com.example.reto.R
+import com.example.reto.ui.theme.Black
+import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormScreen(navController: NavController) {
+    // Variables de formulario
     var transectNumber by remember { mutableStateOf("") }
     var commonName by remember { mutableStateOf("") }
     var scientificName by remember { mutableStateOf("") }
@@ -44,19 +78,48 @@ fun FormScreen(navController: NavController) {
     val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
 
-    // Scroll state para la pantalla
-    val scrollState = rememberScrollState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    // Estado para URI de imagen capturada o seleccionada
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val file = context.createImageFile()
+    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+
+    // Lanzador para la cámara
+    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) capturedImageUri = uri
+    }
+
+    // Lanzador para la galería
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { selectedUri ->
+        capturedImageUri = selectedUri
+    }
+
+    // Lanzador para permisos de cámara
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            cameraLauncher.launch(uri)
+        } else {
+            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Función para seleccionar imagen (cámara o galería)
+    fun selectImageOption() {
+        val permissionCheckResult = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+            cameraLauncher.launch(uri) // Lanzar la cámara si el permiso está concedido
+        } else {
+            permissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
+    }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Formulario", maxLines = 1) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,
-                    titleContentColor = Black,
-                    scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
+                    titleContentColor = Black
                 ),
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
@@ -65,9 +128,7 @@ fun FormScreen(navController: NavController) {
                             contentDescription = "Atrás"
                         )
                     }
-                },
-                
-                scrollBehavior = scrollBehavior
+                }
             )
         }
     ) { innerPadding ->
@@ -76,9 +137,8 @@ fun FormScreen(navController: NavController) {
                 .padding(innerPadding)
                 .padding(16.dp)
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(rememberScrollState())
         ) {
-            // Número de Transecto
             OutlinedTextField(
                 value = transectNumber,
                 onValueChange = { transectNumber = it },
@@ -87,7 +147,9 @@ fun FormScreen(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-// Tipo de Animal
+
+
+            // Tipo de Animal
             Text("Tipo de Animal", fontSize = 18.sp)
             Column {
                 Row(
@@ -172,7 +234,6 @@ fun FormScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Nombre Común
             OutlinedTextField(
                 value = commonName,
                 onValueChange = { commonName = it },
@@ -182,7 +243,6 @@ fun FormScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Nombre Científico
             OutlinedTextField(
                 value = scientificName,
                 onValueChange = { scientificName = it },
@@ -192,7 +252,6 @@ fun FormScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Número de Individuos
             OutlinedTextField(
                 value = numberOfIndividuals,
                 onValueChange = { numberOfIndividuals = it },
@@ -203,47 +262,29 @@ fun FormScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Tipo de Observación
-            Text("Tipo de Observación", fontSize = 18.sp)
-            Column(modifier = Modifier.selectableGroup()) {
-                observationTypes.forEach { observation ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = selectedObservationType == observation,
-                                onClick = { selectedObservationType = observation }
-                            )
-                            .padding(0.dp),
-                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
-                    ) {
-                        RadioButton(
-                            selected = selectedObservationType == observation,
-                            onClick = { selectedObservationType = observation }
-                        )
-                        Text(observation)
-                    }
-                }
-            }
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Evidencias (botón para elegir archivo)
             Text("Evidencias", fontSize = 18.sp)
             Button(
-                onClick = { /* Acción para elegir archivo */ },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = GreenAwaqOscuro
-                )
+                onClick = { selectImageOption() },
+                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Elige archivo")
             }
 
+            // Vista previa de la imagen seleccionada
+            capturedImageUri?.let { uri ->
+                Image(
+                    painter = rememberImagePainter(uri),
+                    contentDescription = "Imagen seleccionada",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .height(200.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Observaciones
             OutlinedTextField(
                 value = observations,
                 onValueChange = { observations = it },
@@ -254,7 +295,6 @@ fun FormScreen(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
             // Botones Atrás y Enviar
             Row(
                 modifier = Modifier
@@ -264,41 +304,26 @@ fun FormScreen(navController: NavController) {
             ) {
                 Button(
                     onClick = { navController.navigate(route = "Formulario1") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaqOscuro
-                    ),
-                    modifier = Modifier
-                        .weight(1f) // Ocupa espacio proporcional
-                        .padding(end = 8.dp) // Espaciado entre botones
+                    colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                    modifier = Modifier.weight(1f).padding(end = 8.dp)
                 ) {
-                    Text(
-                        "ATRÁS",
-                        color = Color.White
-                    )
+                    Text("ATRÁS", color = Color.White)
                 }
                 Button(
                     onClick = { navController.navigate(route = "HomeScreen") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaqOscuro
-                    ),
-                    modifier = Modifier
-                        .weight(1f) // Ocupa espacio proporcional
-                        .padding(start = 8.dp) // Espaciado entre botones
+                    colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                    modifier = Modifier.weight(1f).padding(start = 8.dp)
                 ) {
-                    Text(
-                        "ENVIAR",
-                        color = Color.White
-                    )
+                    Text("ENVIAR", color = Color.White)
                 }
             }
-
         }
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun showFormScreen(modifier: Modifier = Modifier){
-    val navController = rememberNavController()
-    FormScreen(navController)
+// Función para crear el archivo de imagen temporal
+fun Context.createImageFile(): File {
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+    val imageFileName = "JPEG_${timeStamp}_"
+    return File.createTempFile(imageFileName, ".jpg", externalCacheDir)
 }
