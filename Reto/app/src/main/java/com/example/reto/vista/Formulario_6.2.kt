@@ -351,6 +351,11 @@ fun FormScreen6(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = colorResource(id = R.color.green_black)
                         ),
+                        enabled = if(zonaSeleccionada == null){
+                            false
+                        }else{
+                            true
+                        },
                         modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 10.dp)
                     ) {
                         Text(

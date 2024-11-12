@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.GreenAwaqOscuro
-import com.example.reto.vista.Forms_7_2ViewModel
 import com.example.reto.vista.Formulario_1ViewModel
 import kotlinx.coroutines.launch
 

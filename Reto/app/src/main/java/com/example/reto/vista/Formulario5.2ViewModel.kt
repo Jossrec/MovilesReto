@@ -41,8 +41,6 @@ class Formulario_5_2ViewModel(private val itemsRepository: ItemsRepository5, pri
     private fun validateInput(uiState: Formulario_5Details = itemUiState.itemDetails): Boolean {
         return with(uiState) {
             codigo.isNotBlank()
-                    && cuadrante.isNotBlank()
-                    && habitoCrecimiento.isNotBlank()
                     && nombreComunEspecie.isNotBlank()
         }
     }

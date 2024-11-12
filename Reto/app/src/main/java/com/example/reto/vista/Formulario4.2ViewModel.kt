@@ -41,9 +41,6 @@ class Formulario_4_2ViewModel(private val itemsRepository: ItemsRepository4, pri
     private fun validateInput(uiState: Formulario_4Details = itemUiState.itemDetails): Boolean {
         return with(uiState) {
             codigo.isNotBlank()
-                    && Seguimiento.isNotBlank()
-                    && Cambio.isNotBlank()
-                    && Disturbio.isNotBlank()
         }
     }
 }

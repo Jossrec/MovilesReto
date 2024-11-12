@@ -51,13 +51,10 @@ fun FormScreen2(
     var scientificName by remember { mutableStateOf("") }
     var numberOfIndividuals by remember { mutableStateOf("") }
     var selectedAnimal by remember { mutableStateOf("Insecto") }
-    Cambio(valores.copy(tipoAnimal = selectedAnimal))
     var selectedObservationType by remember { mutableStateOf("La Vió") }
-    Cambio(valores.copy(TipoObservacion = selectedObservationType))
     var selectedZone by remember { mutableStateOf("Bosque") }
-    Cambio(valores.copy(zona = selectedZone))
     var selectedAltitude by remember { mutableStateOf("Baja <1mt") }
-    Cambio(valores.copy(AlturaObservacion = selectedAltitude))
+    Cambio(valores.copy(tipoAnimal = selectedAnimal, TipoObservacion = selectedObservationType, zona = selectedZone, AlturaObservacion = selectedAltitude))
     var observations by remember { mutableStateOf("") }
     val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
@@ -350,7 +347,7 @@ fun FormScreen2(
                             Cambio(valores.copy(formId = viewModel.getfromID()))
                             viewModel.saveItem()
                         }
-                              },
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),

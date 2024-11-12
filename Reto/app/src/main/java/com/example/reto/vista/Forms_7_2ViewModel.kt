@@ -42,10 +42,6 @@ class Forms_7_2ViewModel(private val itemsRepository: ItemsRepository7, private 
         return with(uiState) {
             zona.isNotBlank()
                     && Pluviosidad.isNotBlank()
-                    && Temperatura_maxima.isNotBlank()
-                    && Humedad_maxima.isNotBlank()
-                    && Temperatura_minima.isNotBlank()
-                    && Humedad_minima.isNotBlank()
                     && Nivel_Quebrada.isNotBlank()
         }
     }

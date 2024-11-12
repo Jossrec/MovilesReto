@@ -60,12 +60,12 @@ import com.example.reto.ui.theme.GreenAwaqOscuro
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-import com.example.reto.components.Boton
 import com.example.reto.components.HeaderBar
 import com.example.reto.ui.theme.AppViewModelProvider
 
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -75,7 +75,6 @@ fun Formulario1(
 ) {
     val scrollState = rememberScrollState()
     var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") } // Inicializa con uno por defecto
-    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = { HeaderBar(navController) }
@@ -93,58 +92,62 @@ fun Formulario1(
                 tipoRegistro = tipoRegistro,
                 onTipoRegistroChange = { selectedTipoRegistro ->
                     tipoRegistro = selectedTipoRegistro
-                }
+                },
+//                valores = viewModel.itemUiState.itemDetails,
+//                Cambio = viewModel::updateUiState
             )
 
             // Botón al final del contenido
-            Boton(
-                scrollState = scrollState,
-                tipoRegistro = tipoRegistro,
-                navController = navController,
-                onNextClicked = {
-                    // Navega a la pantalla correspondiente según el tipo de registro seleccionado
-                    navController.navigate(tipoRegistro)
-                    coroutineScope.launch {
-                        viewModel.saveItem()
-                    }
-                }
-            )
+//            Boton(
+//                scrollState = scrollState,
+//                tipoRegistro = tipoRegistro,
+//                navController = navController,
+//                coroutineScope = coroutineScope,
+//                onNextClicked = {
+//                        viewModel.saveItem()
+//                }
+//            )
         }
     }
 }
 
-@Composable
-fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHostController, onNextClicked: () -> Unit) {
-    Button(
-        onClick = {
-            // Llama a la función para navegar a la siguiente pantalla
-            onNextClicked()
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp) ,
-            colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
-
-    ) {
-        Text(text = "Siguiente")
-    }
-}
+//@Composable
+//fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHostController, coroutineScope: CoroutineScope, onNextClicked: suspend () -> Unit) {
+//    Button(
+//        onClick = {
+//            // Llama a la función para navegar a la siguiente pantalla
+//            coroutineScope.launch {
+//                onNextClicked() // Llamada dentro de la corutina
+//                navController.navigate(tipoRegistro)
+//            }
+//        },
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(vertical = 16.dp) ,
+//            colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
+//
+//    ) {
+//        Text(text = "Siguiente")
+//    }
+//}
 
 @Composable
 fun Content(
     modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
+//    valores: Formulario_baseDetails,
+//    Cambio: (Formulario_baseDetails) -> Unit = {},
     viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     //Room
+    val coroutineScope = rememberCoroutineScope()
     val valores = viewModel.itemUiState.itemDetails
     val Cambio = viewModel::updateUiState
 
-//    val nombre = remember { mutableStateOf("") }
-//    val fecha = remember { mutableStateOf("") }
-//    val localidad = remember { mutableStateOf("") }
-//    val hora = remember { mutableStateOf("") }
+
     var estadoTiempo by remember { mutableStateOf("Soleado") }
     var epoca by remember { mutableStateOf("Verano/Seca") }
+    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo, Época = epoca))
+
 
     Column(
         modifier = modifier
@@ -217,7 +220,8 @@ fun Content(
         ) {
             IconButton(
                 onClick = { estadoTiempo = "Soleado"
-                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
+                    Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))
+                },
                 modifier = Modifier
                     .size(100.dp)
                     .background(if (estadoTiempo == "Soleado") GreenAwaq else Color.Transparent)
@@ -229,7 +233,6 @@ fun Content(
                     modifier = Modifier.size(100.dp)
                 )
             }
-
             IconButton(
                 onClick = { estadoTiempo = "Parcialmente Nublado"
                     Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo))},
@@ -313,7 +316,24 @@ fun Content(
                 }
             }
         }
+        Button(
+            onClick = {
+                // Llama a la función para navegar a la siguiente pantalla
+                coroutineScope.launch {
+                    viewModel.saveItem()
+                    navController.navigate(tipoRegistro)
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp) ,
+            colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
+
+        ) {
+            Text(text = "Siguiente")
+        }
     }
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)

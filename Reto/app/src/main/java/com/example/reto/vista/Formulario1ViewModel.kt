@@ -39,8 +39,6 @@ class Formulario_1ViewModel(private val itemsRepository: ItemsRepository) : View
                     && fecha.isNotBlank()
                     && Localidad.isNotBlank()
                     && Hora.isNotBlank()
-                    && Estado_del_Tiempo.isNotBlank()
-                    && Época.isNotBlank()
                     && Tipo_Registro.isNotBlank()
         }
     }

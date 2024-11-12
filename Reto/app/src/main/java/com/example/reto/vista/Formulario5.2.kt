@@ -53,11 +53,9 @@ fun FormScreen5(
 
     // Variables de estado para las selecciones
     var selectedCuadrante by remember { mutableStateOf("A") }
-    Cambio(valores.copy(cuadrante = selectedCuadrante))
     var selectedSubCuadrante by remember { mutableStateOf(1) }
-    Cambio(valores.copy(subcuadrante = selectedSubCuadrante.toString()))
     var selectedHabito by remember { mutableStateOf("Arbolito 1-3 mt") }
-    Cambio(valores.copy(habitoCrecimiento = selectedHabito))
+    Cambio(valores.copy(cuadrante = selectedCuadrante, subcuadrante = selectedSubCuadrante.toString(), habitoCrecimiento = selectedHabito))
 
     // Scroll state para la pantalla
     val scrollState = rememberScrollState()

@@ -42,7 +42,6 @@ class Formulario_3_2ViewModel(private val itemsRepository: ItemsRepository3, pri
     private fun validateInput(uiState: Formulario_3Details = itemUiState.itemDetails): Boolean {
         return with(uiState) {
             zona.isNotBlank()
-                    && tipoAnimal.isNotBlank()
                     && nombreComun.isNotBlank()
                     && numeroIndividuos.isNotBlank()
         }
