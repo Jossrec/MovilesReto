@@ -1,5 +1,10 @@
 package com.example.reto.vista
 
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,11 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.example.reto.R
 import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
@@ -43,20 +52,48 @@ fun FormScreen5(navController: NavController) {
     var selectedCuadrante by remember { mutableStateOf("A") }
     var selectedSubCuadrante by remember { mutableStateOf(1) }
     var selectedHabito by remember { mutableStateOf("Arbolito 1-3 mt") }
+// Estado para URI de imagen capturada o seleccionada
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val file = context.createImageFile()
+    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
 
-    // Scroll state para la pantalla
-    val scrollState = rememberScrollState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    // Lanzador para la cámara
+    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) capturedImageUri = uri
+    }
+
+    // Lanzador para la galería
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { selectedUri ->
+        capturedImageUri = selectedUri
+    }
+
+    // Lanzador para permisos de cámara
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            cameraLauncher.launch(uri)
+        } else {
+            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Función para seleccionar imagen (cámara o galería)
+    fun selectImageOption() {
+        val permissionCheckResult = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+            cameraLauncher.launch(uri) // Lanzar la cámara si el permiso está concedido
+        } else {
+            permissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
+    }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Formulario", maxLines = 1) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,
-                    titleContentColor = Black,
-                    scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
+                    titleContentColor = com.example.reto.ui.theme.Black
                 ),
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
@@ -66,8 +103,6 @@ fun FormScreen5(navController: NavController) {
                         )
                     }
                 },
-
-                scrollBehavior = scrollBehavior
             )
         }
     ) { innerPadding ->
@@ -76,8 +111,9 @@ fun FormScreen5(navController: NavController) {
                 .padding(innerPadding)
                 .padding(16.dp)
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(rememberScrollState())
         ) {
+
             // Código
             OutlinedTextField(
                 value = codigo,
@@ -310,14 +346,24 @@ fun FormScreen5(navController: NavController) {
             // Evidencias (botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
             Button(
-                onClick = { /* Acción para elegir archivo */ },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = GreenAwaqOscuro
-                )
+                onClick = { selectImageOption() },
+                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Elige archivo")
             }
 
+            // Vista previa de la imagen seleccionada
+            capturedImageUri?.let { uri ->
+                Image(
+                    painter = rememberImagePainter(uri),
+                    contentDescription = "Imagen seleccionada",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .height(200.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
