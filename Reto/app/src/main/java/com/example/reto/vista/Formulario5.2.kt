@@ -52,7 +52,8 @@ fun FormScreen5(navController: NavController) {
     var selectedCuadrante by remember { mutableStateOf("A") }
     var selectedSubCuadrante by remember { mutableStateOf(1) }
     var selectedHabito by remember { mutableStateOf("Arbolito 1-3 mt") }
-// Estado para URI de imagen capturada o seleccionada
+
+    // Estado para URI de imagen capturada o seleccionada
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
     val context = LocalContext.current
     val file = context.createImageFile()
