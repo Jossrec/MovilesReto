@@ -21,8 +21,6 @@ import com.example.reto.components.NavegacionInferior
 import com.example.reto.models.ItemsTabsMovimientos
 import com.example.reto.navigation.AppNavigation
 import com.example.reto.ui.theme.RetoTheme
-import com.example.reto.vista.Forms_6_2
-import com.example.reto.vista.Forms_7_2
 import com.example.reto.vista.Formulario1
 import com.example.reto.vista.NuevaContra
 import com.example.reto.vista.SearchScreen

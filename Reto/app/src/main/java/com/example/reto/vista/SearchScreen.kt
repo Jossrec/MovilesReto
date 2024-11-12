@@ -65,11 +65,8 @@ import com.example.reto.vista.movimientos.MovimientosTabs
 @Composable
 fun SearchScreen(
     navController: NavController,
-    viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val searchUiState by viewModel.searchUiState.collectAsState()
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -97,7 +94,6 @@ fun SearchScreen(
         Column(modifier = Modifier.padding(innerPadding)) {
             MovimientosTabs() // Integra las tabs aquí
         }
-        //MyMessages(messages = searchUiState.itemList, Modifier.padding(innerPadding))
     }
 }
 
@@ -179,28 +175,6 @@ fun MyImage() {
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.primary)
     )
-}
-
-//@Composable
-//fun MyTexts(message: Item) {
-//    Column(modifier = Modifier.padding(start = 8.dp)) {
-//        MyText(
-//            message.nombre,
-//            MaterialTheme.colorScheme.secondary,
-//            MaterialTheme.typography.titleMedium
-//        )
-//        Spacer(modifier = Modifier.height(16.dp))
-//        MyText(
-//            message.email,
-//            MaterialTheme.colorScheme.onBackground,
-//            MaterialTheme.typography.titleSmall
-//        )
-//    }
-//}
-
-@Composable
-fun MyText(text: String, color: Color, style: TextStyle) {
-    Text(text, color = color, style = style)
 }
 
 @Preview(showSystemUi = true)
