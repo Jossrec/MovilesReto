@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -37,22 +35,17 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.reto.ui.theme.AppViewModelProvider
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.NavController
@@ -60,32 +53,22 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
-import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
-
 @Composable
-fun FormScreen42(
-    navController: NavController,
-    viewModel: Formulario_4_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
-) {
-    //Room
-    val coroutineScope = rememberCoroutineScope()
-    val valores = viewModel.itemUiState.itemDetails
-    val Cambio = viewModel::updateUiState
+fun FormScreen7(navController: NavController) {
 
     var observations by remember { mutableStateOf("") }
-    var selectedOption by remember{ mutableStateOf(value = "Si") }
-    var selectedCambio by remember{ mutableStateOf(value = "Si") }
-    var selectedCobertura by remember { mutableStateOf(value = "BD") }
-    var codigo by remember { mutableStateOf(value = "" ) }
-    var cropType by remember { mutableStateOf(value = "") }
-    var selectedDisturbance by remember { mutableStateOf(value = "Inundación") }
-    Cambio(valores.copy(Seguimiento = selectedOption, Cambio = selectedCambio, Cobertura = selectedCobertura, Disturbio = selectedDisturbance))
-    val option = listOf("Si", "No")
-    val cobertura = listOf("BD", "RA", "RB", "PA", "PL", "CP", "CT", "VH", "TD", "IF")
-    val disturbance = listOf("Inundación", "Quema", "Tala", "Erosión", "Mineria", "Carretera", "Más plantas acuáticas", "Otro")
-
+    var selectedZona by remember { mutableStateOf(value = "Bosque") }
+    var codigo by remember { mutableStateOf(value = "") }
+    var pluviosidad by remember { mutableStateOf(value = "") }
+    var tempmax by remember { mutableStateOf(value = "") }
+    var hummax by remember { mutableStateOf(value = "") }
+    var tempmin by remember { mutableStateOf(value = "") }
+    var tempminp by remember { mutableStateOf(value = "") }
+    var nivquebrada by remember { mutableStateOf(value = "") }
+    val zona = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
 
     // Estado para URI de imagen capturada o seleccionada
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
@@ -148,137 +131,86 @@ fun FormScreen42(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
+
+            // Selección de Zona
+            Text("Zona", fontSize = 18.sp)
+            Column(modifier = Modifier.selectableGroup()) {
+                zona.forEach { zona ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .selectable(
+                                selected = selectedZona == zona,
+                                onClick = { selectedZona = zona }
+                            )
+                            .height(30.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = selectedZona == zona,
+                            onClick = { selectedZona = zona }
+                        )
+                        Text(zona)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             OutlinedTextField(
-                value = valores.codigo,
-                onValueChange = { Cambio(valores.copy(codigo = it)) },
-                label = { Text("Código") },
+                value = pluviosidad,
+                onValueChange = { pluviosidad = it },
+                label = { Text("Pluviosidad (mm)") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Selección de Zona
-            Text("Seguimiento", fontSize = 18.sp)
-            Column(modifier = Modifier.selectableGroup()) {
-                option.forEach { option -> // Utiliza cada zona para crear un radio button
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = selectedOption == option,
-                                onClick = { selectedOption = option }
-                            )
-                            .height(30.dp),
-                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
-                    ) {
-                        RadioButton(
-                            selected = selectedOption == option,
-                            onClick = {
-                                selectedOption = option
-                                Cambio(valores.copy(Seguimiento = selectedOption))
-                            }
-                        )
-                        Text(option)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Selección de Zona
-            Text("Cambio", fontSize = 18.sp)
-            Column(modifier = Modifier.selectableGroup()) {
-                option.forEach { option -> // Utiliza cada zona para crear un radio button
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = selectedCambio == option,
-                                onClick = { selectedCambio = option }
-                            )
-                            .height(30.dp),
-                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
-                    ) {
-                        RadioButton(
-                            selected = selectedCambio == option,
-                            onClick = {
-                                selectedCambio = option
-                                Cambio(valores.copy(Cambio = selectedCambio))
-                            }
-                        )
-                        Text(option)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Selección de Zona
-            Text("Cobertura", fontSize = 18.sp)
-            Column(modifier = Modifier.selectableGroup()) {
-                cobertura.forEach { cobertura -> // Utiliza cada zona para crear un radio button
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = selectedCobertura == cobertura,
-                                onClick = { selectedCobertura = cobertura }
-                            )
-                            .height(30.dp),
-                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
-                    ) {
-                        RadioButton(
-                            selected = selectedCobertura == cobertura,
-                            onClick = {
-                                selectedCobertura = cobertura
-                                Cambio(valores.copy(Cobertura = selectedCobertura))
-                            }
-                        )
-                        Text(cobertura)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Número de Individuos
             OutlinedTextField(
-                value = valores.tipoCultivo,
-                onValueChange = { Cambio(valores.copy(tipoCultivo = it)) },
-                label = { Text("Tipos de cultivos") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                value = tempmax,
+                onValueChange = { tempmax = it },
+                label = { Text("Temperatura Máxima") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Selección de Zona
-            Text("Disturbio", fontSize = 18.sp)
-            Column(modifier = Modifier.selectableGroup()) {
-                disturbance.forEach { disturbance -> // Utiliza cada zona para crear un radio button
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = selectedDisturbance == disturbance,
-                                onClick = { selectedDisturbance = disturbance }
-                            )
-                            .height(30.dp),
-                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
-                    ) {
-                        RadioButton(
-                            selected = selectedDisturbance == disturbance,
-                            onClick = {
-                                selectedDisturbance = disturbance
-                                Cambio(valores.copy(Disturbio = selectedDisturbance))
-                            }
-                        )
-                        Text(disturbance)
-                    }
-                }
-            }
+            OutlinedTextField(
+                value = hummax,
+                onValueChange = { hummax = it },
+                label = { Text("Humedad Máxima") },
+                modifier = Modifier.fillMaxWidth()
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = tempmin,
+                onValueChange = { tempmin = it },
+                label = { Text("Temperatura mínima") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = tempminp,
+                onValueChange = { tempminp = it },
+                label = { Text("Temperatura mínima???") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = nivquebrada,
+                onValueChange = { nivquebrada = it },
+                label = { Text("Nivel Quebrada (mt)") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
 
             // Evidencias (botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
@@ -302,18 +234,21 @@ fun FormScreen42(
                 )
             }
 
-
             Spacer(modifier = Modifier.height(16.dp))
+
 
             // Observaciones
             OutlinedTextField(
-                value = valores.observaciones,
-                onValueChange = { Cambio(valores.copy(observaciones = it)) },
+                value = observations,
+                onValueChange = { observations = it },
                 label = { Text("Observaciones") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -330,41 +265,30 @@ fun FormScreen42(
                         containerColor = GreenAwaqOscuro
                     ),
                     modifier = Modifier
-                        .weight(1f) // Ocupa espacio proporcional
-                        .padding(end = 8.dp) // Espaciado entre botones
+                        .weight(1f)
+                        .padding(end = 8.dp)
                 ) {
-                    Text(
-                        "ATRÁS",
-                        color = Color.White
-                    )
+                    Text("ATRÁS", color = Color.White)
                 }
                 Button(
-                    onClick = { navController.navigate(route = "SearchScreen")
-                        coroutineScope.launch {
-                            Cambio(valores.copy(formId = viewModel.getfromID()))
-                            viewModel.saveItem()
-                        }
-                    },
+                    onClick = { navController.navigate(route = "HomeScreen") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
                     modifier = Modifier
-                        .weight(1f) // Ocupa espacio proporcional
-                        .padding(start = 8.dp) // Espaciado entre botones
+                        .weight(1f)
+                        .padding(start = 8.dp)
                 ) {
-                    Text(
-                        "ENVIAR",
-                        color = Color.White
-                    )
+                    Text("ENVIAR", color = Color.White)
                 }
             }
-
         }
     }
 }
-@Preview( )
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun showform42 (modifier: Modifier = Modifier){
+fun showForm7(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    FormScreen42(navController )
+    FormScreen7(navController)
 }

@@ -34,8 +34,23 @@ import com.example.reto.ui.theme.GreenAwaqOscuro
 import com.example.reto.vista.Formulario_1_2ViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+import android.content.Context
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import coil.compose.rememberImagePainter
+import com.example.reto.R
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormScreen(
     navController: NavController,
@@ -57,30 +72,78 @@ fun FormScreen(
     val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
 
-    // Scroll state para la pantalla
-    val scrollState = rememberScrollState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    // Estado para URI de imagen capturada o seleccionada
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val file = context.createImageFile()
+    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+
+    // Lanzador para la cámara
+    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) capturedImageUri = uri
+    }
+
+    // Lanzador para la galería
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { selectedUri ->
+        capturedImageUri = selectedUri
+    }
+
+    // Lanzador para permisos de cámara
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            cameraLauncher.launch(uri)
+        } else {
+            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Función para seleccionar imagen (cámara o galería)
+    fun selectImageOption() {
+        val permissionCheckResult = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+            cameraLauncher.launch(uri) // Lanzar la cámara si el permiso está concedido
+        } else {
+            permissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
+    }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Formulario", maxLines = 1) },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = GreenAwaq,
-                    titleContentColor = Black,
-                    scrolledContainerColor = GreenAwaq // Mantén el color durante el scroll
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Atrás"
+                modifier = Modifier.height(120.dp), // Aumenta la altura de la barra superior
+                title = {
+                    Box(
+                        contentAlignment = Alignment.Center, // Centra el contenido vertical y horizontalmente
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Text(
+                            "Formulario",
+                            fontSize = 50.sp, // Ajusta el tamaño de fuente para iPad
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = Black
                         )
                     }
                 },
-                
-                scrollBehavior = scrollBehavior
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = GreenAwaq,
+                    titleContentColor = Black
+                ),
+                navigationIcon = {
+                    IconButton(
+                        onClick = { navController.navigate(route = "Formulario1") },
+                        modifier = Modifier
+                            .size(80.dp) // Aumenta el tamaño del botón en general
+                            .padding(vertical = 20.dp) // Alinea verticalmente el botón dentro del TopAppBar
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Atrás",
+                            tint = com.example.reto.ui.theme.Black,
+                            modifier = Modifier.size(50.dp) // Tamaño más grande para el ícono de flecha
+                        )
+                    }
+                }
             )
         }
     ) { innerPadding ->
@@ -89,9 +152,8 @@ fun FormScreen(
                 .padding(innerPadding)
                 .padding(16.dp)
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(rememberScrollState())
         ) {
-            // Número de Transecto
             OutlinedTextField(
                 value = valores.numeroTransecto,
                 onValueChange = { Cambio(valores.copy(numeroTransecto = it)) },
@@ -100,7 +162,9 @@ fun FormScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-// Tipo de Animal
+
+
+            // Tipo de Animal
             Text("Tipo de Animal", fontSize = 18.sp)
             Column {
                 Row(
@@ -189,7 +253,6 @@ fun FormScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Nombre Común
             OutlinedTextField(
                 value = valores.nombreComun,
                 onValueChange = { Cambio(valores.copy(nombreComun = it)) },
@@ -199,7 +262,6 @@ fun FormScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Nombre Científico
             OutlinedTextField(
                 value = valores.nombreCientifico,
                 onValueChange = { Cambio(valores.copy(nombreCientifico = it)) },
@@ -209,7 +271,6 @@ fun FormScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Número de Individuos
             OutlinedTextField(
                 value = valores.numeroIndividuos,
                 onValueChange = { Cambio(valores.copy(numeroIndividuos = it)) },
@@ -251,18 +312,27 @@ fun FormScreen(
             // Evidencias (botón para elegir archivo)
             Text("Evidencias", fontSize = 18.sp)
             Button(
-                onClick = { /* Acción para elegir archivo */ },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = GreenAwaqOscuro
-                )
+                onClick = { selectImageOption() },
+                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Elige archivo")
             }
 
+            // Vista previa de la imagen seleccionada
+            capturedImageUri?.let { uri ->
+                Image(
+                    painter = rememberImagePainter(uri),
+                    contentDescription = "Imagen seleccionada",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .height(200.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Observaciones
             OutlinedTextField(
                 value = valores.observaciones,
                 onValueChange = { Cambio(valores.copy(observaciones = it)) },
@@ -273,7 +343,6 @@ fun FormScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
             // Botones Atrás y Enviar
             Row(
                 modifier = Modifier
@@ -283,21 +352,14 @@ fun FormScreen(
             ) {
                 Button(
                     onClick = { navController.navigate(route = "Formulario1") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaqOscuro
-                    ),
-                    modifier = Modifier
-                        .weight(1f) // Ocupa espacio proporcional
-                        .padding(end = 8.dp) // Espaciado entre botones
+                    colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                    modifier = Modifier.weight(1f).padding(end = 8.dp)
                 ) {
-                    Text(
-                        "ATRÁS",
-                        color = Color.White
-                    )
+                    Text("ATRÁS", color = Color.White)
                 }
                 Button(
                     onClick = {
-                        navController.navigate(route = "SearchScreen")
+                        navController.navigate(route = "HomeScreen")
                         coroutineScope.launch {
                             Cambio(valores.copy(formId = viewModel.getfromID()))
                             viewModel.saveItem()
@@ -310,20 +372,16 @@ fun FormScreen(
                         .weight(1f) // Ocupa espacio proporcional
                         .padding(start = 8.dp) // Espaciado entre botones
                 ) {
-                    Text(
-                        "ENVIAR",
-                        color = Color.White
-                    )
+                    Text("ENVIAR", color = Color.White)
                 }
             }
-
         }
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun showFormScreen(modifier: Modifier = Modifier){
-    val navController = rememberNavController()
-    FormScreen(navController)
+// Función para crear el archivo de imagen temporal
+fun Context.createImageFile(): File {
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+    val imageFileName = "JPEG_${timeStamp}_"
+    return File.createTempFile(imageFileName, ".jpg", externalCacheDir)
 }
