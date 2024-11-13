@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
@@ -33,6 +35,7 @@ import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.ui.theme.White
 import com.example.reto.vista.movimientos.MovimientosTabs
+
 
 private val messages: List<MyMessage> = listOf(
     MyMessage("Hola Jetpack Compose 1", "Preparado?"),
@@ -64,12 +67,20 @@ fun SearchScreen(navController: NavController) {
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.height(120.dp), // Aumenta la altura de la barra superior
                 title = {
-                    Text(
-                        "Búsqueda",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    Box(
+                        contentAlignment = Alignment.Center, // Centra el contenido vertical y horizontalmente
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Text(
+                            "Búsqueda",
+                            fontSize = 50.sp, // Ajusta el tamaño de fuente para iPad
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = Black
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,

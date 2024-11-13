@@ -37,7 +37,6 @@ fun HomeScreen(navController: NavHostController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp) // Ajusta la altura del TopBar con el semicírculo
                     .background(color = White)
             ) {
                 // Imagen de fondo (el semicírculo)
@@ -47,43 +46,59 @@ fun HomeScreen(navController: NavHostController) {
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.TopCenter) // Alinea la imagen en la parte superior
+                        .align(Alignment.TopCenter)
                         .background(color = White)
                 )
 
                 // Contenido de la TopAppBar
                 CenterAlignedTopAppBar(
+                    modifier = Modifier.height(200.dp),
                     title = {
-                        Text(
-                            "Hola, Samantha",
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = Color.Black,
-
-                            //modifier = Modifier.padding(top = 48.dp) // Añadimos el padding superior solo al texto
-                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
+                            contentAlignment = Alignment.BottomCenter
+                        ) {
+                            Text(
+                                "Hola, Samantha",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                color = Color.Black,
+                                fontSize = 60.sp
+                            )
+                        }
                     },
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = Color.Transparent, // Hacemos transparente la barra para que solo se vea el fondo
-                        titleContentColor = Color.Black // Color del título negro para que contraste con el fondo
+                        containerColor = Color.Transparent,
+                        titleContentColor = Color.Black
                     ),
                     navigationIcon = {
-                        // Logo en lugar del ícono de navegación
-                        Image(
-                            painter = painterResource(id = R.drawable.awaq_verde_vertical), // Reemplaza con tu logo
-                            contentDescription = "Logo",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.size(40.dp) // Ajusta el tamaño del logo
-                        )
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.size(100.dp) // Tamaño consistente
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.awaq_verde_vertical),
+                                contentDescription = "Logo",
+                                contentScale = ContentScale.Inside,
+                                modifier = Modifier.size(100.dp)
+                            )
+                        }
                     },
                     actions = {
-                        // Icono de perfil a la derecha
-                        IconButton(onClick =  { navController.navigate("ProfileScreen") }) {
-                            Icon(
-                                imageVector = Icons.Filled.Person,
-                                contentDescription = "Perfil",
-                                tint = Color.Black // Ícono negro para mejor contraste
-                            )
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.size(100.dp) // Tamaño consistente
+                        ) {
+                            IconButton(onClick = { navController.navigate("ProfileScreen") }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Person,
+                                    contentDescription = "Perfil",
+                                    tint = Color.Black,
+                                    modifier = Modifier.size(100.dp) // Ajusta el tamaño interno para que el icono se vea mejor
+                                )
+                            }
                         }
                     },
                     scrollBehavior = scrollBehavior
@@ -91,12 +106,19 @@ fun HomeScreen(navController: NavHostController) {
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("Formulario1")
-            }) {
-                Icon(Icons.Filled.Add, contentDescription = "Nuevo formulario")
+            FloatingActionButton(
+                onClick = { navController.navigate("Formulario1") },
+                modifier = Modifier.size(100.dp) // Aumenta el tamaño del botón flotante
+            ) {
+                Icon(
+                    Icons.Filled.Add,
+                    contentDescription = "Nuevo formulario",
+                    modifier = Modifier.size(40.dp) // Aumenta el tamaño del icono dentro del botón
+                )
             }
         },
-        bottomBar = {
+
+                bottomBar = {
             NavegacionInferior(navController)
         },
         content = { paddingValues ->
@@ -111,41 +133,6 @@ fun HomeScreen(navController: NavHostController) {
             }
         }
     )
-}
-
-
-@Composable
-fun HeaderWithImageAndProfileIcon() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(250.dp)
-            .padding(0.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.semicirculo_removebg_preview),
-            contentDescription = null,
-            contentScale = ContentScale.FillWidth,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Text(
-            text = "Hola, Samantha",
-            fontSize = 32.sp,
-            modifier = Modifier.align(Alignment.Center)
-        )
-
-        IconButton(
-            onClick = {
-                // Acción para abrir el perfil
-            },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(35.dp)
-        ) {
-            Icon(Icons.Filled.Person, contentDescription = "Perfil", tint = Color.Black)
-        }
-    }
 }
 
 @Composable
@@ -163,28 +150,28 @@ fun DashboardContent(modifier: Modifier = Modifier) {
 
         CircularProgressIndicator(
             progress = 0.6f,
-            modifier = Modifier.size(100.dp),
+            modifier = Modifier.size(200.dp),
             color = Color(0xFF9CCC65)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "60%", fontSize = 24.sp)
+        Text(text = "60%", fontSize = 50.sp)
 
         Spacer(modifier = Modifier.height(32.dp))
 
         Row {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "5 Forms", fontSize = 16.sp)
-                Text(text = "En total", fontSize = 14.sp)
+                Text(text = "5 Forms", fontSize = 35.sp)
+                Text(text = "En total", fontSize = 30.sp)
             }
             Spacer(modifier = Modifier.width(32.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "3 Forms", fontSize = 16.sp)
-                Text(text = "Subidos", fontSize = 14.sp)
+                Text(text = "3 Forms", fontSize = 35.sp)
+                Text(text = "Subidos", fontSize = 30.sp)
             }
             Spacer(modifier = Modifier.width(32.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "2 Forms", fontSize = 16.sp)
-                Text(text = "Guardados", fontSize = 14.sp, color = Color.Red)
+                Text(text = "2 Forms", fontSize = 35.sp)
+                Text(text = "Guardados", fontSize = 30.sp, color = Color.Red)
             }
         }
     }
@@ -193,7 +180,6 @@ fun DashboardContent(modifier: Modifier = Modifier) {
 @Composable
 fun EmergencyMessageCard() {
     val cardColor = Color.Red
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -205,11 +191,14 @@ fun EmergencyMessageCard() {
             text = "¡Emergencia!\nTienes 2 formularios sin subir a la nube.",
             color = Color.White,
             modifier = Modifier.padding(16.dp),
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center
+            fontSize = 40.sp,
+            textAlign = TextAlign.Center,
+            lineHeight = 48.sp
         )
     }
 }
+
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
