@@ -35,31 +35,12 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.foundation.verticalScroll
-
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.rememberImagePainter
 import com.example.reto.R
-import com.example.reto.ui.theme.Black
-import com.example.reto.ui.theme.GreenAwaq
-import com.example.reto.ui.theme.GreenAwaqOscuro
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -116,16 +97,37 @@ fun FormScreen(navController: NavController) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Formulario", maxLines = 1) },
+                modifier = Modifier.height(120.dp), // Aumenta la altura de la barra superior
+                title = {
+                    Box(
+                        contentAlignment = Alignment.Center, // Centra el contenido vertical y horizontalmente
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Text(
+                            "Formulario",
+                            fontSize = 50.sp, // Ajusta el tamaño de fuente para iPad
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = Black
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,
                     titleContentColor = Black
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
+                    IconButton(
+                        onClick = { navController.navigate(route = "Formulario1") },
+                        modifier = Modifier
+                            .size(80.dp) // Aumenta el tamaño del botón en general
+                            .padding(vertical = 20.dp) // Alinea verticalmente el botón dentro del TopAppBar
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Atrás"
+                            contentDescription = "Atrás",
+                            tint = com.example.reto.ui.theme.Black,
+                            modifier = Modifier.size(50.dp) // Tamaño más grande para el ícono de flecha
                         )
                     }
                 }
