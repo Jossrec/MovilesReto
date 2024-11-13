@@ -55,7 +55,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.reto.ui.theme.AppViewModelProvider
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.example.reto.ui.theme.GreenAwaq
