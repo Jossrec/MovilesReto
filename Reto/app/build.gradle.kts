@@ -14,6 +14,11 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        manifestPlaceholders.clear()
+        manifestPlaceholders["auth0Domain"] = "@string/com_auth0_domain"
+        manifestPlaceholders["auth0Scheme"] = "https"
+
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -38,7 +43,6 @@ android {
     }
     buildFeatures {
         compose = true
-        viewBinding=true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -60,12 +64,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.webkit)
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.material3.android)
     implementation(libs.support.annotations)
-    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     implementation(libs.androidx.material.icons.extended)
     androidTestImplementation(libs.androidx.junit)
@@ -75,18 +77,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation (libs.maps.compose)
-    // Google Maps SDK dependency
-    implementation (libs.play.services.maps)
-
     implementation(libs.androidx.room.runtime)
-    implementation(kotlin("script-runtime"))
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.maps.compose)
+    implementation(libs.auth0)
+    implementation(libs.coil)
     implementation(libs.coil.compose)
 
-    implementation(libs.camerax.core)
-    implementation(libs.camerax.lifecycle)
-    implementation(libs.camerax.video)
-    implementation(libs.camerax.view)
-    implementation(libs.camerax.extensions)
-    ksp(libs.androidx.room.compiler)
 }

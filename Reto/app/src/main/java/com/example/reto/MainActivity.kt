@@ -15,59 +15,68 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+
 import androidx.navigation.compose.rememberNavController
-import com.example.reto.components.NavegacionInferior
-import com.example.reto.models.ItemsTabsMovimientos
+import androidx.room.Room
+import com.auth0.android.Auth0
+
 import com.example.reto.navigation.AppNavigation
+import com.example.reto.room.UserRepository
+import com.example.reto.room.UsersDataBase
 import com.example.reto.ui.theme.RetoTheme
-import com.example.reto.vista.Formulario1
-import com.example.reto.vista.NuevaContra
-import com.example.reto.vista.SearchScreen
-import com.example.reto.vista.Verificacion
-import com.example.reto.vista.movimientos.MovimientosTabs
-import com.example.reto.vista.movimientos.Todos
+import com.example.reto.viewmodels.UserViewModel
+import com.example.reto.viewmodels.UserViewModelFactory
+
 
 class MainActivity : ComponentActivity() {
+    private lateinit var account: Auth0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize the database
+        val database = Room.databaseBuilder(
+            applicationContext,
+            UsersDataBase::class.java, "app_database"
+        ).build()
+
+        account = Auth0.getInstance(
+            "wa4SSdJ72KqCxwOOSp5osSTbXbPvyPBl",
+            "dev-6511lhqrk7y4e42z.us.auth0.com"
+        )
+
+        // Create the repository and the ViewModel
+        val userRepository = UserRepository(database.userDao())
+        val userViewModel = ViewModelProvider(
+            this,
+            UserViewModelFactory(userRepository)
+        )[UserViewModel::class.java]
+
         setContent {
             RetoTheme {
-                Surface (
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ){
-                    //CreateAccountScreen()
-                    //Formulario1()
-                    //Forms_7_2()
-                    //Forms_6_2()
-                    MainScreen()
+                Surface(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    MainScreen(userViewModel = userViewModel, account = account)
                 }
             }
         }
-
     }
 }
 
-@SuppressLint("SuspiciousIndentation")
 @Composable
-fun MainScreen() {
+fun MainScreen(userViewModel: UserViewModel, account: Auth0) {
     val navController = rememberNavController()
-        Scaffold(
-        ) {padding->
-            Box(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxSize()
-            ){
-                AppNavigation(navController = navController)
-            }
+    Scaffold(
+        bottomBar = {
         }
-}
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewComponent(){
-    MainScreen()
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxSize()
+        ) {
+            AppNavigation(navController = navController, userViewModel = userViewModel,auth0 = account)
+        }
+    }
 }

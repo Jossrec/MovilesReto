@@ -24,6 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
+import com.example.reto.navigation.NavScreen
+import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 
 @Composable
 fun IntroScreen(navController: NavController) {
@@ -34,15 +37,15 @@ fun IntroScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
     ) {
-            // Logo con margen
-            Text(
-                text = "AWAQ-BIO",
-                fontSize = 50.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 50.dp)
-            )
+        // Logo con margen
+        Text(
+            text = "AWAQ-BIO",
+            fontSize = 50.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 50.dp)
+        )
 
-            // Imagen principal
+        // Imagen principal
         Image(
             painter = painterResource(id = R.drawable.awaqs2_removebg_preview), // Reemplaza con tu imagen principal
             contentDescription = "Imagen principal",
@@ -57,30 +60,18 @@ fun IntroScreen(navController: NavController) {
 
         // Botón "Iniciar sesión"
         Button(
-            onClick = { /* Acción del botón */ },
+            onClick = {navController.navigate(NavScreen.LoginScreen.name) },
             shape = CircleShape,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
+            colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
             modifier = Modifier
-                .fillMaxWidth(0.7f) // Ajusta el ancho
-                .height(50.dp)
+                .fillMaxWidth(0.8f) // Ajusta el ancho
+                .height(80.dp)
         ) {
-            Text(text = "INICIAR SESIÓN", color = Color.White)
+            Text(text = "INICIAR SESIÓN", color = Color.White,fontSize = 40.sp)
         }
+        Spacer(modifier = Modifier.height(40.dp))
 
-        // Espaciado entre botones
-        Spacer(modifier = Modifier.height(5.dp))
 
-        // Botón "Crear una cuenta"
-        ClickableText(
-            text = AnnotatedString("Crear una cuenta"),
-            onClick = { /* Acción del texto */ },
-            modifier = Modifier.padding(bottom = 100.dp),
-            style = TextStyle(
-                fontSize = 16.sp,
-                color = Color.Black,
-                textAlign = TextAlign.Center
-            )
-        )
     }
 }
 

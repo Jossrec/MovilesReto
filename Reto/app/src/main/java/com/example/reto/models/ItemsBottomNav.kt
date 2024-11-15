@@ -1,9 +1,6 @@
 package com.example.reto.models
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddCircleOutline
-import androidx.compose.material.icons.outlined.AttachMoney
-import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
@@ -23,12 +20,12 @@ sealed class ItemsBottomNav (
     data object ItemBottomNav2: ItemsBottomNav(
         Icons.Outlined.Search,
         "Search" ,
-                NavScreen.SearchScreen.name
+        NavScreen.SearchScreen.name
     )
     data object ItemBottomNav3: ItemsBottomNav(
         Icons.Outlined.Settings,
         "Settings",
-                NavScreen.ProfileScreen.name
+        NavScreen.ProfileScreen.name
     )
 
 }

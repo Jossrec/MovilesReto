@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">newreto</string>
-    <string name="numerocel">+52 123 456 7890</string>
-    <string name="contraseña">contrasena</string>
-    <string name="correo">samantha@awaq.com</string>
-    <string name="startdate">Activo desde Ene 2024\n</string>
-    <string name="profilename">Samantha Smith</string>
-    <string name="newcontraseña">nuevacontraseña1</string>
+    <string name="app_name">Reto</string>
+    <string name="profilename">Samantha Smith\n</string>
+    <string name="startdate">Activo desde Enero 2024\n</string>
+    <string name="correo">samantha@gmail.com\n</string>
+    <string name="contraseña">password\n</string>
+    <string name="numerocel">+52 123 45 67</string>
+    <string name="com_auth0_domain">dev-6511lhqrk7y4e42z.us.auth0.com</string>
+    <string name="com_auth0_client_id">wa4SSdJ72KqCxwOOSp5osSTbXbPvyPBl</string>
+
 </resources>

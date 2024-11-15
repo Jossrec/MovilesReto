@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
@@ -27,37 +28,27 @@ import com.example.reto.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navController: NavHostController) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            // Envolvemos la TopAppBar en un Box para poder agregar el fondo del semicírculo
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = White)
-            ) {
-                // Imagen de fondo (el semicírculo)
+            Box(modifier = Modifier  ) {
                 Image(
-                    painter = painterResource(id = R.drawable.semicirculo_removebg_preview), // Reemplaza con tu semicírculo
+                    painter = painterResource(id = R.drawable.semicirculo_removebg_preview),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.TopCenter)
-                        .background(color = White)
+                    modifier = Modifier.fillMaxWidth()
                 )
 
-                // Contenido de la TopAppBar
                 CenterAlignedTopAppBar(
-                    modifier = Modifier.height(200.dp),
+                    modifier = Modifier.height(90.dp),
                     title = {
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(),
+                                .fillMaxHeight()
+                                .align(Alignment.Center),
                             contentAlignment = Alignment.BottomCenter
                         ) {
                             Text(
@@ -65,7 +56,8 @@ fun HomeScreen(navController: NavHostController) {
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 color = Color.Black,
-                                fontSize = 60.sp
+                                fontSize = 20.sp,
+                                modifier = Modifier.wrapContentHeight()
                             )
                         }
                     },
@@ -76,7 +68,7 @@ fun HomeScreen(navController: NavHostController) {
                     navigationIcon = {
                         Box(
                             contentAlignment = Alignment.Center,
-                            modifier = Modifier.size(100.dp) // Tamaño consistente
+                            modifier = Modifier.size(100.dp)
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.awaq_verde_vertical),
@@ -89,14 +81,14 @@ fun HomeScreen(navController: NavHostController) {
                     actions = {
                         Box(
                             contentAlignment = Alignment.Center,
-                            modifier = Modifier.size(100.dp) // Tamaño consistente
+                            modifier = Modifier.size(100.dp)
                         ) {
                             IconButton(onClick = { navController.navigate("ProfileScreen") }) {
                                 Icon(
                                     imageVector = Icons.Filled.Person,
                                     contentDescription = "Perfil",
                                     tint = Color.Black,
-                                    modifier = Modifier.size(100.dp) // Ajusta el tamaño interno para que el icono se vea mejor
+                                    modifier = Modifier.size(100.dp)
                                 )
                             }
                         }
@@ -108,17 +100,16 @@ fun HomeScreen(navController: NavHostController) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate("Formulario1") },
-                modifier = Modifier.size(100.dp) // Aumenta el tamaño del botón flotante
+                modifier = Modifier.size(100.dp)
             ) {
                 Icon(
                     Icons.Filled.Add,
                     contentDescription = "Nuevo formulario",
-                    modifier = Modifier.size(40.dp) // Aumenta el tamaño del icono dentro del botón
+                    modifier = Modifier.size(40.dp)
                 )
             }
         },
-
-                bottomBar = {
+        bottomBar = {
             NavegacionInferior(navController)
         },
         content = { paddingValues ->
@@ -128,13 +119,11 @@ fun HomeScreen(navController: NavHostController) {
                     .fillMaxSize()
                     .background(color = White)
             ) {
-
                 DashboardContent(Modifier.padding(top = 32.dp))
             }
         }
     )
 }
-
 @Composable
 fun DashboardContent(modifier: Modifier = Modifier) {
     Column(
@@ -197,11 +186,13 @@ fun EmergencyMessageCard() {
         )
     }
 }
-
-
-
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController()) // Use `rememberNavController()` for preview
+fun PreviewHomeScreen() {
+    val navController = rememberNavController()
+    HomeScreen(
+        onLogout = { /* Acción simulada para cerrar sesión */ },
+        navController = navController,
+        modifier = Modifier.fillMaxSize()
+    )
 }

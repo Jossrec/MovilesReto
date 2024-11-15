@@ -309,7 +309,7 @@ fun Content(
                     RadioButton(
                         selected = tipoRegistro == ruta,
                         onClick = { onTipoRegistroChange(ruta)
-                        Cambio(valores.copy( Tipo_Registro = texto))
+                            Cambio(valores.copy( Tipo_Registro = texto))
                         } // Solo actualiza el estado
                     )
                     Text(text = texto)

@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -16,101 +17,108 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import com.auth0.android.Auth0
+import com.auth0.android.authentication.AuthenticationAPIClient
+import com.auth0.android.result.Credentials
+import com.auth0.android.callback.Callback
 
+import com.auth0.android.authentication.AuthenticationException
 import com.example.reto.R
 
+
 @Composable
-fun LoginScreen( navController: NavController) {
+fun AuthApp(auth0: Auth0, onLoginSuccess: (Credentials) -> Unit, onLogout: () -> Unit) {
+    var loggedIn by remember { mutableStateOf(false) }
+    var credentials by remember { mutableStateOf<Credentials?>(null) }
+    if (loggedIn) {
+        onLoginSuccess(credentials!!)
+    } else {
+        onLogout()
+    }
+}
+
+
+fun loginWithUsernamePassword(
+    auth0: Auth0,
+    email: String,
+    password: String,
+    onSuccess: (Credentials) -> Unit,
+    onError: (String) -> Unit
+) {
+    val authentication = AuthenticationAPIClient(auth0)
+    authentication
+        .login(email, password, "Username-Password-Authentication")
+        .setConnection("Username-Password-Authentication")
+        .validateClaims()
+        .setScope("openid profile email")
+        .start(object : Callback<Credentials, AuthenticationException> {
+            override fun onSuccess(result: Credentials) {
+                onSuccess(result)
+            }
+
+            override fun onFailure(error: AuthenticationException) {
+                Log.e("AuthError", "Authentication error: ${error.getDescription()}")
+                onError(error.message ?: "Unknown error")
+            }
+        })
+}
+
+@Composable
+fun LoginScreen(
+    navController: NavController,
+    auth0: Auth0,
+    onLoginSuccess: (Credentials) -> Unit,
+    modifier: Modifier = Modifier
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf("") } // Variable para mostrar errores
+    var errorMessage by remember { mutableStateOf("") }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-
+    Box(modifier = modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.fondo1), // Reemplaza con tu imagen
+            painter = painterResource(id = R.drawable.fondo1),
             contentDescription = null,
-            contentScale = ContentScale.Crop,  // Ajusta la imagen para que ocupe todo el espacio sin deformarse
+            contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
 
-        // Caja de contenido sobre la imagen
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            // Título "Bienvenido" en la parte superior
+        Box(modifier = Modifier.fillMaxSize()) {
             Text(
                 text = "Bienvenido",
-                style = TextStyle(
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                ),
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(top = 150.dp)
-                    .padding(start = 25.dp)
+                style = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White),
+                modifier = Modifier.align(Alignment.TopStart).padding(top = 150.dp, start = 25.dp)
             )
 
-            // Contenedor para los campos de entrada
             Column(
                 modifier = Modifier
                     .padding(24.dp)
                     .fillMaxWidth()
-                    .align(Alignment.Center) // Alinear el contenido de la columna al centro
+                    .align(Alignment.Center)
             ) {
-                // Título de sesión
                 Text(
                     text = "Inicia Sesión",
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    ),
-                    modifier = Modifier
-                        .padding(bottom = 16.dp)
-                        .padding(top = 130.dp)
+                    style = TextStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold, color = Color.Black),
+                    modifier = Modifier.padding(bottom = 16.dp, top = 130.dp)
                 )
 
-                // Email Input
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text(text = "Email") },
                     singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
                 )
 
-                // Contraseña Input
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
                     label = { Text(text = "Contraseña") },
                     singleLine = true,
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
                 )
 
-                // "Olvidaste tu contraseña?" Text
-                Text(
-                    text = "¿Olvidaste la contraseña?",
-                    fontSize = 14.sp,
-                    color = Color(0xFF749444),
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(bottom = 32.dp)
-                )
-
-                // Mostrar mensaje de error si los campos están vacíos
                 if (errorMessage.isNotEmpty()) {
                     Text(
                         text = errorMessage,
@@ -120,9 +128,12 @@ fun LoginScreen( navController: NavController) {
                     )
                 }
 
-                // Botón de Entrar
                 Button(
-                    onClick = {},
+                    onClick = {
+                        loginWithUsernamePassword(auth0, email, password, onLoginSuccess, onError = { message ->
+                            errorMessage = message
+                        })
+                    },
                     modifier = Modifier
                         .width(150.dp)
                         .height(48.dp)
