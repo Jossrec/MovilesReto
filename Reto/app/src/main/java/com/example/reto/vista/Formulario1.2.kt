@@ -49,97 +49,48 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormScreen(
     navController: NavController,
     viewModel: Formulario_1_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    //Room
     val coroutineScope = rememberCoroutineScope()
     val valores = viewModel.itemUiState.itemDetails
     val Cambio = viewModel::updateUiState
 
-    var transectNumber by remember { mutableStateOf("") }
-    var commonName by remember { mutableStateOf("") }
-    var scientificName by remember { mutableStateOf("") }
-    var numberOfIndividuals by remember { mutableStateOf("") }
     var selectedAnimal by remember { mutableStateOf("Insecto") }
     var selectedObservationType by remember { mutableStateOf("La Vió") }
     Cambio(valores.copy(tipoAnimal = selectedAnimal, TipoObservacion = selectedObservationType))
-    var observations by remember { mutableStateOf("") }
+
     val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
-
-    // Estado para URI de imagen capturada o seleccionada
-    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val context = LocalContext.current
-    val file = context.createImageFile()
-    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
-
-    // Lanzador para la cámara
-    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (success) capturedImageUri = uri
-    }
-
-    // Lanzador para la galería
-    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { selectedUri ->
-        capturedImageUri = selectedUri
-    }
-
-    // Lanzador para permisos de cámara
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) {
-            cameraLauncher.launch(uri)
-        } else {
-            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // Función para seleccionar imagen (cámara o galería)
-    fun selectImageOption() {
-        val permissionCheckResult = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
-        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-            cameraLauncher.launch(uri) // Lanzar la cámara si el permiso está concedido
-        } else {
-            permissionLauncher.launch(android.Manifest.permission.CAMERA)
-        }
-    }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.height(120.dp), // Aumenta la altura de la barra superior
                 title = {
-                    Box(
-                        contentAlignment = Alignment.Center, // Centra el contenido vertical y horizontalmente
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(
-                            "Formulario",
-                            fontSize = 50.sp, // Ajusta el tamaño de fuente para iPad
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = Black
-                        )
-                    }
+                    Text(
+                        "Formulario",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = GreenAwaq,
-                    titleContentColor = Black
+                    titleContentColor = Black,
+                    scrolledContainerColor = GreenAwaq
                 ),
                 navigationIcon = {
-                    IconButton(
-                        onClick = { navController.navigate(route = "Formulario1") },
-                        modifier = Modifier
-                            .size(80.dp) // Aumenta el tamaño del botón en general
-                            .padding(vertical = 20.dp) // Alinea verticalmente el botón dentro del TopAppBar
-                    ) {
+                    IconButton(onClick = {
+                        navController.navigate("Formulario1")
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Atrás",
-                            tint = com.example.reto.ui.theme.Black,
-                            modifier = Modifier.size(50.dp) // Tamaño más grande para el ícono de flecha
+                            contentDescription = "Regresar"
                         )
                     }
                 }
@@ -162,31 +113,30 @@ fun FormScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-
-            // Tipo de Animal
             Text("Tipo de Animal", fontSize = 18.sp)
             Column {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    animalTypes.take(3).forEach { animal -> // Primeros tres animales en la primera fila
+                    animalTypes.take(3).forEach { animal ->
                         Box(
                             modifier = Modifier
-                                .padding(4.dp) // Espaciado entre cada elemento
+                                .padding(4.dp)
                                 .background(
-                                    color = if (selectedAnimal == animal) GreenAwaq else Color.Transparent, // Fondo según selección
-                                    shape = MaterialTheme.shapes.medium // Borde redondeado
+                                    color = if (selectedAnimal == animal) GreenAwaq else Color.Transparent,
+                                    shape = MaterialTheme.shapes.medium
                                 )
                                 .border(
                                     width = 2.dp,
                                     color = Color.Gray,
                                     shape = MaterialTheme.shapes.medium
                                 )
-                                .clickable { selectedAnimal = animal
+                                .clickable {
+                                    selectedAnimal = animal
                                     Cambio(valores.copy(tipoAnimal = selectedAnimal))
-                                } // Cambiar la selección al hacer clic
-                                .padding(8.dp) // Espacio dentro de la caja
+                                }
+                                .padding(8.dp)
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Image(
@@ -210,23 +160,24 @@ fun FormScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    animalTypes.drop(3).forEach { animal -> // Los dos últimos animales en la segunda fila
+                    animalTypes.drop(3).forEach { animal ->
                         Box(
                             modifier = Modifier
-                                .padding(4.dp) // Espaciado entre cada elemento
+                                .padding(4.dp)
                                 .background(
-                                    color = if (selectedAnimal == animal) GreenAwaq else Color.Transparent, // Fondo según selección
-                                    shape = MaterialTheme.shapes.medium // Borde redondeado
+                                    color = if (selectedAnimal == animal) GreenAwaq else Color.Transparent,
+                                    shape = MaterialTheme.shapes.medium
                                 )
                                 .border(
                                     width = 2.dp,
                                     color = Color.Gray,
                                     shape = MaterialTheme.shapes.medium
                                 )
-                                .clickable { selectedAnimal = animal
+                                .clickable {
+                                    selectedAnimal = animal
                                     Cambio(valores.copy(tipoAnimal = selectedAnimal))
-                                } // Cambiar la selección al hacer clic
-                                .padding(8.dp) // Espacio dentro de la caja
+                                }
+                                .padding(8.dp)
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Image(
@@ -247,8 +198,6 @@ fun FormScreen(
                     }
                 }
             }
-
-
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -280,7 +229,6 @@ fun FormScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Tipo de Observación
             Text("Tipo de Observación", fontSize = 18.sp)
             Column(modifier = Modifier.selectableGroup()) {
                 observationTypes.forEach { observation ->
@@ -289,45 +237,24 @@ fun FormScreen(
                             .fillMaxWidth()
                             .selectable(
                                 selected = selectedObservationType == observation,
-                                onClick = { selectedObservationType = observation }
+                                onClick = {
+                                    selectedObservationType = observation
+                                    Cambio(valores.copy(TipoObservacion = selectedObservationType))
+                                }
                             )
                             .padding(0.dp),
-                        verticalAlignment = Alignment.CenterVertically // Alineación vertical
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
                             selected = selectedObservationType == observation,
-                            onClick = { selectedObservationType = observation
+                            onClick = {
+                                selectedObservationType = observation
                                 Cambio(valores.copy(TipoObservacion = selectedObservationType))
                             }
                         )
                         Text(observation)
                     }
                 }
-            }
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Evidencias (botón para elegir archivo)
-            Text("Evidencias", fontSize = 18.sp)
-            Button(
-                onClick = { selectImageOption() },
-                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Elige archivo")
-            }
-
-            // Vista previa de la imagen seleccionada
-            capturedImageUri?.let { uri ->
-                Image(
-                    painter = rememberImagePainter(uri),
-                    contentDescription = "Imagen seleccionada",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .height(200.dp)
-                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -342,7 +269,7 @@ fun FormScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-            // Botones Atrás y Enviar
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -352,7 +279,9 @@ fun FormScreen(
                 Button(
                     onClick = { navController.navigate(route = "Formulario1") },
                     colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                    modifier = Modifier.weight(1f).padding(end = 8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
                 ) {
                     Text("ATRÁS", color = Color.White)
                 }
@@ -363,24 +292,15 @@ fun FormScreen(
                             Cambio(valores.copy(formId = viewModel.getfromID()))
                             viewModel.saveItem()
                         }
-                      },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaqOscuro
-                    ),
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
                     modifier = Modifier
-                        .weight(1f) // Ocupa espacio proporcional
-                        .padding(start = 8.dp) // Espaciado entre botones
+                        .weight(1f)
+                        .padding(start = 8.dp)
                 ) {
                     Text("ENVIAR", color = Color.White)
                 }
             }
         }
     }
-}
-
-// Función para crear el archivo de imagen temporal
-fun Context.createImageFile(): File {
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-    val imageFileName = "JPEG_${timeStamp}_"
-    return File.createTempFile(imageFileName, ".jpg", externalCacheDir)
 }

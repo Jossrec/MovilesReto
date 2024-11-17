@@ -70,40 +70,7 @@ fun FormScreen7(navController: NavController) {
     var nivquebrada by remember { mutableStateOf(value = "") }
     val zona = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
 
-    // Estado para URI de imagen capturada o seleccionada
-    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
-    val context = LocalContext.current
-    val file = context.createImageFile()
-    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
 
-    // Lanzador para la cámara
-    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (success) capturedImageUri = uri
-    }
-
-    // Lanzador para la galería
-    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { selectedUri ->
-        capturedImageUri = selectedUri
-    }
-
-    // Lanzador para permisos de cámara
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) {
-            cameraLauncher.launch(uri)
-        } else {
-            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // Función para seleccionar imagen (cámara o galería)
-    fun selectImageOption() {
-        val permissionCheckResult = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
-        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-            cameraLauncher.launch(uri) // Lanzar la cámara si el permiso está concedido
-        } else {
-            permissionLauncher.launch(android.Manifest.permission.CAMERA)
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -215,24 +182,13 @@ fun FormScreen7(navController: NavController) {
             // Evidencias (botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
             Button(
-                onClick = { selectImageOption() },
+                onClick = {  },
                 colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Elige archivo")
             }
 
-            // Vista previa de la imagen seleccionada
-            capturedImageUri?.let { uri ->
-                Image(
-                    painter = rememberImagePainter(uri),
-                    contentDescription = "Imagen seleccionada",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .height(200.dp)
-                )
-            }
 
             Spacer(modifier = Modifier.height(16.dp))
 

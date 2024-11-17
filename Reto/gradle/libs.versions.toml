@@ -1,13 +1,19 @@
 
 [versions]
+activity = "1.9.3"
 agp = "8.6.0"
 auth0 = "3.2.0"
 cameraCamera2 = "1.2.2"
 cameraCore = "1.2.2"
+cameraCoreVersion = "1.1.0"
 cameraExtensions = "1.2.2"
+cameraExtensionsVersion = "1.1.0"
 cameraLifecycle = "1.2.2"
+cameraLifecycleVersion = "1.1.0"
 cameraVideo = "1.2.2"
+cameraVideoVersion = "1.1.0"
 cameraView = "1.2.2"
+cameraViewVersion = "1.1.0"
 coil = "2.7.0"
 coilCompose = "2.1.0"
 coilComposeVersion = "2.2.2"
@@ -38,6 +44,13 @@ firebaseCrashlyticsBuildtools = "3.0.2"
 
 [libraries]
 
+androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCoreVersion" }
+androidx-camera-core-v110 = { module = "androidx.camera:camera-core", version.ref = "cameraCoreVersion" }
+androidx-camera-extensions-v110 = { module = "androidx.camera:camera-extensions", version.ref = "cameraExtensionsVersion" }
+androidx-camera-lifecycle-v110 = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraLifecycleVersion" }
+androidx-camera-video-v110 = { module = "androidx.camera:camera-video", version.ref = "cameraVideoVersion" }
+androidx-camera-view-v110 = { module = "androidx.camera:camera-view", version.ref = "cameraViewVersion" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeBom" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "composeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,16 +44,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.auth0.android.Auth0
+import com.auth0.android.provider.WebAuthProvider
 import com.example.reto.R
 import com.example.reto.components.HeaderBar
 
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.White
+import com.auth0.android.callback.Callback
+import com.auth0.android.authentication.AuthenticationException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(navController: NavController) {
+fun Profile(navController: NavController, auth0: Auth0, activity: Activity) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
@@ -148,14 +153,30 @@ fun Profile(navController: NavController) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        onClick = { navController.navigate("ProfileScreen") },
+                        onClick = {
+                            WebAuthProvider.logout(auth0)
+                                .withScheme("com.example.reto") // Reemplaza con tu esquema configurado
+                                .start(activity, object : Callback<Void?, AuthenticationException> {
+                                    override fun onSuccess(payload: Void?) {
+                                        // Navega a la pantalla de LoginScreen después del logout
+                                        navController.navigate("LoginScreen") {
+                                            popUpTo("ProfileScreen") { inclusive = true } // Limpia el stack
+                                        }
+                                    }
+
+                                    override fun onFailure(exception: AuthenticationException) {
+                                        // Maneja errores en caso de que fallen
+                                        println("Error al cerrar sesión: ${exception.message}")
+                                    }
+                                })
+                        },
                         modifier = Modifier.size(300.dp, 70.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = GreenAwaq,
                             contentColor = Color.White
                         )
                     ) {
-                        Text("Cerrar Sesion", fontSize = 40.sp)
+                        Text("Cerrar Sesión", fontSize = 40.sp)
                     }
                 }
             }

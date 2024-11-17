@@ -85,4 +85,12 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.compose)
 
+    implementation(libs.androidx.camera.core.v110) // Ajusta la versión según sea necesario
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle.v110)
+    implementation(libs.androidx.camera.video.v110)
+    implementation(libs.androidx.camera.view.v110)
+    implementation(libs.androidx.camera.extensions.v110)
+    implementation( libs.androidx.activity)
+
 }

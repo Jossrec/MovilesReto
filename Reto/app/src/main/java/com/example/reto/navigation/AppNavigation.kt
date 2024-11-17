@@ -1,6 +1,7 @@
 package com.example.reto.navigation
 
 import FormScreen
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -20,13 +21,15 @@ import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MapScreen
 import com.example.reto.vista.Profile
 import com.example.reto.vista.SearchScreen
-import com.auth0.android.Auth0
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import com.auth0.android.result.Credentials
+import com.example.reto.MainActivity
 import com.example.reto.viewmodels.UserViewModel
+import com.auth0.android.Auth0
 import com.example.reto.vista.AuthApp
 
 
@@ -53,7 +56,7 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = if (loggedIn) NavScreen.HomeScreen.name else NavScreen.Intro.name
+        startDestination = if (loggedIn) NavScreen.HomeScreen.name else NavScreen.LoginScreen.name
     ) {
         composable(NavScreen.HomeScreen.name) {
             HomeScreen(
@@ -74,7 +77,8 @@ fun AppNavigation(
             EditInfoScreen(navController)
         }
         composable(NavScreen.ProfileScreen.name) {
-            Profile(navController)
+            val activity = LocalContext.current as Activity // Obtén la actividad actual
+            Profile(navController, auth0 = auth0, activity = activity)
         }
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
