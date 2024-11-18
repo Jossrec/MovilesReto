@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,7 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.reto.MainActivity
 import com.example.reto.R
+import com.example.reto.components.CameraButton
+import com.example.reto.components.HeaderBar
 import com.example.reto.data.ItemDao2
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
@@ -99,38 +103,9 @@ fun FormScreen7(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        "Formulario",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = GreenAwaq,
-                    titleContentColor = Black,
-                    scrolledContainerColor = GreenAwaq
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Descripción del ícono"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { /* Acción del menú */ }) {
-                        Icon(
-                            imageVector = Icons.Filled.MoreVert,
-                            contentDescription = "Descripción del ícono"
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior
-            )
+        topBar = { HeaderBar(navController) },
+        floatingActionButton = {
+            CameraButton(activity = LocalContext.current as MainActivity, navController)
         }
     ) { innerPadding ->
         LazyColumn(

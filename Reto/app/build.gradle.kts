@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.support.annotations)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     implementation(libs.androidx.material.icons.extended)
     androidTestImplementation(libs.androidx.junit)
@@ -80,7 +81,6 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-    implementation(libs.maps.compose)
     implementation(libs.auth0)
     implementation(libs.coil)
     implementation(libs.coil.compose)
@@ -92,5 +92,9 @@ dependencies {
     implementation(libs.androidx.camera.view.v110)
     implementation(libs.androidx.camera.extensions.v110)
     implementation( libs.androidx.activity)
+    implementation (libs.accompanist.permissions.v0301)
+    implementation (libs.maps.compose.v2111)
+
+
 
 }

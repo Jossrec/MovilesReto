@@ -1,5 +1,7 @@
 
 [versions]
+accompanistPermissions = "0.30.1)"
+accompanistPermissionsVersion = "0.30.1"
 activity = "1.9.3"
 agp = "8.6.0"
 auth0 = "3.2.0"
@@ -27,8 +29,10 @@ lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.04.01"
 mapsCompose = "2.11.0"
+mapsComposeVersion = "2.11.1"
 materialIconsExtended = "1.7.3"
 navigationRuntimeKtx = "2.8.2"
+playServicesLocationVersion = "21.0.1"
 playServicesMaps = "19.0.0"
 roomRuntime = "2.6.1"
 webkit = "1.12.1"
@@ -41,9 +45,12 @@ material3Android = "1.3.0"
 roomCompiler = "2.6.1"
 supportAnnotations = "28.0.0"
 firebaseCrashlyticsBuildtools = "3.0.2"
+playServicesLocation = "21.3.0"
 
 [libraries]
 
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+accompanist-permissions-v0301 = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissionsVersion" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCoreVersion" }
 androidx-camera-core-v110 = { module = "androidx.camera:camera-core", version.ref = "cameraCoreVersion" }
@@ -82,6 +89,8 @@ androidx-room-common = { group = "androidx.room", name = "room-common", version.
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-runtime-desktop = { group = "androidx.compose.runtime", name = "runtime-desktop", version.ref = "runtimeDesktop" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+maps-compose-v2111 = { module = "com.google.maps.android:maps-compose", version.ref = "mapsComposeVersion" }
+play-services-location-v2101 = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 
 
@@ -93,6 +102,7 @@ camerax-extensions = { group = "androidx.camera", name = "camera-extensions", ve
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 support-annotations = { group = "com.android.support", name = "support-annotations", version.ref = "supportAnnotations" }
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

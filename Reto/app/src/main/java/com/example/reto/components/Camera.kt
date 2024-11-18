@@ -1,27 +1,20 @@
 package com.example.reto.components
 
 
-import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Camera
+
 import androidx.compose.material.icons.filled.PhotoCamera
-import androidx.compose.material3.Button
+
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

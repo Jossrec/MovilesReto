@@ -24,6 +24,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.components.NavegacionInferior
+import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 import com.example.reto.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -100,7 +102,8 @@ fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navControlle
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate("Formulario1") },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(100.dp),
+                containerColor = GreenAwaq
             ) {
                 Icon(
                     Icons.Filled.Add,

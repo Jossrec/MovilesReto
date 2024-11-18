@@ -8,46 +8,37 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
+
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.ui.theme.AppViewModelProvider
-import com.example.reto.ui.theme.Black
+
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 import com.example.reto.vista.Formulario_1_2ViewModel
 import kotlinx.coroutines.launch
 
-import android.content.Context
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.widget.Toast
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import coil.compose.rememberImagePainter
+import com.example.reto.MainActivity
 import com.example.reto.R
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.reto.components.CameraButton
+import com.example.reto.components.HeaderBar
 
 
 
@@ -66,36 +57,24 @@ fun FormScreen(
     var selectedObservationType by remember { mutableStateOf("La Vió") }
     Cambio(valores.copy(tipoAnimal = selectedAnimal, TipoObservacion = selectedObservationType))
 
-    val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")
-    val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
+    val animalTypes = remember { listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto") }
+    val observationTypes = remember { listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron") }
 
+
+    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
+
+    // ActivityResultLauncher para seleccionar archivo
+    val filePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedFileUri = uri // Guarda el URI del archivo seleccionado
+    }
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        "Formulario",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = GreenAwaq,
-                    titleContentColor = Black,
-                    scrolledContainerColor = GreenAwaq
-                ),
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navController.navigate("Formulario1")
-                    }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Regresar"
-                        )
-                    }
-                }
-            )
+        topBar = { HeaderBar(navController) },
+        floatingActionButton = {
+            CameraButton(activity = LocalContext.current as MainActivity, navController)
         }
+
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -256,6 +235,44 @@ fun FormScreen(
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = { filePickerLauncher.launch("*/*") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GreenAwaqOscuro
+                    ),
+                    modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
+                ) {
+                    Text("Elige archivo", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(24.dp) // Fija la altura del contenedor del texto
+                        .background(Color.LightGray, shape = MaterialTheme.shapes.small)
+                        .padding(horizontal = 8.dp),
+                    contentAlignment = Alignment.CenterStart // Alinea el texto a la izquierda
+                ) {
+                    Text(
+                        text = selectedFileUri?.lastPathSegment ?: "Ningún archivo seleccionado",
+                        color = Color.Black,
+                        maxLines = 1, // Limita el texto a una sola línea
+                        fontSize = 12.sp, // Ajusta el tamaño de fuente
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis // Agrega puntos suspensivos si el texto es largo
+                    )
+                }
+            }
+
 
             Spacer(modifier = Modifier.height(16.dp))
 

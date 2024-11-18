@@ -113,7 +113,7 @@ fun CameraWindow(
             CameraControlButton(
                 icon = Icons.Filled.ArrowBack,
                 contentDescription = "Cerrar Cámara",
-                onClick = onClose // Llama al callback para cerrar la cámara
+                onClick = onClose ,// Llama al callback para cerrar la cámara
             )
 
             Spacer(modifier = Modifier.width(1.dp))
