@@ -33,9 +33,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 
 import android.net.Uri
+import android.os.Build
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.LocalContext
 import com.example.reto.MainActivity
 import com.example.reto.R
@@ -45,6 +47,7 @@ import com.example.reto.components.HeaderBar
 
 
 
+@RequiresApi(Build.VERSION_CODES.P)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormScreen(
@@ -244,10 +247,10 @@ fun FormScreen(
 //CHECAR CAMBIOS
             // Evidencias (botón para elegir archivo)
             Text("Evidencias", fontSize = 18.sp)
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                modifier = Modifier.fillMaxWidth())
+//            Button(
+//                onClick = {},
+//                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+//                modifier = Modifier.fillMaxWidth())
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
