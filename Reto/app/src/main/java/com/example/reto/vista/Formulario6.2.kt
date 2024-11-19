@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
@@ -34,12 +35,20 @@ import com.example.reto.MainActivity
 import com.example.reto.R
 import com.example.reto.components.CameraButton
 import com.example.reto.components.HeaderBar
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormScreen6(navController: NavController) {
+fun FormScreen6(
+    navController: NavController,
+    viewModel: Forms_6_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
 
     var observations by remember { mutableStateOf("") }
     var selectedZona by remember { mutableStateOf(value = "Bosque") }
@@ -79,8 +88,8 @@ fun FormScreen6(navController: NavController) {
         ) {
 
             OutlinedTextField(
-                value = codigo,
-                onValueChange = { codigo= it },
+                value = valores.codigo,
+                onValueChange = { Cambio(valores.copy(codigo = it)) },
                 label = { Text("Código") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -102,7 +111,9 @@ fun FormScreen6(navController: NavController) {
                     ) {
                         RadioButton(
                             selected = selectedZona == zona,
-                            onClick = { selectedZona = zona }
+                            onClick = { selectedZona = zona
+                                Cambio(valores.copy(zona = selectedZona))
+                            }
                         )
                         Text(zona)
                     }
@@ -112,8 +123,8 @@ fun FormScreen6(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = nomcamara,
-                onValueChange = { nomcamara = it },
+                value = valores.nombreCamara,
+                onValueChange = {  Cambio(valores.copy(nombreCamara = it)) },
                 label = { Text("Nombre Cámara") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -121,8 +132,8 @@ fun FormScreen6(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = placacamara,
-                onValueChange = { placacamara = it },
+                value = valores.placaCamara,
+                onValueChange = {  Cambio(valores.copy(placaCamara = it)) },
                 label = { Text("Placa Cámara") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -130,8 +141,8 @@ fun FormScreen6(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = placaguaya,
-                onValueChange = { placaguaya = it },
+                value = valores.placaGuaya,
+                onValueChange = {  Cambio(valores.copy(placaGuaya = it)) },
                 label = { Text("Placa Guaya") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -139,8 +150,8 @@ fun FormScreen6(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = anchocamino,
-                onValueChange = { anchocamino = it },
+                value = valores.anchoCamino,
+                onValueChange = {  Cambio(valores.copy(anchoCamino = it)) },
                 label = { Text("Ancho Camino mt") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -148,8 +159,8 @@ fun FormScreen6(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = fechainstalacion,
-                onValueChange = { fechainstalacion = it },
+                value = valores.fechaInstalacion,
+                onValueChange = {  Cambio(valores.copy(fechaInstalacion = it))},
                 label = { Text("Fecha de Instalación") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -157,8 +168,8 @@ fun FormScreen6(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = distobjetivo,
-                onValueChange = { distobjetivo= it },
+                value = valores.distanciaObjetivo,
+                onValueChange = {  Cambio(valores.copy(distanciaObjetivo = it)) },
                 label = { Text("Distancia al objetivo mt") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -166,8 +177,8 @@ fun FormScreen6(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = altlente,
-                onValueChange = { altlente= it },
+                value = valores.alturaLente,
+                onValueChange = {  Cambio(valores.copy(alturaLente = it)) },
                 label = { Text("Altura del lente mt") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -186,6 +197,16 @@ fun FormScreen6(navController: NavController) {
                             checked = isChecked,
                             onCheckedChange = { checked ->
                                 items[index] = label to checked // Actualiza el estado del checkbox
+                                val nuevoEstado = when (label) {
+                                    "Programada" -> valores.copy(programada = isChecked)
+                                    "Memoria" -> valores.copy(memoria = isChecked)
+                                    "Prueba de gateo" -> valores.copy(pruebaDeGateo = isChecked)
+                                    "Instalada" -> valores.copy(instalada = isChecked)
+                                    "Letrero de cámara" -> valores.copy(letreroDeCamara = isChecked)
+                                    "Prendida" -> valores.copy(prendida = isChecked)
+                                    else -> valores // Si no coincide, dejamos el objeto como está
+                                }
+                                Cambio(nuevoEstado)
                             },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = GreenAwaq,
@@ -215,8 +236,8 @@ fun FormScreen6(navController: NavController) {
 
             // Observaciones
             OutlinedTextField(
-                value = observations,
-                onValueChange = { observations = it },
+                value = valores.observaciones,
+                onValueChange = { Cambio(valores.copy(observaciones = it)) },
                 label = { Text("Observaciones") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -244,7 +265,12 @@ fun FormScreen6(navController: NavController) {
                     Text("ATRÁS", color = Color.White)
                 }
                 Button(
-                    onClick = { navController.navigate(route = "HomeScreen") },
+                    onClick = {
+                        navController.navigate(route = "HomeScreen")
+                        coroutineScope.launch {
+                            Cambio(valores.copy(formId = viewModel.getfromID()))
+                            viewModel.saveItem()
+                        } },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),

@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 
@@ -48,19 +49,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.example.reto.MainActivity
 import com.example.reto.components.CameraButton
 import com.example.reto.components.HeaderBar
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormScreen7(navController: NavController) {
+fun FormScreen7(
+    navController: NavController,
+    viewModel: Forms_7_2ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val valores = viewModel.itemUiState.itemDetails
+    val Cambio = viewModel::updateUiState
 
     var observations by remember { mutableStateOf("") }
     var selectedZona by remember { mutableStateOf(value = "Bosque") }
@@ -105,7 +115,7 @@ fun FormScreen7(navController: NavController) {
                     ) {
                         RadioButton(
                             selected = selectedZona == zona,
-                            onClick = { selectedZona = zona }
+                            onClick = { Cambio(valores.copy(zona = selectedZona)) }
                         )
                         Text(zona)
                     }
@@ -115,8 +125,8 @@ fun FormScreen7(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = pluviosidad,
-                onValueChange = { pluviosidad = it },
+                value = valores.Pluviosidad,
+                onValueChange = { Cambio(valores.copy(Pluviosidad = it)) },
                 label = { Text("Pluviosidad (mm)") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -124,8 +134,8 @@ fun FormScreen7(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = tempmax,
-                onValueChange = { tempmax = it },
+                value = valores.Temperatura_maxima,
+                onValueChange = { Cambio(valores.copy(Temperatura_maxima = it)) },
                 label = { Text("Temperatura Máxima") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -133,8 +143,8 @@ fun FormScreen7(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = hummax,
-                onValueChange = { hummax = it },
+                value = valores.Humedad_maxima,
+                onValueChange = { Cambio(valores.copy(Humedad_maxima = it)) },
                 label = { Text("Humedad Máxima") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -142,8 +152,8 @@ fun FormScreen7(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = tempmin,
-                onValueChange = { tempmin = it },
+                value = valores.Temperatura_minima,
+                onValueChange = { Cambio(valores.copy(Temperatura_minima = it)) },
                 label = { Text("Temperatura mínima") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -151,8 +161,8 @@ fun FormScreen7(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = tempminp,
-                onValueChange = { tempminp = it },
+                value = valores.Humedad_minima,
+                onValueChange = { Cambio(valores.copy(Humedad_minima = it)) },
                 label = { Text("Temperatura mínima???") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -160,8 +170,8 @@ fun FormScreen7(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = nivquebrada,
-                onValueChange = { nivquebrada = it },
+                value = valores.Nivel_Quebrada,
+                onValueChange = { Cambio(valores.copy(Nivel_Quebrada = it)) },
                 label = { Text("Nivel Quebrada (mt)") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -184,14 +194,14 @@ fun FormScreen7(navController: NavController) {
 
 
             // Observaciones
-            OutlinedTextField(
-                value = observations,
-                onValueChange = { observations = it },
-                label = { Text("Observaciones") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-            )
+//            OutlinedTextField(
+//                value = observations,
+//                onValueChange = { observations = it },
+//                label = { Text("Observaciones") },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(100.dp)
+//            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -217,7 +227,11 @@ fun FormScreen7(navController: NavController) {
                     Text("ATRÁS", color = Color.White)
                 }
                 Button(
-                    onClick = { navController.navigate(route = "HomeScreen") },
+                    onClick = { navController.navigate(route = "HomeScreen")
+                        coroutineScope.launch {
+                            Cambio(valores.copy(formId = viewModel.getfromID()))
+                            viewModel.saveItem()
+                        } },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
