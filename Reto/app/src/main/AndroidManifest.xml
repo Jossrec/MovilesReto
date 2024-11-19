@@ -8,6 +8,14 @@
         android:required="false" />
     <uses-permission android:name="android.permission.CAMERA"/>
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-feature android:name="android.hardware.camera.any"/>
     <application
         android:name=".InventoryApplication"
         android:allowBackup="true"
@@ -29,10 +37,13 @@
             android:theme="@style/Theme.Reto">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <data android:scheme="com.example.reto" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>

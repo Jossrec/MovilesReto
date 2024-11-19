@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,14 +44,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.auth0.android.Auth0
+import com.auth0.android.provider.WebAuthProvider
 import com.example.reto.R
+import com.example.reto.components.HeaderBar
+
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.White
+import com.auth0.android.callback.Callback
+import com.auth0.android.authentication.AuthenticationException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(navController: NavController) {
+fun Profile(navController: NavController, auth0: Auth0, activity: Activity) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -90,7 +99,8 @@ fun Profile(navController: NavController) {
         ) {
             Row(
                 Modifier.padding(top = 20.dp),
-                verticalAlignment = Alignment.CenterVertically) {
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.profilepic),
                     contentDescription = "foto de perfil",
@@ -117,6 +127,7 @@ fun Profile(navController: NavController) {
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(80.dp))
             Column(Modifier.padding(top = 50.dp)) {
                 Row(modifier = Modifier.padding(bottom = 10.dp)) {
                     Image(
@@ -131,125 +142,48 @@ fun Profile(navController: NavController) {
                         modifier = Modifier.padding(start = 30.dp)
                     )
                 }
-                Divider()
+                Spacer(modifier = Modifier.height(80.dp))
 
-                Row(modifier = Modifier.padding(top = 20.dp, bottom = 10.dp, ), verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_smartphone_24),
-                        contentDescription = "contraseña",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(30.dp)
 
-                    )
-                    Text(
-                        text = stringResource(R.string.numerocel),
-                        fontSize = 30.sp,
-                        modifier = Modifier.padding(start = 30.dp, end = 40.dp)
-                    )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Button(
-                        onClick = { navController.navigate("EditInfoScreen") },
-                        modifier = Modifier.size(120.dp, 40.dp),
+                        onClick = {
+                            WebAuthProvider.logout(auth0)
+                                .withScheme("com.example.reto") // Reemplaza con tu esquema configurado
+                                .start(activity, object : Callback<Void?, AuthenticationException> {
+                                    override fun onSuccess(payload: Void?) {
+                                        // Navega a la pantalla de LoginScreen después del logout
+                                        navController.navigate("LoginScreen") {
+                                            popUpTo("ProfileScreen") { inclusive = true } // Limpia el stack
+                                        }
+                                    }
+
+                                    override fun onFailure(exception: AuthenticationException) {
+                                        // Maneja errores en caso de que fallen
+                                        println("Error al cerrar sesión: ${exception.message}")
+                                    }
+                                })
+                        },
+                        modifier = Modifier.size(300.dp, 70.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF9CCC65),
+                            containerColor = GreenAwaq,
                             contentColor = Color.White
                         )
                     ) {
-                        Text("Editar", fontSize = 25.sp)
+                        Text("Cerrar Sesión", fontSize = 40.sp)
                     }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(4.dp, shape = RoundedCornerShape(12.dp))
-                        .background(
-                            Color.White,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .padding(horizontal = 16.dp, vertical = 30.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Cambiar contraseña",
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.weight(1f),
-                        fontSize = 30.sp,
-                        color = Black
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
-                        contentDescription = "flecha",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clickable { navController.navigate("EditPasswordScreen") }
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(4.dp, shape = RoundedCornerShape(12.dp))
-                        .background(
-                            Color.White,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .padding(horizontal = 16.dp, vertical = 30.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Notificaciones",
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.weight(1f),
-                        fontSize = 30.sp,
-                        color = Black
-                    )
-                    val isChecked = true
-                    Switch(
-                        checked = isChecked,
-                        onCheckedChange = null
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        Color.LightGray,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    onClick = { navController.navigate("Intro") },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.LightGray,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(
-                        "Cerrar Sesion",
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.Normal,
-                        color = Black
-                    )
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun showProfile(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
-    Profile(navController)
-}
+
+
+

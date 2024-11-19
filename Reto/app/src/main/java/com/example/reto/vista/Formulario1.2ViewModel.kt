@@ -97,5 +97,6 @@ fun Formulario_1.toItemDetails(): Formulario_1Details = Formulario_1Details(
     nombreCientifico = nombreCientifico,
     numeroIndividuos = numeroIndividuos.toString(),
     TipoObservacion = TipoObservacion,
-    observaciones = observaciones
+    observaciones = observaciones,
+
 )

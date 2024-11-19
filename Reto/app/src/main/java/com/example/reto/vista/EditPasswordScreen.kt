@@ -15,7 +15,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -119,7 +118,7 @@ fun EditPasswordScreen(navController: NavController) {
                 )
             }
 
-            Divider()
+
             Spacer(modifier = Modifier.padding(10.dp))
 
             Column {
@@ -132,7 +131,7 @@ fun EditPasswordScreen(navController: NavController) {
                 OutlinedTextField(
                     value = newPassword,
                     onValueChange = { newPassword = it },
-                    label = { Text(text = stringResource(R.string.newcontraseña)) },
+                    label = {  },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(120.dp),
@@ -141,7 +140,7 @@ fun EditPasswordScreen(navController: NavController) {
                 )
             }
 
-            Divider()
+
             Spacer(modifier = Modifier.padding(10.dp))
 
             Column {
@@ -154,7 +153,7 @@ fun EditPasswordScreen(navController: NavController) {
                 OutlinedTextField(
                     value = confirmPassword,
                     onValueChange = { confirmPassword = it },
-                    label = { Text(text = stringResource(R.string.newcontraseña)) },
+                    label = { },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(120.dp),
@@ -163,7 +162,7 @@ fun EditPasswordScreen(navController: NavController) {
                 )
             }
 
-            Divider()
+
             Spacer(modifier = Modifier.padding(30.dp))
 
             Row(
@@ -183,10 +182,4 @@ fun EditPasswordScreen(navController: NavController) {
             }
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun showEditPasswordScreen(modifier: Modifier = Modifier) {
-    EditPasswordScreen(navController = rememberNavController())
 }

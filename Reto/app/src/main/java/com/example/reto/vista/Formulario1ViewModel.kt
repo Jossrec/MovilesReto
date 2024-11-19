@@ -22,6 +22,11 @@ class Formulario_1ViewModel(private val itemsRepository: ItemsRepository) : View
      * Updates the [itemUiState] with the value provided in the argument. This method also triggers
      * a validation for input values.
      */
+    // Función para guardar la localidad
+    fun updateLocalidad(localidad: String) {
+        itemUiState = itemUiState.copy(itemDetails = itemUiState.itemDetails.copy(Localidad = localidad))
+    }
+
     fun updateUiState(itemDetails: Formulario_baseDetails) {
         itemUiState =
             Formulario_baseUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))

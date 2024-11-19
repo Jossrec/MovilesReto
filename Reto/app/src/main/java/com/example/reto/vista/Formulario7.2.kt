@@ -51,6 +51,9 @@ import androidx.core.content.FileProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
+import com.example.reto.MainActivity
+import com.example.reto.components.CameraButton
+import com.example.reto.components.HeaderBar
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 
@@ -70,23 +73,12 @@ fun FormScreen7(navController: NavController) {
     var nivquebrada by remember { mutableStateOf(value = "") }
     val zona = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
 
+
+
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Formulario", maxLines = 1) },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = GreenAwaq,
-                    titleContentColor = com.example.reto.ui.theme.Black
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate(route = "Formulario1") }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Atrás"
-                        )
-                    }
-                },
-            )
+        topBar = { HeaderBar(navController) },
+        floatingActionButton = {
+            CameraButton(activity = LocalContext.current as MainActivity, navController)
         }
     ) { innerPadding ->
         Column(
@@ -177,10 +169,10 @@ fun FormScreen7(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            // Evidencias (botón para elegir archivos
+            // Evidencias botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
             Button(
-                onClick = { },
+                onClick = {  },
                 colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
                 modifier = Modifier.fillMaxWidth()
             ) {

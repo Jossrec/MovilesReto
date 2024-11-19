@@ -46,6 +46,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -59,14 +60,14 @@ import com.example.reto.ui.theme.GreenAwaqOscuro
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.reto.MainActivity
+import com.example.reto.components.CameraButton
 
-import com.example.reto.components.HeaderBar
+
 import com.example.reto.ui.theme.AppViewModelProvider
 
-import com.example.reto.ui.theme.GreenAwaq
-import com.example.reto.ui.theme.GreenAwaqOscuro
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun Formulario1(
@@ -74,43 +75,37 @@ fun Formulario1(
     viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollState = rememberScrollState()
-    var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") } // Inicializa con uno por defecto
+    var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") }
 
     Scaffold(
-        topBar = { HeaderBar(navController) }
+        topBar = { HeaderBar(navController) },
+        floatingActionButton = {
+            CameraButton(activity = LocalContext.current as MainActivity, navController)
+        }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(scrollState)
-                .padding(16.dp)
         ) {
-            // Primer componente desplazable
-            Content(
-                navController = navController,
-                tipoRegistro = tipoRegistro,
-                onTipoRegistroChange = { selectedTipoRegistro ->
-                    tipoRegistro = selectedTipoRegistro
-                },
-//                valores = viewModel.itemUiState.itemDetails,
-//                Cambio = viewModel::updateUiState
-            )
-
-            // Botón al final del contenido
-//            Boton(
-//                scrollState = scrollState,
-//                tipoRegistro = tipoRegistro,
-//                navController = navController,
-//                coroutineScope = coroutineScope,
-//                onNextClicked = {
-//                        viewModel.saveItem()
-//                }
-//            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(16.dp)
+            ) {
+                // Contenido desplazable
+                Content(
+                    navController = navController,
+                    tipoRegistro = tipoRegistro,
+                    onTipoRegistroChange = { selectedTipoRegistro ->
+                        tipoRegistro = selectedTipoRegistro
+                    }
+                )
+            }
         }
     }
 }
-
 //@Composable
 //fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHostController, coroutineScope: CoroutineScope, onNextClicked: suspend () -> Unit) {
 //    Button(
@@ -130,12 +125,9 @@ fun Formulario1(
 //        Text(text = "Siguiente")
 //    }
 //}
-
 @Composable
 fun Content(
     modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
-//    valores: Formulario_baseDetails,
-//    Cambio: (Formulario_baseDetails) -> Unit = {},
     viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     //Room
@@ -309,7 +301,7 @@ fun Content(
                     RadioButton(
                         selected = tipoRegistro == ruta,
                         onClick = { onTipoRegistroChange(ruta)
-                        Cambio(valores.copy( Tipo_Registro = texto))
+                            Cambio(valores.copy( Tipo_Registro = texto))
                         } // Solo actualiza el estado
                     )
                     Text(text = texto)
@@ -336,9 +328,3 @@ fun Content(
 
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewFormulario1() {
-    val navController = rememberNavController()
-    Formulario1(navController)
-}
