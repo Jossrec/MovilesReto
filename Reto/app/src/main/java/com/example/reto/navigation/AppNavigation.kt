@@ -1,7 +1,8 @@
 package com.example.reto.navigation
 
 import FormScreen
-import android.app.Activity
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,20 +26,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.auth0.android.result.Credentials
-import com.example.reto.MainActivity
 import com.example.reto.viewmodels.UserViewModel
 import com.auth0.android.Auth0
-import com.example.reto.data.ItemsRepository
 import com.example.reto.vista.AuthApp
-import com.example.reto.vista.Formulario_1ViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun AppNavigation(
     navController: NavHostController,
@@ -83,9 +77,12 @@ fun AppNavigation(
             EditInfoScreen(navController)
         }
         composable(NavScreen.ProfileScreen.name) {
-            val activity = LocalContext.current as Activity // Obtén la actividad actual
-            Profile(navController, auth0 = auth0, activity = activity)
+            Profile(
+                navController = navController,
+                currentCredentials = remember { mutableStateOf(credentials) } // Pasa las credenciales actuales
+            )
         }
+
         composable(NavScreen.Intro.name) {
             IntroScreen(navController)
         }
