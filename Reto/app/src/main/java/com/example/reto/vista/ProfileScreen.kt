@@ -2,8 +2,6 @@ package com.example.reto.vista
 
 import android.app.Activity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,23 +13,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import com.auth0.android.result.Credentials
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
@@ -39,25 +34,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.auth0.android.Auth0
-import com.auth0.android.provider.WebAuthProvider
+
 import com.example.reto.R
-import com.example.reto.components.HeaderBar
 
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.GreenAwaq
-import com.example.reto.ui.theme.White
-import com.auth0.android.callback.Callback
-import com.auth0.android.authentication.AuthenticationException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(navController: NavController, auth0: Auth0, activity: Activity) {
+fun Profile(navController: NavController, currentCredentials: MutableState<Credentials?>) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
@@ -154,26 +142,16 @@ fun Profile(navController: NavController, auth0: Auth0, activity: Activity) {
                 ) {
                     Button(
                         onClick = {
-                            WebAuthProvider.logout(auth0)
-                                .withScheme("com.example.reto") // Reemplaza con tu esquema configurado
-                                .start(activity, object : Callback<Void?, AuthenticationException> {
-                                    override fun onSuccess(payload: Void?) {
-                                        // Navega a la pantalla de LoginScreen después del logout
-                                        navController.navigate("LoginScreen") {
-                                            popUpTo("ProfileScreen") { inclusive = true } // Limpia el stack
-                                        }
-                                    }
+                            currentCredentials.value = null
 
-                                    override fun onFailure(exception: AuthenticationException) {
-                                        // Maneja errores en caso de que fallen
-                                        println("Error al cerrar sesión: ${exception.message}")
-                                    }
-                                })
+                            navController.navigate("loginScreen") {
+                                popUpTo("loginScreen") { inclusive = true }
+                            }
                         },
                         modifier = Modifier.size(300.dp, 70.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = GreenAwaq,
-                            contentColor = Color.White
+                            contentColor = Black
                         )
                     ) {
                         Text("Cerrar Sesión", fontSize = 40.sp)
