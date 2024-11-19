@@ -30,8 +30,7 @@ fun NavegacionInferior(
         modifier = Modifier.height(120.dp)
     ) {
         NavigationBar(
-            containerColor = GreenAwaq,
-            modifier = Modifier.height(120.dp)
+            containerColor = GreenAwaq
         ) {
             menuItems.forEach { item ->
                 val selected = currentRoute(navController) == item.ruta
@@ -41,14 +40,12 @@ fun NavegacionInferior(
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = item.title,
-                            modifier = Modifier.size(36.dp)
+                            contentDescription = item.title
                         )
                     },
                     label = {
                         Text(
-                            text = item.title,
-                            fontSize = 14.sp
+                            text = item.title
                         )
                     }
                 )
