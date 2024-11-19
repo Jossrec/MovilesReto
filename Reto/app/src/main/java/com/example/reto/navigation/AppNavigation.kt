@@ -1,6 +1,10 @@
 package com.example.reto.navigation
 
 import FormScreen
+<<<<<<< Updated upstream
+=======
+import android.app.Activity
+>>>>>>> Stashed changes
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -15,8 +19,7 @@ import com.example.reto.vista.FormScreen6
 import com.example.reto.vista.FormScreen7
 import com.example.reto.vista.Formulario1
 import com.example.reto.vista.LoginScreen
-import com.example.reto.vista.EditInfoScreen
-import com.example.reto.vista.EditPasswordScreen
+
 import com.example.reto.vista.HomeScreen
 import com.example.reto.vista.IntroScreen
 import com.example.reto.vista.MapScreen
@@ -73,9 +76,7 @@ fun AppNavigation(
         composable(NavScreen.SearchScreen.name){
             SearchScreen(navController)
         }
-        composable(NavScreen.EditInfoScreen.name){
-            EditInfoScreen(navController)
-        }
+
         composable(NavScreen.ProfileScreen.name) {
             Profile(
                 navController = navController,
@@ -125,9 +126,6 @@ fun AppNavigation(
         }
         composable(NavScreen.Formulario72.name){
             FormScreen7(navController)
-        }
-        composable(NavScreen.EditPasswordScreen.name) {
-            EditPasswordScreen(navController)
         }
 
     }
