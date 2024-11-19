@@ -1,10 +1,6 @@
 package com.example.reto.navigation
 
 import FormScreen
-<<<<<<< Updated upstream
-=======
-import android.app.Activity
->>>>>>> Stashed changes
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
