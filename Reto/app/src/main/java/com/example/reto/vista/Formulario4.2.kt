@@ -36,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -95,6 +96,15 @@ fun FormScreen42(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         selectedFileUri = uri // Guarda el URI del archivo seleccionado
+    }
+
+    val isFormComplete by derivedStateOf {
+        valores.codigo.isNotBlank() &&
+                selectedOption.isNotBlank() &&
+                selectedCambio.isNotBlank() &&
+                selectedCobertura.isNotBlank() &&
+                valores.tipoCultivo.isNotBlank() &&
+                selectedDisturbance.isNotBlank()
     }
 
     Scaffold(
@@ -313,12 +323,10 @@ fun FormScreen42(
                     ),
                     modifier = Modifier
                         .weight(1f) // Ocupa espacio proporcional
-                        .padding(start = 8.dp) // Espaciado entre botones
+                        .padding(start = 8.dp),
+                    enabled = isFormComplete // Habilita solo si el formulario está completo
                 ) {
-                    Text(
-                        "ENVIAR",
-                        color = Color.White
-                    )
+                    Text("ENVIAR", color = if (isFormComplete) Color.White else Color.Gray)
                 }
             }
 

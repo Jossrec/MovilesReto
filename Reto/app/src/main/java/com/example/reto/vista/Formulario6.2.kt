@@ -80,6 +80,16 @@ fun FormScreen6(
         "Prendida" to false
     )}
 
+    val isFormComplete by derivedStateOf {
+        valores.codigo.isNotBlank() &&
+                valores.nombreCamara.isNotBlank() &&
+                valores.placaCamara.isNotBlank() &&
+                valores.placaGuaya.isNotBlank() &&
+                valores.anchoCamino.isNotBlank() &&
+                valores.fechaInstalacion.isNotBlank() &&
+                valores.distanciaObjetivo.isNotBlank() &&
+                valores.alturaLente.isNotBlank()
+    }
 
     Scaffold(
         topBar = { HeaderBar(navController) },
@@ -296,9 +306,10 @@ fun FormScreen6(
                     ),
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 8.dp)
+                        .padding(start = 8.dp),
+                    enabled = isFormComplete // Habilita solo si el formulario está completo
                 ) {
-                    Text("ENVIAR", color = Color.White)
+                    Text("ENVIAR", color = if (isFormComplete) Color.White else Color.Gray)
                 }
             }
         }

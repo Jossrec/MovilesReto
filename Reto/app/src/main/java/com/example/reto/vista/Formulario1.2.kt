@@ -75,6 +75,15 @@ fun FormScreen(
     ) { uri: Uri? ->
         selectedFileUri = uri // Guarda el URI del archivo seleccionado
     }
+
+    val isFormComplete by derivedStateOf {
+        valores.numeroTransecto.isNotBlank() &&
+                selectedAnimal.isNotBlank() &&
+                valores.nombreComun.isNotBlank() &&
+                valores.numeroIndividuos.isNotBlank() &&
+                selectedObservationType.isNotBlank()
+    }
+
     Scaffold(
         topBar = { HeaderBar(navController) },
         floatingActionButton = {
@@ -327,9 +336,10 @@ fun FormScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 8.dp)
+                        .padding(start = 8.dp),
+                    enabled = isFormComplete
                 ) {
-                    Text("ENVIAR", color = Color.White)
+                    Text("ENVIAR", color = if (isFormComplete) Color.White else Color.Gray)
                 }
             }
         }
