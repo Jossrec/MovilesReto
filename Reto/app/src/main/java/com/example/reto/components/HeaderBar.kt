@@ -41,7 +41,7 @@ fun HeaderBar(navController: NavController) {
         ),
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigate("HomeScreen")
+                navController.navigate("Formulario1")
             }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,

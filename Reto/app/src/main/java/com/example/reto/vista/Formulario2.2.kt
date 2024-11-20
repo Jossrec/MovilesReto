@@ -346,7 +346,7 @@ fun FormScreen2(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { navController.navigate(route = "Formulario12") },
+                    onClick = { navController.navigate(route = "Formulario1") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
