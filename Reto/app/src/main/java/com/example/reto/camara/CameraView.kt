@@ -57,6 +57,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.reto.MainActivity
 import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -119,7 +120,8 @@ fun CameraWindow(
             CameraControlButton(
                 icon = Icons.Filled.ArrowBack,
                 contentDescription = "Cerrar Cámara",
-                onClick = onClose
+                onClick = onClose,
+
             )
 
             Spacer(modifier = Modifier.width(1.dp))
@@ -175,12 +177,12 @@ fun CameraWindow(
 }
 
 @Composable
-fun CameraControlButton(icon: ImageVector, contentDescription: String?, onClick: () -> Unit) {
+fun CameraControlButton(icon: ImageVector, contentDescription: String?, onClick: () -> Unit ) {
     Box(
         modifier = Modifier
             .clip(CircleShape)
             .size(60.dp)
-            .background(MaterialTheme.colorScheme.primary)
+            .background(GreenAwaqOscuro)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {

@@ -62,7 +62,14 @@ fun FormScreen5(
     var estaturaBiomonitor by remember { mutableStateOf("") }
     var altura by remember { mutableStateOf("") }
     var observations by remember { mutableStateOf("") }
+    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
 
+    // ActivityResultLauncher para seleccionar archivo
+    val filePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedFileUri = uri // Guarda el URI del archivo seleccionado
+    }
     // Variables de estado para las selecciones
     var selectedCuadrante by remember { mutableStateOf("A") }
     var selectedSubCuadrante by remember { mutableStateOf(1) }
@@ -321,14 +328,26 @@ fun FormScreen5(
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            // Evidencias botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
-            Button(
-                onClick = { },
-                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                modifier = Modifier.fillMaxWidth()
+//            Button(
+//                onClick = {},
+//                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+//                modifier = Modifier.fillMaxWidth())
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Elige archivo")
+                Button(
+                    onClick = { filePickerLauncher.launch("*/*") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GreenAwaqOscuro
+                    ),
+                    modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
+                ) {
+                    Text("Elige archivo", color = Color.White)
+                }
             }
 
 
@@ -347,9 +366,8 @@ fun FormScreen5(
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            Spacer(modifier = Modifier.height(16.dp))
 
-            // Botones Atrás y Enviar
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

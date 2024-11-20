@@ -60,6 +60,14 @@ fun FormScreen6(
     var fechainstalacion by remember { mutableStateOf(value = "") }
     var distobjetivo by remember { mutableStateOf(value = "") }
     var altlente by remember { mutableStateOf(value = "") }
+    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
+
+    // ActivityResultLauncher para seleccionar archivo
+    val filePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedFileUri = uri // Guarda el URI del archivo seleccionado
+    }
 
     val zona = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
     // Crear una lista de elementos con su estado de checked mutable
@@ -220,14 +228,26 @@ fun FormScreen6(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Evidencias (botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
-            Button(
-                onClick = {  },
-                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                modifier = Modifier.fillMaxWidth()
+//            Button(
+//                onClick = {},
+//                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+//                modifier = Modifier.fillMaxWidth())
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Elige archivo")
+                Button(
+                    onClick = { filePickerLauncher.launch("*/*") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GreenAwaqOscuro
+                    ),
+                    modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
+                ) {
+                    Text("Elige archivo", color = Color.White)
+                }
             }
 
 

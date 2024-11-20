@@ -75,7 +75,14 @@ fun FormScreen3(
     val observationTypes = listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron")
     val zones = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
     val altitudes = listOf("Baja <1mt", "Media 1-3mt", "Alta >3mt")
+    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
 
+    // ActivityResultLauncher para seleccionar archivo
+    val filePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedFileUri = uri // Guarda el URI del archivo seleccionado
+    }
 
     Scaffold(
         topBar = { HeaderBar(navController) },
@@ -287,14 +294,26 @@ fun FormScreen3(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
             Text("Evidencias", fontSize = 18.sp)
-            Button(
-                onClick = {  },
-                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                modifier = Modifier.fillMaxWidth()
+//            Button(
+//                onClick = {},
+//                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+//                modifier = Modifier.fillMaxWidth())
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Elige archivo")
+                Button(
+                    onClick = { filePickerLauncher.launch("*/*") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GreenAwaqOscuro
+                    ),
+                    modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
+                ) {
+                    Text("Elige archivo", color = Color.White)
+                }
             }
 
 

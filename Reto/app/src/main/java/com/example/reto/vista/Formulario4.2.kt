@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -87,8 +88,14 @@ fun FormScreen42(
     val option = listOf("Si", "No")
     val cobertura = listOf("BD", "RA", "RB", "PA", "PL", "CP", "CT", "VH", "TD", "IF")
     val disturbance = listOf("Inundación", "Quema", "Tala", "Erosión", "Mineria", "Carretera", "Más plantas acuáticas", "Otro")
+    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
 
-
+    // ActivityResultLauncher para seleccionar archivo
+    val filePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedFileUri = uri // Guarda el URI del archivo seleccionado
+    }
 
     Scaffold(
         topBar = { HeaderBar(navController) },
@@ -235,14 +242,26 @@ fun FormScreen42(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Evidencias botón para elegir archivos
             Text("Evidencias", fontSize = 18.sp)
-            Button(
-                onClick = {  },
-                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                modifier = Modifier.fillMaxWidth()
+//            Button(
+//                onClick = {},
+//                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+//                modifier = Modifier.fillMaxWidth())
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Elige archivo")
+                Button(
+                    onClick = { filePickerLauncher.launch("*/*") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GreenAwaqOscuro
+                    ),
+                    modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
+                ) {
+                    Text("Elige archivo", color = Color.White)
+                }
             }
 
 
@@ -305,10 +324,4 @@ fun FormScreen42(
 
         }
     }
-}
-@Preview( )
-@Composable
-fun showform42 (modifier: Modifier = Modifier){
-    val navController = rememberNavController()
-    FormScreen42(navController )
 }

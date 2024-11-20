@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -82,6 +83,7 @@ fun FormScreen7(
     var tempminp by remember { mutableStateOf(value = "") }
     var nivquebrada by remember { mutableStateOf(value = "") }
     val zona = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
+    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
 
 
 
@@ -179,15 +181,7 @@ fun FormScreen7(
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            // Evidencias botón para elegir archivos
-            Text("Evidencias", fontSize = 18.sp)
-            Button(
-                onClick = {  },
-                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Elige archivo")
-            }
+
 
 
             Spacer(modifier = Modifier.height(16.dp))
