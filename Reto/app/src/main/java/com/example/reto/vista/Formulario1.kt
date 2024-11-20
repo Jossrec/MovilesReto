@@ -72,7 +72,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Formulario1(
     navController: NavHostController,
-    viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: Formulario_1ViewModel
 ) {
     val scrollState = rememberScrollState()
     var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") }
@@ -99,6 +99,7 @@ fun Formulario1(
                 Content(
                     navController = navController,
                     tipoRegistro = tipoRegistro,
+                    viewModel = viewModel,
                     onTipoRegistroChange = { selectedTipoRegistro ->
                         tipoRegistro = selectedTipoRegistro
                         errorMessage = ""
@@ -144,6 +145,7 @@ fun Formulario1(
 fun Content(
     modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
     viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory), onError: (String) -> Unit)
+    viewModel: Formulario_1ViewModel
  {
     //Room
     val coroutineScope = rememberCoroutineScope()
@@ -197,7 +199,11 @@ fun Content(
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
-                onClick = { navController.navigate("MapScreen")},
+                onClick = {
+                    coroutineScope.launch {
+                        navController.navigate("MapScreen")
+                    }
+                          },
                 colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
             ) {
                 Icon(

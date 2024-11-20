@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,11 +37,14 @@ import com.google.maps.android.compose.MarkerState
 
 
 @Composable
-fun MapScreen(navController: NavController) {
+fun MapScreen(navController: NavController,
+              viewModel: Formulario_1ViewModel
+) {
     val context = LocalContext.current
     val fusedLocationProviderClient = remember { LocationServices.getFusedLocationProviderClient(context) }
     var userLocation by remember { mutableStateOf(LatLng(-33.852, 151.211)) } // Default location
     var selectedLocation by remember { mutableStateOf<LatLng?>(null) }
+    var selectedAddress by remember { mutableStateOf<String?>(null) }
     val cameraPositionState = rememberCameraPositionState {
         CameraPosition.fromLatLngZoom(userLocation, 10f)
     }
@@ -91,12 +95,15 @@ fun MapScreen(navController: NavController) {
                 onMapClick = { latLng ->
                     // Cuando el usuario hace clic en el mapa, se actualiza la ubicación seleccionada
                     selectedLocation = latLng
+                    val geocoder = Geocoder(context)
+                    val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+                    selectedAddress = addresses?.firstOrNull()?.getAddressLine(0)
                 }
             ) {
                 selectedLocation?.let {
                     Marker(
                         state = MarkerState(position = it),  // Usamos MarkerState en lugar de 'position'
-                        title = "Ubicación seleccionada"
+                        title = selectedAddress ?: "Ubicación seleccionada"
                     )
                 }
             }
@@ -110,7 +117,7 @@ fun MapScreen(navController: NavController) {
                 Button(
                     onClick = {
                         selectedLocation?.let {
-                            println("Ubicación guardada: ${it.latitude}, ${it.longitude}")
+                            viewModel.updateLocalidad(selectedAddress ?: "Ubicación desconocida")
                             navController.navigate("Formulario1")
                         }
                     },
