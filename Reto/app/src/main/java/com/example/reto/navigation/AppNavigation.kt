@@ -25,10 +25,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.auth0.android.result.Credentials
 import com.example.reto.viewmodels.UserViewModel
 import com.auth0.android.Auth0
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.vista.AuthApp
+import com.example.reto.vista.Formulario_1ViewModel
 
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -40,6 +43,7 @@ fun AppNavigation(
 ) {
     var loggedIn by remember { mutableStateOf(false) }
     var credentials by remember { mutableStateOf<Credentials?>(null) }
+    var viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
     // Verifica el estado de autenticación en tiempo de ejecución
     AuthApp(
@@ -97,10 +101,10 @@ fun AppNavigation(
             )
         }
         composable(NavScreen.MapScreen.name) {
-            MapScreen(navController)
+            MapScreen(navController, viewModel)
         }
         composable(NavScreen.Formulario1.name) {
-            Formulario1(navController)
+            Formulario1(navController, viewModel)
         }
         composable(NavScreen.Formulario12.name){
             FormScreen(navController)
