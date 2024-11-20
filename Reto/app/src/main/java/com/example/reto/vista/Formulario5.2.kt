@@ -72,7 +72,7 @@ fun FormScreen5(
     }
     // Variables de estado para las selecciones
     var selectedCuadrante by remember { mutableStateOf("") }
-    var selectedSubCuadrante by remember { mutableStateOf(null) }
+    var selectedSubCuadrante by remember { mutableStateOf(1) }
     var selectedHabito by remember { mutableStateOf("") }
     Cambio(valores.copy(cuadrante = selectedCuadrante, subcuadrante = selectedSubCuadrante.toString(), habitoCrecimiento = selectedHabito))
 
