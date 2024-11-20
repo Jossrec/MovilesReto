@@ -24,6 +24,7 @@ import com.auth0.android.callback.Callback
 
 import com.auth0.android.authentication.AuthenticationException
 import com.example.reto.R
+import com.example.reto.viewmodels.SharedViewModel
 
 
 @Composable
@@ -68,7 +69,8 @@ fun LoginScreen(
     navController: NavController,
     auth0: Auth0,
     onLoginSuccess: (Credentials) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    sharedViewModel: SharedViewModel,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -104,7 +106,10 @@ fun LoginScreen(
 
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = {
+                        email = it
+                        sharedViewModel.email.value = it.trim()  // Actualiza correctamente el email en el ViewModel
+                    },
                     label = { Text(text = "Email") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)

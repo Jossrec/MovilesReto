@@ -34,12 +34,14 @@ import com.example.reto.viewmodels.UserViewModelFactory
 
 
 import android.Manifest
-
+import android.os.Build
+import androidx.annotation.RequiresApi
 
 
 class MainActivity : ComponentActivity() {
     private lateinit var account: Auth0
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -93,6 +95,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun MainScreen(userViewModel: UserViewModel, account: Auth0) {
     val navController = rememberNavController()

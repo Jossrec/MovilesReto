@@ -9,6 +9,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,12 +31,14 @@ import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 import com.example.reto.ui.theme.White
+import com.example.reto.viewmodels.SharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navController: NavHostController) {
+fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navController: NavHostController,sharedViewModel: SharedViewModel) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-
+    val email by sharedViewModel.email.observeAsState("")
+    val name = email.substringBefore('@')
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -98,7 +102,7 @@ fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navControlle
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Hola, Samantha",
+                        text = if (name.isNotEmpty()) "Hola, $name" else "Hola, Usuario",
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
@@ -271,13 +275,3 @@ fun EmergencyMessageCard() {
 }
 
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun PreviewHomeScreen() {
-    val navController = rememberNavController()
-    HomeScreen(
-        onLogout = { /* Acción simulada para cerrar sesión */ },
-        navController = navController,
-        modifier = Modifier.fillMaxSize()
-    )
-}

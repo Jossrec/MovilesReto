@@ -94,7 +94,7 @@ dependencies {
     implementation( libs.androidx.activity)
     implementation (libs.accompanist.permissions.v0301)
     implementation (libs.maps.compose.v2111)
-
+    implementation (libs.androidx.runtime.livedata)
     
 
 

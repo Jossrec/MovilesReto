@@ -25,9 +25,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.auth0.android.result.Credentials
 import com.example.reto.viewmodels.UserViewModel
 import com.auth0.android.Auth0
+import com.example.reto.viewmodels.SharedViewModel
 import com.example.reto.vista.AuthApp
 
 
@@ -37,9 +39,12 @@ fun AppNavigation(
     navController: NavHostController,
     userViewModel: UserViewModel,
     auth0: Auth0
+
+
 ) {
     var loggedIn by remember { mutableStateOf(false) }
     var credentials by remember { mutableStateOf<Credentials?>(null) }
+    val sharedViewModel: SharedViewModel = viewModel()
 
     // Verifica el estado de autenticación en tiempo de ejecución
     AuthApp(
@@ -60,6 +65,7 @@ fun AppNavigation(
         composable(NavScreen.HomeScreen.name) {
             HomeScreen(
                 navController = navController, // Pasa navController aquí
+                sharedViewModel = sharedViewModel,
                 onLogout = {
                     loggedIn = false
                     navController.navigate(NavScreen.LoginScreen.name) {
@@ -87,6 +93,7 @@ fun AppNavigation(
             LoginScreen(
                 navController = navController,
                 auth0 = auth0,
+                sharedViewModel = sharedViewModel,
                 onLoginSuccess = { creds ->
                     credentials = creds
                     loggedIn = true
