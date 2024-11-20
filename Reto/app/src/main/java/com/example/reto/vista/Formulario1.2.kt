@@ -67,13 +67,15 @@ fun FormScreen(
     val observationTypes = remember { listOf("La Vió", "Huella", "Rastro", "Cacería", "Le Dijeron") }
 
 
-    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
+    // Lista de URIs seleccionados
+    var selectedFileUris by remember { mutableStateOf<List<Uri>>(emptyList()) }
 
-    // ActivityResultLauncher para seleccionar archivo
+// ActivityResultLauncher para seleccionar múltiples archivos
     val filePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        selectedFileUri = uri // Guarda el URI del archivo seleccionado
+        contract = ActivityResultContracts.OpenMultipleDocuments()
+    ) { uris: List<Uri>? ->
+        // Guarda los URIs de los archivos seleccionados
+        selectedFileUris = uris ?: emptyList()
     }
 
     val isFormComplete by derivedStateOf {
@@ -266,34 +268,44 @@ fun FormScreen(
                         .padding(vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                Button(
-                    onClick = { filePickerLauncher.launch("*/*") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaqOscuro
-                    ),
-                    modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
-                ) {
-                    Text("Elige archivo", color = Color.White)
-                }
+                    // Botón para abrir el selector de archivos
+                    Button(
+                        onClick = {
+                            filePickerLauncher.launch(arrayOf("image/*")) // Filtro para imágenes
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                        modifier = Modifier.width(150.dp) // Ajusta el tamaño del botón
+                    ) {
+                        Text("Elige archivos", color = Color.White)
+                    }
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(24.dp) // Fija la altura del contenedor del texto
-                        .background(Color.LightGray, shape = MaterialTheme.shapes.small)
-                        .padding(horizontal = 8.dp),
-                    contentAlignment = Alignment.CenterStart // Alinea el texto a la izquierda
-                ) {
-                    Text(
-                        text = selectedFileUri?.lastPathSegment ?: "Ningún archivo seleccionado",
-                        color = Color.Black,
-                        maxLines = 1, // Limita el texto a una sola línea
-                        fontSize = 12.sp, // Ajusta el tamaño de fuente
-                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis // Agrega puntos suspensivos si el texto es largo
-                    )
-                }
+                    // Mostrar los nombres de los archivos seleccionados
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.LightGray, shape = MaterialTheme.shapes.small)
+                            .padding(8.dp)
+                    ) {
+                        if (selectedFileUris.isNotEmpty()) {
+                            selectedFileUris.forEach { uri ->
+                                Text(
+                                    text = uri.lastPathSegment ?: "Archivo desconocido",
+                                    color = Color.Black,
+                                    maxLines = 1,
+                                    fontSize = 12.sp,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                )
+                            }
+                        } else {
+                            Text(
+                                text = "Ningún archivo seleccionado",
+                                color = Color.Gray,
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
             }
 
 
