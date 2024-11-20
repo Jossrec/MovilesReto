@@ -1,9 +1,11 @@
 package com.example.reto.vista
 
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 
 import android.view.View.OnClickListener
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 
@@ -77,6 +79,7 @@ import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun Formulario1(
     navController: NavHostController,
