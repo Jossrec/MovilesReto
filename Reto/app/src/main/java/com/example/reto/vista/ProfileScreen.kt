@@ -159,7 +159,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                             .fillMaxWidth(0.8f) // Ajusta el ancho del botón al 80% del contenedor
                             .height(70.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = GreenAwaqOscuro,
+                            containerColor = GreenAwaq,
                             contentColor = Black
                         ),
                         shape = RoundedCornerShape(16.dp)
