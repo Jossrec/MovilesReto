@@ -144,8 +144,7 @@ fun Formulario1(
 @Composable
 fun Content(
     modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
-    viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory), onError: (String) -> Unit)
-    viewModel: Formulario_1ViewModel
+    viewModel: Formulario_1ViewModel, onError: (String) -> Unit)
  {
     //Room
     val coroutineScope = rememberCoroutineScope()
