@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.app.DatePickerDialog
 import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -75,6 +76,7 @@ import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
 
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 
 
@@ -190,14 +192,36 @@ fun Content(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Fecha
-        OutlinedTextField(
-            value = valores.fecha,
-            onValueChange = { Cambio(valores.copy(fecha = it)) },
-            label = { Text("Fecha") },
+// Fecha
+        var showDatePicker by remember { mutableStateOf(false) }
+        if (showDatePicker) {
+            DatePickerDialog(
+                onDismissRequest = { showDatePicker = false },
+                onDateSelected = { selectedDate ->
+                    Cambio(valores.copy(fecha = selectedDate))
+                    showDatePicker = false
+                }
+            )
+        }
+        Row(
             modifier = Modifier.fillMaxWidth(),
-        )
-
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = valores.fecha,
+                onValueChange = { /* No editable directamente */ },
+                label = { Text("Fecha") },
+                modifier = Modifier.weight(1f),
+                readOnly = true
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                onClick = { showDatePicker = true },
+                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
+            ) {
+                Text("Seleccionar Fecha")
+            }
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -234,12 +258,35 @@ fun Content(
         Spacer(modifier = Modifier.height(8.dp))
 
         // Hora
-        OutlinedTextField(
-            value = valores.Hora,
-            onValueChange = { Cambio(valores.copy(Hora = it))},
-            label = { Text("Hora") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        var showTimePicker by remember { mutableStateOf(false) }
+        if (showTimePicker) {
+            TimePickerDialog(
+                onDismissRequest = { showTimePicker = false },
+                onTimeSelected = { selectedTime ->
+                    Cambio(valores.copy(Hora = selectedTime))
+                    showTimePicker = false
+                }
+            )
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = valores.Hora,
+                onValueChange = { /* No editable directamente */ },
+                label = { Text("Hora") },
+                modifier = Modifier.weight(1f),
+                readOnly = true
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                onClick = { showTimePicker = true },
+                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
+            ) {
+                Text("Seleccionar Hora")
+            }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -378,4 +425,44 @@ fun Content(
     }
 
 }
+
+@Composable
+fun DatePickerDialog(onDismissRequest: () -> Unit, onDateSelected: (String) -> Unit) {
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    DatePickerDialog(
+        context,
+        { _, selectedYear, selectedMonth, selectedDay ->
+            onDateSelected("$selectedDay/${selectedMonth + 1}/$selectedYear")
+        },
+        year,
+        month,
+        day
+    ).show()
+    onDismissRequest()
+}
+
+@Composable
+fun TimePickerDialog(onDismissRequest: () -> Unit, onTimeSelected: (String) -> Unit) {
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+
+    android.app.TimePickerDialog(
+        context,
+        { _, selectedHour, selectedMinute ->
+            onTimeSelected("$selectedHour:$selectedMinute")
+        },
+        hour,
+        minute,
+        true
+    ).show()
+    onDismissRequest()
+}
+
 
