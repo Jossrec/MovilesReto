@@ -148,7 +148,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp, 150.dp),
+                        .padding(16.dp, 70.dp),
                     contentAlignment = Alignment.BottomCenter // Asegura que el botón esté en la parte inferior
                 ) {
                     Button(
