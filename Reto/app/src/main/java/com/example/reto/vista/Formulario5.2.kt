@@ -76,6 +76,16 @@ fun FormScreen5(
     var selectedHabito by remember { mutableStateOf("Arbolito 1-3 mt") }
     Cambio(valores.copy(cuadrante = selectedCuadrante, subcuadrante = selectedSubCuadrante.toString(), habitoCrecimiento = selectedHabito))
 
+    val isFormComplete by derivedStateOf {
+        valores.codigo.isNotBlank() &&
+                valores.nombreComunEspecie.isNotBlank() &&
+                valores.nombreCientifico.isNotBlank() &&
+                valores.Placa.isNotBlank() &&
+                valores.Circunferencia.isNotBlank() &&
+                valores.Distancia.isNotBlank() &&
+                valores.estaturaBiomonitor.isNotBlank() &&
+                valores.Altura.isNotBlank()
+    }
 
     Scaffold(
         topBar = { HeaderBar(navController) },
@@ -401,11 +411,12 @@ fun FormScreen5(
                     ),
                     modifier = Modifier
                         .weight(1f) // Ocupa espacio proporcional
-                        .padding(start = 8.dp) // Espaciado entre botones
+                        .padding(start = 8.dp),
+                    enabled = isFormComplete // Habilita solo si el formulario está completo
                 ) {
                     Text(
                         "ENVIAR",
-                        color = Color.White
+                        color = if (isFormComplete) Color.White else Color.Gray
                     )
                 }
             }

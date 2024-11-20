@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -85,7 +86,14 @@ fun FormScreen7(
     val zona = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
     var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
 
-
+    val isFormComplete by derivedStateOf {
+        valores.Pluviosidad.isNotBlank() &&
+                valores.Temperatura_maxima.isNotBlank() &&
+                valores.Humedad_maxima.isNotBlank() &&
+                valores.Temperatura_minima.isNotBlank() &&
+                valores.Humedad_minima.isNotBlank() &&
+                valores.Nivel_Quebrada.isNotBlank()
+    }
 
     Scaffold(
         topBar = { HeaderBar(navController) },
@@ -231,9 +239,13 @@ fun FormScreen7(
                     ),
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 8.dp)
+                        .padding(start = 8.dp),
+                    enabled = isFormComplete // Habilita solo si el formulario está completo
                 ) {
-                    Text("ENVIAR", color = Color.White)
+                    Text(
+                        "ENVIAR",
+                        color = if (isFormComplete) Color.White else Color.Gray
+                    )
                 }
             }
         }

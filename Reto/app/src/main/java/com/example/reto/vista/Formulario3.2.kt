@@ -84,6 +84,15 @@ fun FormScreen3(
         selectedFileUri = uri // Guarda el URI del archivo seleccionado
     }
 
+    val isFormComplete by derivedStateOf {
+        selectedZone.isNotBlank() &&
+                selectedAnimal.isNotBlank() &&
+                valores.nombreComun.isNotBlank() &&
+                valores.numeroIndividuos.isNotBlank() &&
+                selectedObservationType.isNotBlank() &&
+                selectedAltitude.isNotBlank()
+    }
+
     Scaffold(
         topBar = { HeaderBar(navController) },
         floatingActionButton = {
@@ -365,12 +374,10 @@ fun FormScreen3(
                     ),
                     modifier = Modifier
                         .weight(1f) // Ocupa espacio proporcional
-                        .padding(start = 8.dp) // Espaciado entre botones
+                        .padding(start = 8.dp),
+                    enabled = isFormComplete // Habilita solo si el formulario está completo
                 ) {
-                    Text(
-                        "ENVIAR",
-                        color = Color.White
-                    )
+                    Text("ENVIAR", color = if (isFormComplete) Color.White else Color.Gray)
                 }
             }
 

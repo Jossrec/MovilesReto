@@ -81,8 +81,14 @@ fun FormScreen2(
         selectedFileUri = uri // Guarda el URI del archivo seleccionado
     }
 
-
-
+    val isFormComplete by derivedStateOf {
+        selectedZone.isNotBlank() &&
+                selectedAnimal.isNotBlank() &&
+                valores.nombreComun.isNotBlank() &&
+                valores.numeroIndividuos.isNotBlank() &&
+                selectedObservationType.isNotBlank() &&
+                selectedAltitude.isNotBlank()
+    }
 
     Scaffold(
         topBar = { HeaderBar(navController) },
@@ -340,7 +346,7 @@ fun FormScreen2(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { navController.navigate(route = "Formulario12") },
+                    onClick = { navController.navigate(route = "Formulario1") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GreenAwaqOscuro
                     ),
@@ -366,12 +372,10 @@ fun FormScreen2(
                     ),
                     modifier = Modifier
                         .weight(1f) // Ocupa espacio proporcional
-                        .padding(start = 8.dp) // Espaciado entre botones
+                        .padding(start = 8.dp), // Espaciado entre botones
+                    enabled = isFormComplete // Habilitar solo si el formulario está completo
                 ) {
-                    Text(
-                        "ENVIAR",
-                        color = Color.White
-                    )
+                    Text("ENVIAR", color = if (isFormComplete) Color.White else Color.Gray)
                 }
             }
 

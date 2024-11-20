@@ -50,6 +50,8 @@ import com.example.reto.R
 
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Profile(navController: NavController, currentCredentials: MutableState<Credentials?>) {
@@ -142,7 +144,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp, 200.dp),
+                        .padding(16.dp, 300.dp),
                     contentAlignment = Alignment.BottomCenter // Asegura que el botón esté en la parte inferior
                 ) {
                     Button(
@@ -157,7 +159,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                             .fillMaxWidth(0.8f) // Ajusta el ancho del botón al 80% del contenedor
                             .height(70.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFE8EDE9),
+                            containerColor = GreenAwaqOscuro,
                             contentColor = Black
                         ),
                         shape = RoundedCornerShape(16.dp)
