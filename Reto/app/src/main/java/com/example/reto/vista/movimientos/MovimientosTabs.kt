@@ -17,8 +17,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.reto.ui.theme.GreenAwaq
+import com.example.reto.ui.theme.GreenAwaqOscuro
 
 
 @Composable
@@ -53,15 +56,17 @@ fun Tabs(tabs: List<ItemsTabsMovimientos>, pagerState: PagerState) {
     // Incrementa la altura del TabRow para hacer las pestañas más grandes
     TabRow(
         selectedTabIndex = selectedTab,
-        modifier = Modifier.height(70.dp), // Ajusta la altura del TabRow
+        modifier = Modifier.height(70.dp),
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
                 Modifier
                     .tabIndicatorOffset(tabPositions[selectedTab])
-                    .height(15.dp) // Grosor del indicador
+                    .height(15.dp), // Grosor del indicador
+                color = GreenAwaqOscuro // Aplica el color GreenAwaq al indicador
             )
         }
-    ) {
+    )
+    {
         tabs.forEachIndexed { index, items ->
             Tab(
                 selected = selectedTab == index,
@@ -81,7 +86,8 @@ fun Tabs(tabs: List<ItemsTabsMovimientos>, pagerState: PagerState) {
                     Icon(
                         imageVector = if (index == selectedTab) items.iconSelected else items.iconUnselected,
                         contentDescription = items.title,
-                        modifier = Modifier.size(30.dp) // Aumenta el tamaño del ícono
+                        modifier = Modifier.size(30.dp),
+                        tint = if (index == selectedTab) GreenAwaq else Color.Gray // Aplica GreenAwaq al ícono seleccionado
                     )
                 }
             )

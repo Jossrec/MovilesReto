@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import com.auth0.android.result.Credentials
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,25 +26,30 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 import com.example.reto.R
 
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.GreenAwaq
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Profile(navController: NavController, currentCredentials: MutableState<Credentials?>) {
@@ -52,7 +59,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.height(120.dp), // Aumenta la altura de la barra superior
+
                 title = {
                     Box(
                         contentAlignment = Alignment.Center, // Centra el contenido vertical y horizontalmente
@@ -60,7 +67,6 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                     ) {
                         Text(
                             "Configuración",
-                            fontSize = 50.sp, // Ajusta el tamaño de fuente para iPad
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             color = com.example.reto.ui.theme.Black
@@ -79,66 +85,65 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
             NavegacionInferior(navController)
         }
     ) { paddingValues ->
-        Column(
-            Modifier
-                .padding(paddingValues)
-                .padding(start = 20.dp, end = 20.dp)
+        Box(
+            modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
         ) {
-            Row(
-                Modifier.padding(top = 20.dp),
-                verticalAlignment = Alignment.CenterVertically
+            // Imagen de fondo
+            Image(
+                painter = painterResource(id = R.drawable.transparentlogo),
+                contentDescription = "Logo de fondo",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(30.dp)
+            )
+
+
+            // Contenido principal de la pantalla
+            Column(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.profilepic),
-                    contentDescription = "foto de perfil",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(200.dp)
-                        .clip(CircleShape)
-                )
-                Column {
+                // Foto de perfil, nombre, etc.
+                Column(
+                    modifier = Modifier.padding(top = 50.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.profilepic),
+                        contentDescription = "Foto de perfil",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(200.dp)
+                            .clip(CircleShape)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = stringResource(R.string.profilename),
                         fontWeight = FontWeight.W500,
                         fontSize = 50.sp,
-                        color = Black,
-                        modifier = Modifier.padding(start = 20.dp)
-                    )
-
-                    Text(
-                        text = stringResource(R.string.startdate),
-                        fontWeight = FontWeight.W400,
-                        fontSize = 30.sp,
-                        color = Black,
-                        modifier = Modifier.padding(start = 20.dp)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(80.dp))
-            Column(Modifier.padding(top = 50.dp)) {
-                Row(modifier = Modifier.padding(bottom = 10.dp)) {
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_email_24),
-                        contentDescription = "email",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.size(30.dp)
+                        color = Black
                     )
                     Text(
                         text = stringResource(R.string.correo),
+                        fontWeight = FontWeight.W400,
                         fontSize = 30.sp,
-                        modifier = Modifier.padding(start = 30.dp)
+                        color = Black
                     )
                 }
+
                 Spacer(modifier = Modifier.height(80.dp))
 
-
-                Row(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                        .padding(16.dp, 200.dp),
+                    contentAlignment = Alignment.BottomCenter // Asegura que el botón esté en la parte inferior
                 ) {
                     Button(
                         onClick = {
@@ -148,13 +153,16 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                                 popUpTo("loginScreen") { inclusive = true }
                             }
                         },
-                        modifier = Modifier.size(300.dp, 70.dp),
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f) // Ajusta el ancho del botón al 80% del contenedor
+                            .height(70.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = GreenAwaq,
+                            containerColor = Color(0xFFE8EDE9),
                             contentColor = Black
-                        )
+                        ),
+                        shape = RoundedCornerShape(16.dp)
                     ) {
-                        Text("Cerrar Sesión", fontSize = 40.sp)
+                        Text("Cerrar Sesión", fontSize = 20.sp)
                     }
                 }
             }
@@ -164,4 +172,16 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
 
 
 
+@SuppressLint("UnrememberedMutableState")
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewProfileScreen() {
+    val navController = rememberNavController()
+    val credentials = mutableStateOf<Credentials?>(null)
+
+    Profile(
+        navController = navController,
+        currentCredentials = credentials
+    )
+}
 

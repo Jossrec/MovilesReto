@@ -114,12 +114,14 @@ fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navControlle
             FloatingActionButton(
                 onClick = { navController.navigate("Formulario1") },
                 modifier = Modifier.size(80.dp),
-                containerColor = GreenAwaq
+                containerColor = GreenAwaqOscuro
             ) {
                 Icon(
                     Icons.Filled.Add,
                     contentDescription = "Nuevo formulario",
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier.size(40.dp),
+                    tint = Color.White
+
                 )
             }
         },

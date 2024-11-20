@@ -73,7 +73,6 @@ fun SearchScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
-                modifier = Modifier.height(120.dp), // Aumenta la altura de la barra superior
                 title = {
                     Box(
                         contentAlignment = Alignment.Center, // Centra el contenido vertical y horizontalmente
@@ -81,7 +80,6 @@ fun SearchScreen(
                     ) {
                         Text(
                             "Búsqueda",
-                            fontSize = 50.sp, // Ajusta el tamaño de fuente para iPad
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             color = Black
