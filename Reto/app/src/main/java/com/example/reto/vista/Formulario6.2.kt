@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -257,6 +258,24 @@ fun FormScreen6(
                     modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
                 ) {
                     Text("Elige archivo", color = Color.White)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(24.dp) // Fija la altura del contenedor del texto
+                        .background(Color.LightGray, shape = MaterialTheme.shapes.small)
+                        .padding(horizontal = 8.dp),
+                    contentAlignment = Alignment.CenterStart // Alinea el texto a la izquierda
+                ) {
+                    Text(
+                        text = selectedFileUri?.lastPathSegment ?: "Ningún archivo seleccionado",
+                        color = Color.Black,
+                        maxLines = 1, // Limita el texto a una sola línea
+                        fontSize = 12.sp, // Ajusta el tamaño de fuente
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis // Agrega puntos suspensivos si el texto es largo
+                    )
                 }
             }
 

@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +31,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -271,6 +274,24 @@ fun FormScreen42(
                     modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
                 ) {
                     Text("Elige archivo", color = Color.White)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(24.dp) // Fija la altura del contenedor del texto
+                        .background(Color.LightGray, shape = MaterialTheme.shapes.small)
+                        .padding(horizontal = 8.dp),
+                    contentAlignment = Alignment.CenterStart // Alinea el texto a la izquierda
+                ) {
+                    Text(
+                        text = selectedFileUri?.lastPathSegment ?: "Ningún archivo seleccionado",
+                        color = Color.Black,
+                        maxLines = 1, // Limita el texto a una sola línea
+                        fontSize = 12.sp, // Ajusta el tamaño de fuente
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis // Agrega puntos suspensivos si el texto es largo
+                    )
                 }
             }
 
