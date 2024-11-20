@@ -82,7 +82,7 @@ fun LoginScreen(
 
     Box(modifier = modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.fondo1),
+            painter = painterResource(id = R.drawable.fondoinicio),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -90,10 +90,17 @@ fun LoginScreen(
 
         Box(modifier = Modifier.fillMaxSize()) {
             Text(
-                text = "Bienvenido",
-                style = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White),
-                modifier = Modifier.align(Alignment.TopStart).padding(top = 150.dp, start = 25.dp)
+                text = "AWAQ-BIO",
+                style = TextStyle(
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                ),
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 150.dp)
             )
+
 
             Column(
                 modifier = Modifier
@@ -102,9 +109,14 @@ fun LoginScreen(
                     .align(Alignment.Center)
             ) {
                 Text(
+                    text = "Bienvenidx",
+                    style = TextStyle(fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.Black),
+                    modifier = Modifier.padding(bottom = 16.dp, top = 20.dp)
+                )
+                Text(
                     text = "Inicia Sesión",
                     style = TextStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold, color = Color.Black),
-                    modifier = Modifier.padding(bottom = 16.dp, top = 130.dp)
+                    modifier = Modifier.padding(bottom = 16.dp, top = 10.dp)
                 )
 
                 OutlinedTextField(
@@ -154,13 +166,15 @@ fun LoginScreen(
                         })
                     },
                     modifier = Modifier
-                        .width(150.dp)
-                        .height(48.dp)
+                        .padding(top = 10.dp) // Se agrega el padding superior
+                        .width(250.dp)
+                        .height(50.dp)
                         .align(Alignment.CenterHorizontally),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4D752D))
                 ) {
-                    Text(text = "Iniciar Sesión", fontSize = 16.sp)
+                    Text(text = "Iniciar Sesión", fontSize = 20.sp)
                 }
+
             }
         }
     }
