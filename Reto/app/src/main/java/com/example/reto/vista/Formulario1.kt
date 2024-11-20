@@ -172,8 +172,8 @@ fun Content(
     val Cambio = viewModel::updateUiState
 
 
-    var estadoTiempo by remember { mutableStateOf("Soleado") }
-    var epoca by remember { mutableStateOf("Verano/Seca") }
+    var estadoTiempo by remember { mutableStateOf("") }
+    var epoca by remember { mutableStateOf("") }
     Cambio(valores.copy(Estado_del_Tiempo = estadoTiempo, Época = epoca))
 
 

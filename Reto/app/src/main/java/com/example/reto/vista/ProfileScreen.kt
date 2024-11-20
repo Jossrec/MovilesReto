@@ -26,7 +26,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,11 +52,14 @@ import com.example.reto.R
 import com.example.reto.components.NavegacionInferior
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
+import com.example.reto.viewmodels.SharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(navController: NavController, currentCredentials: MutableState<Credentials?>) {
+fun Profile(navController: NavController, currentCredentials: MutableState<Credentials?>,sharedViewModel: SharedViewModel) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    val email by sharedViewModel.email.observeAsState("")
+    val name = email.substringBefore('@')
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -126,7 +130,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = stringResource(R.string.profilename),
+                        text = if (name.isNotEmpty())  "$name" else "Hola, Usuario",
                         fontWeight = FontWeight.W500,
                         fontSize = 50.sp,
                         color = Black
@@ -144,7 +148,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp, 150.dp),
+                        .padding(16.dp, 70.dp),
                     contentAlignment = Alignment.BottomCenter // Asegura que el botón esté en la parte inferior
                 ) {
                     Button(
@@ -159,7 +163,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                             .fillMaxWidth(0.8f) // Ajusta el ancho del botón al 80% del contenedor
                             .height(70.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = GreenAwaqOscuro,
+                            containerColor = GreenAwaq,
                             contentColor = Black
                         ),
                         shape = RoundedCornerShape(16.dp)
@@ -174,16 +178,4 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
 
 
 
-@SuppressLint("UnrememberedMutableState")
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewProfileScreen() {
-    val navController = rememberNavController()
-    val credentials = mutableStateOf<Credentials?>(null)
-
-    Profile(
-        navController = navController,
-        currentCredentials = credentials
-    )
-}
 
