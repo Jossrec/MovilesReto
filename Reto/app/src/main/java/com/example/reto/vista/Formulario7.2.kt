@@ -75,7 +75,7 @@ fun FormScreen7(
     val Cambio = viewModel::updateUiState
 
     var observations by remember { mutableStateOf("") }
-    var selectedZona by remember { mutableStateOf(value = "Bosque") }
+    var selectedZona by remember { mutableStateOf(value = "") }
     var codigo by remember { mutableStateOf(value = "") }
     var pluviosidad by remember { mutableStateOf(value = "") }
     var tempmax by remember { mutableStateOf(value = "") }

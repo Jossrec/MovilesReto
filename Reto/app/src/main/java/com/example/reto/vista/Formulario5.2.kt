@@ -71,9 +71,9 @@ fun FormScreen5(
         selectedFileUri = uri // Guarda el URI del archivo seleccionado
     }
     // Variables de estado para las selecciones
-    var selectedCuadrante by remember { mutableStateOf("A") }
-    var selectedSubCuadrante by remember { mutableStateOf(1) }
-    var selectedHabito by remember { mutableStateOf("Arbolito 1-3 mt") }
+    var selectedCuadrante by remember { mutableStateOf("") }
+    var selectedSubCuadrante by remember { mutableStateOf(null) }
+    var selectedHabito by remember { mutableStateOf("") }
     Cambio(valores.copy(cuadrante = selectedCuadrante, subcuadrante = selectedSubCuadrante.toString(), habitoCrecimiento = selectedHabito))
 
     val isFormComplete by derivedStateOf {

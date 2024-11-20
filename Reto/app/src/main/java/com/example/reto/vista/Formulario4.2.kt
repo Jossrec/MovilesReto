@@ -82,12 +82,12 @@ fun FormScreen42(
     val Cambio = viewModel::updateUiState
 
     var observations by remember { mutableStateOf("") }
-    var selectedOption by remember{ mutableStateOf(value = "Si") }
-    var selectedCambio by remember{ mutableStateOf(value = "Si") }
-    var selectedCobertura by remember { mutableStateOf(value = "BD") }
+    var selectedOption by remember{ mutableStateOf(value = "") }
+    var selectedCambio by remember{ mutableStateOf(value = "") }
+    var selectedCobertura by remember { mutableStateOf(value = "") }
     var codigo by remember { mutableStateOf(value = "" ) }
     var cropType by remember { mutableStateOf(value = "") }
-    var selectedDisturbance by remember { mutableStateOf(value = "Inundación") }
+    var selectedDisturbance by remember { mutableStateOf(value = "") }
     Cambio(valores.copy(Seguimiento = selectedOption, Cambio = selectedCambio, Cobertura = selectedCobertura, Disturbio = selectedDisturbance))
     val option = listOf("Si", "No")
     val cobertura = listOf("BD", "RA", "RB", "PA", "PL", "CP", "CT", "VH", "TD", "IF")

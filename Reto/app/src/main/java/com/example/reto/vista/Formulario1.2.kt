@@ -58,8 +58,8 @@ fun FormScreen(
     val valores = viewModel.itemUiState.itemDetails
     val Cambio = viewModel::updateUiState
 
-    var selectedAnimal by remember { mutableStateOf("Insecto") }
-    var selectedObservationType by remember { mutableStateOf("La Vió") }
+    var selectedAnimal by remember { mutableStateOf("") }
+    var selectedObservationType by remember { mutableStateOf("") }
     Cambio(valores.copy(tipoAnimal = selectedAnimal, TipoObservacion = selectedObservationType))
 
 

@@ -61,10 +61,10 @@ fun FormScreen2(
     var commonName by remember { mutableStateOf("") }
     var scientificName by remember { mutableStateOf("") }
     var numberOfIndividuals by remember { mutableStateOf("") }
-    var selectedAnimal by remember { mutableStateOf("Insecto") }
-    var selectedObservationType by remember { mutableStateOf("La Vió") }
-    var selectedZone by remember { mutableStateOf("Bosque") }
-    var selectedAltitude by remember { mutableStateOf("Baja <1mt") }
+    var selectedAnimal by remember { mutableStateOf("") }
+    var selectedObservationType by remember { mutableStateOf("") }
+    var selectedZone by remember { mutableStateOf("") }
+    var selectedAltitude by remember { mutableStateOf("") }
     Cambio(valores.copy(tipoAnimal = selectedAnimal, TipoObservacion = selectedObservationType, zona = selectedZone, AlturaObservacion = selectedAltitude))
     var observations by remember { mutableStateOf("") }
     val animalTypes = listOf("Mamífero", "Ave", "Reptil", "Anfibio", "Insecto")

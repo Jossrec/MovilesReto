@@ -52,7 +52,7 @@ fun FormScreen6(
     val Cambio = viewModel::updateUiState
 
     var observations by remember { mutableStateOf("") }
-    var selectedZona by remember { mutableStateOf(value = "Bosque") }
+    var selectedZona by remember { mutableStateOf(value = "") }
     var codigo by remember { mutableStateOf(value = "") }
     var nomcamara by remember { mutableStateOf(value = "") }
     var placacamara by remember { mutableStateOf(value = "") }
