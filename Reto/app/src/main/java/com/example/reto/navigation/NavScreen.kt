@@ -6,6 +6,7 @@ enum class NavScreen {
     EditInfoScreen,
     ProfileScreen,
     Intro,
+    Start,
     LoginScreen,
     MapScreen,
     Formulario1,
