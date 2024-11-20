@@ -4,6 +4,7 @@ import FormScreen
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,6 +34,8 @@ import com.example.reto.viewmodels.SharedViewModel
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.vista.AuthApp
 import com.example.reto.vista.Formulario_1ViewModel
+import com.example.reto.vista.StartScreen
+import kotlinx.coroutines.delay
 
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -63,7 +66,7 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = if (loggedIn) NavScreen.HomeScreen.name else NavScreen.LoginScreen.name
+        startDestination = if (loggedIn) NavScreen.HomeScreen.name else NavScreen.Start.name
     ) {
         composable(NavScreen.HomeScreen.name) {
             HomeScreen(
@@ -81,10 +84,15 @@ fun AppNavigation(
         composable(NavScreen.SearchScreen.name){
             SearchScreen(navController)
         }
+        composable(NavScreen.Start.name){
+            StartScreen(navController)
+        }
+
 
         composable(NavScreen.ProfileScreen.name) {
             Profile(
                 navController = navController,
+                sharedViewModel = sharedViewModel,
                 currentCredentials = remember { mutableStateOf(credentials) } // Pasa las credenciales actuales
             )
         }
