@@ -59,8 +59,8 @@ class MainActivity : ComponentActivity() {
         ).build()
 
         account = Auth0.getInstance(
-            "wa4SSdJ72KqCxwOOSp5osSTbXbPvyPBl",
-            "dev-6511lhqrk7y4e42z.us.auth0.com"
+            getString(R.string.com_auth0_client_id),
+            getString(R.string.com_auth0_domain)
         )
 
 

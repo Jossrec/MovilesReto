@@ -5,7 +5,7 @@
     <string name="correo">samantha@gmail.com\n</string>
     <string name="contraseña">password\n</string>
     <string name="numerocel">+52 123 45 67</string>
-    <string name="com_auth0_domain">dev-6511lhqrk7y4e42z.us.auth0.com</string>
-    <string name="com_auth0_client_id">wa4SSdJ72KqCxwOOSp5osSTbXbPvyPBl</string>
+    <string name="com_auth0_domain">dev-6vzyeoluir57rec7.us.auth0.com</string>
+    <string name="com_auth0_client_id">sxlOUkpm591uWTxtwpKguSg0rFneEFjJ</string>
 
 </resources>
