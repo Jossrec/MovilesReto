@@ -159,7 +159,7 @@ fun LoginScreen(
                         .align(Alignment.CenterHorizontally),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4D752D))
                 ) {
-                    Text(text = "ENTRAR", fontSize = 16.sp)
+                    Text(text = "Iniciar Sesión", fontSize = 16.sp)
                 }
             }
         }
