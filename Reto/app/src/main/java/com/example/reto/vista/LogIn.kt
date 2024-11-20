@@ -98,7 +98,7 @@ fun LoginScreen(
                 ),
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 150.dp)
+                    .padding(top = 100.dp)
             )
 
 

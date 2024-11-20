@@ -24,15 +24,19 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 
 import androidx.compose.runtime.Composable
@@ -48,6 +52,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -65,10 +70,13 @@ import com.example.reto.components.CameraButton
 
 
 import com.example.reto.ui.theme.AppViewModelProvider
+import com.example.reto.ui.theme.Black
 
 import kotlinx.coroutines.launch
 
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Formulario1(
     navController: NavHostController,
@@ -79,7 +87,32 @@ fun Formulario1(
     var errorMessage by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { HeaderBar(navController) },
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        "Formulario",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = GreenAwaq,
+                    titleContentColor = Black,
+                    scrolledContainerColor = GreenAwaq
+                ),
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigate("HomeScreen")
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Regresar"
+                        )
+                    }
+                }
+            )
+        },
         floatingActionButton = {
             CameraButton(activity = LocalContext.current as MainActivity, navController)
         }
@@ -122,25 +155,7 @@ fun Formulario1(
         }
     }
 }
-//@Composable
-//fun Boton(scrollState: ScrollState, tipoRegistro: String, navController: NavHostController, coroutineScope: CoroutineScope, onNextClicked: suspend () -> Unit) {
-//    Button(
-//        onClick = {
-//            // Llama a la función para navegar a la siguiente pantalla
-//            coroutineScope.launch {
-//                onNextClicked() // Llamada dentro de la corutina
-//                navController.navigate(tipoRegistro)
-//            }
-//        },
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(vertical = 16.dp) ,
-//            colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro)
-//
-//    ) {
-//        Text(text = "Siguiente")
-//    }
-//}
+
 @Composable
 fun Content(
     modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
