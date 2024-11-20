@@ -38,8 +38,10 @@ import androidx.compose.material3.FloatingActionButton
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.reto.MainActivity
+import com.example.reto.ui.theme.GreenAwaq
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
@@ -85,6 +88,9 @@ fun CameraWindow(
     }
     cameraViewModel.setImageCapture(controller)
 
+    // Estado para el mensaje de éxito
+    var successMessage by remember { mutableStateOf<String?>(null) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -113,7 +119,7 @@ fun CameraWindow(
             CameraControlButton(
                 icon = Icons.Filled.ArrowBack,
                 contentDescription = "Cerrar Cámara",
-                onClick = onClose ,// Llama al callback para cerrar la cámara
+                onClick = onClose
             )
 
             Spacer(modifier = Modifier.width(1.dp))
@@ -135,7 +141,7 @@ fun CameraWindow(
                         cameraViewModel.takePhoto(
                             context = activity,
                             onImageSaved = { file ->
-                                println("Foto guardada en: ${file.absolutePath}")
+                                successMessage = "Foto guardada en: ${file.absolutePath}" // Actualiza el mensaje
                                 MediaScannerConnection.scanFile(activity, arrayOf(file.absolutePath), null, null)
                             },
                             onError = { exception ->
@@ -146,8 +152,28 @@ fun CameraWindow(
                 }
             )
         }
+
+        // Mostrar el mensaje de éxito si está definido
+        successMessage?.let { message ->
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom =20.dp)
+                    .background(Color.DarkGray, shape = RoundedCornerShape(10.dp))
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(text = message, color = Color.White, style = MaterialTheme.typography.bodyMedium )
+            }
+
+            // Reinicia el mensaje después de 3 segundos
+            LaunchedEffect(message) {
+                kotlinx.coroutines.delay(3000)
+                successMessage = null
+            }
+        }
     }
 }
+
 @Composable
 fun CameraControlButton(icon: ImageVector, contentDescription: String?, onClick: () -> Unit) {
     Box(
