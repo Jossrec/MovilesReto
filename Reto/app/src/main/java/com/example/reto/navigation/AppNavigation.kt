@@ -63,7 +63,7 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = if (loggedIn) NavScreen.HomeScreen.name else NavScreen.Intro.name
+        startDestination = if (loggedIn) NavScreen.HomeScreen.name else NavScreen.LoginScreen.name
     ) {
         composable(NavScreen.HomeScreen.name) {
             HomeScreen(
