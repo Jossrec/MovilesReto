@@ -76,6 +76,7 @@ fun Formulario1(
 ) {
     val scrollState = rememberScrollState()
     var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") }
+    var errorMessage by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = { HeaderBar(navController) },
@@ -100,9 +101,23 @@ fun Formulario1(
                     tipoRegistro = tipoRegistro,
                     onTipoRegistroChange = { selectedTipoRegistro ->
                         tipoRegistro = selectedTipoRegistro
-                    }
+                        errorMessage = ""
+                    },
+                    onError = { message -> errorMessage = message }
                 )
             }
+
+            // Mostrar mensaje de error si existe
+            if (errorMessage.isNotEmpty()) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(16.dp)
+                )
+            }
+
         }
     }
 }
@@ -128,8 +143,8 @@ fun Formulario1(
 @Composable
 fun Content(
     modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
-    viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory)
-) {
+    viewModel: Formulario_1ViewModel = viewModel(factory = AppViewModelProvider.Factory), onError: (String) -> Unit)
+ {
     //Room
     val coroutineScope = rememberCoroutineScope()
     val valores = viewModel.itemUiState.itemDetails
@@ -161,8 +176,9 @@ fun Content(
             value = valores.fecha,
             onValueChange = { Cambio(valores.copy(fecha = it)) },
             label = { Text("Fecha") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
+
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -310,10 +326,22 @@ fun Content(
         }
         Button(
             onClick = {
-                // Llama a la función para navegar a la siguiente pantalla
-                coroutineScope.launch {
-                    viewModel.saveItem()
-                    navController.navigate(tipoRegistro)
+                try {
+                    if (tipoRegistro.isNotEmpty()) {
+                        coroutineScope.launch {
+                            viewModel.saveItem()
+                            // Navegación envuelta en try-catch para manejar el error
+                            try {
+                                navController.navigate(tipoRegistro)
+                            } catch (e: IllegalArgumentException) {
+                                onError("Debe de seleccionar un tipo de registro para continuar")
+                            }
+                        }
+                    } else {
+                        throw IllegalArgumentException("Por favor, seleccione un tipo de registro antes de continuar.")
+                    }
+                } catch (e: Exception) {
+                    onError(e.message ?: "Ocurrió un error desconocido.")
                 }
             },
             modifier = Modifier
