@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.rememberAsyncImagePainter
 import com.example.reto.MainActivity
 import com.example.reto.R
 import com.example.reto.components.CameraButton
@@ -263,11 +264,10 @@ fun FormScreen(
 // Evidencias (botón para elegir archivo)
             Text("Evidencias", fontSize = 18.sp)
 
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(vertical = 8.dp)
             ) {
                 // Botón para abrir el selector de archivos
                 Button(
@@ -275,17 +275,17 @@ fun FormScreen(
                         filePickerLauncher.launch(arrayOf("image/*")) // Filtro para imágenes
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                    modifier = Modifier.width(150.dp) // Ajusta el tamaño del botón
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp) // Espacio debajo del botón
                 ) {
                     Text("Elige archivos", color = Color.White)
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
-
-                // Contenedor para la lista de archivos seleccionados
+                // Contenedor para la lista de vistas previas
                 Box(
                     modifier = Modifier
-                        .weight(1f)
+                        .fillMaxWidth()
                         .height(100.dp) // Altura fija
                         .background(Color.LightGray, shape = MaterialTheme.shapes.small)
                         .padding(8.dp)
@@ -300,17 +300,30 @@ fun FormScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(vertical = 4.dp),
-                                    verticalAlignment = Alignment.CenterVertically
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
+                                    // Vista previa de la imagen
+                                    Image(
+                                        painter = rememberAsyncImagePainter(model = uri),
+                                        contentDescription = "Vista previa de la imagen",
+                                        modifier = Modifier
+                                            .size(64.dp) // Tamaño de la vista previa
+                                    )
+
+                                    // Nombre de la imagen
                                     Text(
                                         text = uri.lastPathSegment ?: "Archivo desconocido",
                                         color = Color.Black,
                                         maxLines = 1,
                                         fontSize = 12.sp,
                                         overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
-                                        modifier = Modifier.weight(1f) // Ocupa el espacio restante
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .weight(1f) // Ocupa el espacio restante
                                     )
 
+                                    // Botón para eliminar la imagen
                                     IconButton(
                                         onClick = {
                                             // Elimina la imagen de la lista
@@ -321,8 +334,8 @@ fun FormScreen(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.Delete,
-                                            contentDescription = "Eliminar archivo",
-                                            tint = Color.Red
+                                            contentDescription = "Eliminar imagen",
+                                            tint = Color(0xFFBA2D2D) // Cambia este color a tu preferencia
                                         )
                                     }
                                 }
@@ -333,12 +346,12 @@ fun FormScreen(
                         Text(
                             text = "Ningún archivo seleccionado",
                             color = Color.Gray,
-                            fontSize = 12.sp,
-                            textAlign = TextAlign.End
+                            fontSize = 12.sp
                         )
                     }
                 }
             }
+
 
 
 
