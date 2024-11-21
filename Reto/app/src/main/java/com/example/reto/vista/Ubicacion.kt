@@ -117,7 +117,7 @@ fun MapScreen(navController: NavController,
                 Button(
                     onClick = {
                         selectedLocation?.let {
-                            viewModel.updateLocalidad(selectedAddress ?: "Ubicación desconocida")
+                            viewModel.updateLocalidad("$selectedAddress (${selectedLocation!!.latitude}, ${selectedLocation!!.longitude})" ?: "Ubicación desconocida")
                             navController.navigate("Formulario1")
                         }
                     },
