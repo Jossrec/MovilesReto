@@ -38,15 +38,17 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.reto.MainActivity
 import com.example.reto.R
 import com.example.reto.components.CameraButton
 import com.example.reto.components.HeaderBar
-
-
+import com.example.reto.vista.FormScreen2
 
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -258,40 +260,42 @@ fun FormScreen(
 
 
 //CHECAR CAMBIOS
-            // Evidencias (botón para elegir archivo)
+// Evidencias (botón para elegir archivo)
             Text("Evidencias", fontSize = 18.sp)
-//            Button(
-//                onClick = {},
-//                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-//                modifier = Modifier.fillMaxWidth())
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Botón para abrir el selector de archivos
+                Button(
+                    onClick = {
+                        filePickerLauncher.launch(arrayOf("image/*")) // Filtro para imágenes
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
+                    modifier = Modifier.width(150.dp) // Ajusta el tamaño del botón
                 ) {
-                    // Botón para abrir el selector de archivos
-                    Button(
-                        onClick = {
-                            filePickerLauncher.launch(arrayOf("image/*")) // Filtro para imágenes
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-                        modifier = Modifier.width(150.dp) // Ajusta el tamaño del botón
-                    ) {
-                        Text("Elige archivos", color = Color.White)
-                    }
+                    Text("Elige archivos", color = Color.White)
+                }
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                    // Mostrar los nombres de los archivos seleccionados con opción de eliminar
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.LightGray, shape = MaterialTheme.shapes.small)
-                            .padding(8.dp)
-                    ) {
-                        if (selectedFileUris.isNotEmpty()) {
-                            selectedFileUris.forEachIndexed { index, uri ->
+                // Contenedor para la lista de archivos seleccionados
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(100.dp) // Altura fija
+                        .background(Color.LightGray, shape = MaterialTheme.shapes.small)
+                        .padding(8.dp)
+                ) {
+                    if (selectedFileUris.isNotEmpty()) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(selectedFileUris.size) { index ->
+                                val uri = selectedFileUris[index]
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -317,21 +321,25 @@ fun FormScreen(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.Delete,
-                                            contentDescription = "Eliminar imagen",
+                                            contentDescription = "Eliminar archivo",
                                             tint = Color.Red
                                         )
                                     }
                                 }
                             }
-                        } else {
-                            Text(
-                                text = "Ningún archivo seleccionado",
-                                color = Color.Gray,
-                                fontSize = 12.sp
-                            )
                         }
+                    } else {
+                        // Mensaje si no hay archivos seleccionados
+                        Text(
+                            text = "Ningún archivo seleccionado",
+                            color = Color.Gray,
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.End
+                        )
                     }
+                }
             }
+
 
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -382,3 +390,5 @@ fun FormScreen(
         }
     }
 }
+
+
