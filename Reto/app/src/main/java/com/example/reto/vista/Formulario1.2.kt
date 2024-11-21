@@ -38,6 +38,8 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.platform.LocalContext
 import com.example.reto.MainActivity
 import com.example.reto.R
@@ -281,7 +283,7 @@ fun FormScreen(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                    // Mostrar los nombres de los archivos seleccionados
+                    // Mostrar los nombres de los archivos seleccionados con opción de eliminar
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -289,14 +291,37 @@ fun FormScreen(
                             .padding(8.dp)
                     ) {
                         if (selectedFileUris.isNotEmpty()) {
-                            selectedFileUris.forEach { uri ->
-                                Text(
-                                    text = uri.lastPathSegment ?: "Archivo desconocido",
-                                    color = Color.Black,
-                                    maxLines = 1,
-                                    fontSize = 12.sp,
-                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-                                )
+                            selectedFileUris.forEachIndexed { index, uri ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 4.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = uri.lastPathSegment ?: "Archivo desconocido",
+                                        color = Color.Black,
+                                        maxLines = 1,
+                                        fontSize = 12.sp,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                                        modifier = Modifier.weight(1f) // Ocupa el espacio restante
+                                    )
+
+                                    IconButton(
+                                        onClick = {
+                                            // Elimina la imagen de la lista
+                                            selectedFileUris = selectedFileUris.toMutableList().apply {
+                                                removeAt(index)
+                                            }
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = "Eliminar imagen",
+                                            tint = Color.Red
+                                        )
+                                    }
+                                }
                             }
                         } else {
                             Text(
