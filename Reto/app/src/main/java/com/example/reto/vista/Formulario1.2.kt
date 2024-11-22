@@ -282,15 +282,15 @@ fun FormScreen(
                     Text("Elige archivos", color = Color.White)
                 }
 
-                // Contenedor para la lista de vistas previas
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp) // Altura fija
-                        .background(Color.LightGray, shape = MaterialTheme.shapes.small)
-                        .padding(8.dp)
-                ) {
-                    if (selectedFileUris.isNotEmpty()) {
+                // Contenedor de vistas previas (aparece solo si hay imágenes seleccionadas)
+                if (selectedFileUris.isNotEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp) // Altura fija
+                            .background(Color.LightGray, shape = MaterialTheme.shapes.small)
+                            .padding(8.dp)
+                    ) {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
@@ -341,19 +341,11 @@ fun FormScreen(
                                 }
                             }
                         }
-                    } else {
-                        // Mensaje si no hay archivos seleccionados
-                        Text(
-                            text = "Ningún archivo seleccionado",
-                            color = Color.Gray,
-                            fontSize = 12.sp
-                        )
                     }
+                } else {
+
                 }
             }
-
-
-
 
             Spacer(modifier = Modifier.height(16.dp))
 

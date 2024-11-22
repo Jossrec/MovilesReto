@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -18,6 +19,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,6 +37,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.example.reto.MainActivity
 import com.example.reto.R
@@ -72,13 +75,15 @@ fun FormScreen2(
     val zones = listOf("Bosque", "Arreglo Agroforestal", "Cultivos Transitorios", "Cultivos Permanentes")
     val altitudes = listOf("Baja <1mt", "Media 1-3mt", "Alta >3mt")
 
-    var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
+    // Lista de URIs seleccionados
+    var selectedFileUris by remember { mutableStateOf<List<Uri>>(emptyList()) }
 
-    // ActivityResultLauncher para seleccionar archivo
+// ActivityResultLauncher para seleccionar múltiples archivos
     val filePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        selectedFileUri = uri // Guarda el URI del archivo seleccionado
+        contract = ActivityResultContracts.OpenMultipleDocuments()
+    ) { uris: List<Uri>? ->
+        // Guarda los URIs de los archivos seleccionados
+        selectedFileUris = uris ?: emptyList()
     }
 
     val isFormComplete by derivedStateOf {
@@ -301,47 +306,92 @@ fun FormScreen2(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+// Evidencias (botón para elegir archivo)
             Text("Evidencias", fontSize = 18.sp)
-//            Button(
-//                onClick = {},
-//                colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
-//                modifier = Modifier.fillMaxWidth())
-            Row(
+
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(vertical = 8.dp)
             ) {
+                // Botón para abrir el selector de archivos
                 Button(
-                    onClick = { filePickerLauncher.launch("*/*") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = GreenAwaqOscuro
-                    ),
-                    modifier = Modifier.width(150.dp) // Fija el ancho del botón para evitar cambios de tamaño
-                ) {
-                    Text("Elige archivo", color = Color.White)
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Box(
+                    onClick = {
+                        filePickerLauncher.launch(arrayOf("image/*")) // Filtro para imágenes
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = GreenAwaqOscuro),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(24.dp) // Fija la altura del contenedor del texto
-                        .background(Color.LightGray, shape = MaterialTheme.shapes.small)
-                        .padding(horizontal = 8.dp),
-                    contentAlignment = Alignment.CenterStart // Alinea el texto a la izquierda
+                        .padding(bottom = 8.dp) // Espacio debajo del botón
                 ) {
-                    Text(
-                        text = selectedFileUri?.lastPathSegment ?: "Ningún archivo seleccionado",
-                        color = Color.Black,
-                        maxLines = 1, // Limita el texto a una sola línea
-                        fontSize = 12.sp, // Ajusta el tamaño de fuente
-                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis // Agrega puntos suspensivos si el texto es largo
-                    )
+                    Text("Elige archivos", color = Color.White)
+                }
+
+                // Contenedor de vistas previas (aparece solo si hay imágenes seleccionadas)
+                if (selectedFileUris.isNotEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp) // Altura fija
+                            .background(Color.LightGray, shape = MaterialTheme.shapes.small)
+                            .padding(8.dp)
+                    ) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(selectedFileUris.size) { index ->
+                                val uri = selectedFileUris[index]
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 4.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    // Vista previa de la imagen
+                                    Image(
+                                        painter = rememberAsyncImagePainter(model = uri),
+                                        contentDescription = "Vista previa de la imagen",
+                                        modifier = Modifier
+                                            .size(64.dp) // Tamaño de la vista previa
+                                    )
+
+                                    // Nombre de la imagen
+                                    Text(
+                                        text = uri.lastPathSegment ?: "Archivo desconocido",
+                                        color = Color.Black,
+                                        maxLines = 1,
+                                        fontSize = 12.sp,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                                        modifier = Modifier
+                                            .padding(horizontal = 8.dp)
+                                            .weight(1f) // Ocupa el espacio restante
+                                    )
+
+                                    // Botón para eliminar la imagen
+                                    IconButton(
+                                        onClick = {
+                                            // Elimina la imagen de la lista
+                                            selectedFileUris = selectedFileUris.toMutableList().apply {
+                                                removeAt(index)
+                                            }
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = "Eliminar imagen",
+                                            tint = Color(0xFFBA2D2D) // Cambia este color a tu preferencia
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
 
 
             // Observaciones
