@@ -347,8 +347,6 @@ fun FormScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
             OutlinedTextField(
                 value = valores.observaciones,
                 onValueChange = { Cambio(valores.copy(observaciones = it)) },
