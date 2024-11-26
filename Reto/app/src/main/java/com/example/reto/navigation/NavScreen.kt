@@ -19,4 +19,3 @@ enum class NavScreen {
     Formulario72,
     EditPasswordScreen
 }
-

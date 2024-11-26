@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.auth0)
     implementation(libs.coil)
     implementation(libs.coil.compose)
+    implementation (libs.jbcrypt)
 
     implementation(libs.androidx.camera.core.v110) // Ajusta la versión según sea necesario
     implementation(libs.androidx.camera.camera2)

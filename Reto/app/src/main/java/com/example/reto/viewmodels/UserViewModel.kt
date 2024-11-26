@@ -1,5 +1,7 @@
 package com.example.reto.viewmodels
 
+
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.reto.model.User
@@ -10,7 +12,7 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun registerUser(name: String, email: String, password: String) {
         viewModelScope.launch {
-            val user = User(name = name, email = email, password = password)
+            val user = User( email = email, password = password)
             repository.insertUser(user)
         }
     }
