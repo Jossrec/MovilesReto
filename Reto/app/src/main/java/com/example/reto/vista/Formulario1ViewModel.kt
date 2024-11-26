@@ -56,6 +56,7 @@ data class Formulario_baseUiState(
 
 data class Formulario_baseDetails(
     val id: Int = 0,
+    val email: String = "",
     val nombre: String = "",
     val fecha: String = "",
     val Localidad: String = "",
@@ -67,6 +68,7 @@ data class Formulario_baseDetails(
 
 fun Formulario_baseDetails.toItem(): Formulario_base = Formulario_base(
     id = id,
+    email = email,
     nombre = nombre,
     fecha = fecha,
     Localidad = Localidad,
@@ -89,6 +91,7 @@ fun Formulario_base.toItemUiState(isEntryValid: Boolean = false): Formulario_bas
  */
 fun Formulario_base.toItemDetails(): Formulario_baseDetails = Formulario_baseDetails(
     id = id,
+    email = email,
     nombre = nombre,
     fecha = fecha,
     Localidad = Localidad,

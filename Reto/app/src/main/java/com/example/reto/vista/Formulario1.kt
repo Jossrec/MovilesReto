@@ -44,6 +44,7 @@ import androidx.compose.runtime.*
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,6 +75,7 @@ import com.example.reto.components.CameraButton
 
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.Black
+import com.example.reto.viewmodels.SharedViewModel
 
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -85,7 +87,8 @@ import java.util.Calendar
 @Composable
 fun Formulario1(
     navController: NavHostController,
-    viewModel: Formulario_1ViewModel
+    viewModel: Formulario_1ViewModel,
+    sharedViewModel: SharedViewModel
 ) {
     val scrollState = rememberScrollState()
     var tipoRegistro by remember { mutableStateOf("Fauna en Transectos") }
@@ -138,6 +141,7 @@ fun Formulario1(
                     navController = navController,
                     tipoRegistro = tipoRegistro,
                     viewModel = viewModel,
+                    sharedViewModel = sharedViewModel,
                     onTipoRegistroChange = { selectedTipoRegistro ->
                         tipoRegistro = selectedTipoRegistro
                         errorMessage = ""
@@ -164,12 +168,14 @@ fun Formulario1(
 @Composable
 fun Content(
     modifier: Modifier = Modifier, navController: NavHostController, tipoRegistro: String, onTipoRegistroChange: (String) -> Unit,
+    sharedViewModel: SharedViewModel,
     viewModel: Formulario_1ViewModel, onError: (String) -> Unit)
  {
     //Room
     val coroutineScope = rememberCoroutineScope()
     val valores = viewModel.itemUiState.itemDetails
     val Cambio = viewModel::updateUiState
+    val emailusuario by sharedViewModel.email.observeAsState("")
 
 
     var estadoTiempo by remember { mutableStateOf("") }
@@ -399,6 +405,7 @@ fun Content(
                 try {
                     if (tipoRegistro.isNotEmpty()) {
                         coroutineScope.launch {
+                            Cambio(valores.copy(email = emailusuario))
                             viewModel.saveItem()
                             // Navegación envuelta en try-catch para manejar el error
                             try {

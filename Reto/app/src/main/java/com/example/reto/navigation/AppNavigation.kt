@@ -45,8 +45,6 @@ fun AppNavigation(
     navController: NavHostController,
     userViewModel: UserViewModel,
     auth0: Auth0
-
-
 ) {
     var loggedIn by remember { mutableStateOf(false) }
     var credentials by remember { mutableStateOf<Credentials?>(null) }
@@ -83,7 +81,7 @@ fun AppNavigation(
         }
 
         composable(NavScreen.SearchScreen.name){
-            SearchScreen(navController)
+            SearchScreen(navController, sharedViewModel)
         }
         composable(NavScreen.Start.name){
             StartScreen(navController)
@@ -119,7 +117,7 @@ fun AppNavigation(
             MapScreen(navController, viewModel)
         }
         composable(NavScreen.Formulario1.name) {
-            Formulario1(navController, viewModel)
+            Formulario1(navController, viewModel, sharedViewModel)
         }
         composable(NavScreen.Formulario12.name){
             FormScreen(navController)

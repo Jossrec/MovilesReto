@@ -22,6 +22,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.Relation
+import com.example.reto.model.User
 
 /**
  * Entity data class represents a single row in the database.
@@ -49,6 +50,7 @@ import androidx.room.Relation
 data class Formulario_base(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val email: String,
     val nombre: String,
     val fecha: String,
     val Localidad: String,

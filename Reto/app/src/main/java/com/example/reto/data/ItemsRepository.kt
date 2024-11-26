@@ -33,8 +33,9 @@ import kotlinx.coroutines.flow.Flow
 //}
 
 interface ItemsRepository {
-    fun getAllItemsStream(): Flow<List<Formulario_base>>
+    fun getAllItemsStream(email: String): Flow<List<Formulario_base>>
     fun getItemStream(id: Int): Flow<Formulario_base?>
+    suspend fun getNumberItems(): Int?
     suspend fun getLastFormularioBaseId(): Int?
     suspend fun insertItem(item: Formulario_base)
     suspend fun deleteItem(item: Formulario_base)
