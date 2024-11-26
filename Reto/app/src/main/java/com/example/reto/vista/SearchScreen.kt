@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.util.Log
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.foundation.Image
@@ -16,6 +17,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +41,7 @@ import com.example.reto.ui.theme.Black
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.RetoTheme
 import com.example.reto.ui.theme.White
+import com.example.reto.viewmodels.SharedViewModel
 import com.example.reto.vista.movimientos.MovimientosTabs
 
 //private val messages: List<MyMessage> = listOf(
@@ -67,6 +70,7 @@ import com.example.reto.vista.movimientos.MovimientosTabs
 @Composable
 fun SearchScreen(
     navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
@@ -99,8 +103,9 @@ fun SearchScreen(
         },
     ) { innerPadding ->
         // Aquí agregamos las tabs
+        //Log.i("email", sharedViewModel.email.value.toString())
         Column(modifier = Modifier.padding(innerPadding)) {
-            MovimientosTabs() // Integra las tabs aquí
+            MovimientosTabs(sharedViewModel) // Integra las tabs aquí
         }
     }
 }
@@ -190,7 +195,7 @@ fun MyImage() {
 @Composable
 fun PreviewComponent() {
     RetoTheme {
-        SearchScreen(navController = rememberNavController())
-        MyMessages(listOf(Formulario_base(1, "Luis", "10/3/24","Monterrey", "10:30", "lluvia", "Invierno/Lluviosa", "Fauna de Trnasectos")))
+        SearchScreen(navController = rememberNavController(), sharedViewModel = SharedViewModel())
+        MyMessages(listOf(Formulario_base(1, "soypro@gmail.com" ,"Luis", "10/3/24","Monterrey", "10:30", "lluvia", "Invierno/Lluviosa", "Fauna de Trnasectos")))
     }
 }

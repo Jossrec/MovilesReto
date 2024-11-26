@@ -15,11 +15,13 @@ import kotlinx.coroutines.flow.Flow
 //}
 
 class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
-    override fun getAllItemsStream(): Flow<List<Formulario_base>> = itemDao.getAllItems()
+    override fun getAllItemsStream(email: String): Flow<List<Formulario_base>> = itemDao.getAllItems(email)
 
     override fun getItemStream(id: Int): Flow<Formulario_base?> = itemDao.getItem(id)
 
     override suspend fun getLastFormularioBaseId(): Int?= itemDao.getLastFormularioBaseId()
+
+    override suspend fun getNumberItems(): Int?= itemDao.getNumberItems()
 
     override suspend fun insertItem(item: Formulario_base) = itemDao.insert(item)
 

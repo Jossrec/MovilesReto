@@ -44,8 +44,11 @@ interface ItemDao {
     @Query("SELECT * from formularios_base WHERE id = :id")
     fun getItem(id: Int): Flow<Formulario_base>
 
-    @Query("SELECT * from formularios_base ORDER BY localidad ASC")
-    fun getAllItems(): Flow<List<Formulario_base>>
+    @Query("SELECT * from formularios_base WHERE email = :email")
+    fun getAllItems(email: String): Flow<List<Formulario_base>>
+
+    @Query("SELECT count(*) from formularios_base")
+    fun getNumberItems(): Int?
 }
 
 @Dao

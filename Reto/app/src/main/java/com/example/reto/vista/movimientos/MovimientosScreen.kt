@@ -1,5 +1,6 @@
 package com.example.reto.vista.movimientos
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,63 +41,76 @@ import com.example.reto.R
 import com.example.reto.data.Formulario_base
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.White
+import com.example.reto.viewmodels.SharedViewModel
 import com.example.reto.vista.SearchScreenViewModel
 
 @Composable
-fun Todos(viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
+fun Todos(sharedViewModel: String,viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
     Column (
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        viewModel.emailUsuario(sharedViewModel)
         val searchUiState by viewModel.searchUiState.collectAsState()
-//        Icon(
-//            Icons.Outlined.EmojiEmotions,
-//            "Todos")
-//        Text(text ="Todos",
-//            style= MaterialTheme.typography.titleMedium,
-//            textAlign = Center
-//        )
-        MyMessages(messages = searchUiState.itemList)
+        if(searchUiState.itemList.isEmpty()){
+            Icon(
+                Icons.Outlined.EmojiEmotions,
+                "Todos")
+            Text(text ="Todos",
+                style= MaterialTheme.typography.titleMedium,
+                textAlign = Center
+            )
+        }
+        else {
+            MyMessages(messages = searchUiState.itemList)
+        }
+
     }
 }
 
 @Composable
-fun Guardados(viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
+fun Guardados(sharedViewModel: String, viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
     Column (
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        viewModel.emailUsuario(sharedViewModel)
         val searchUiState by viewModel.searchUiState.collectAsState()
+        if(searchUiState.itemList.isEmpty()){
+            Icon(
+                Icons.Outlined.EmojiEmotions,
+                "Todos")
+            Text(text ="Todos",
+                style= MaterialTheme.typography.titleMedium,
+                textAlign = Center
+            )
+        }
+        else {
+            MyMessages(messages = searchUiState.itemList)
+        }
 
-//        Icon(Icons.Outlined.EmojiEmotions,
-//            "Guardados")
-//        Text(text ="Guardados",
-//            style= MaterialTheme.typography.titleMedium,
-//            textAlign = Center)
-        MyMessages(messages = searchUiState.itemList)
     }
 }
 
 @Composable
-fun Subidos(viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
+fun Subidos(sharedViewModel: String,viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
     Column (
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        val searchUiState by viewModel.searchUiState.collectAsState()
-
-//        Icon(Icons.Outlined.EmojiEmotions,
-//            "Subidos")
-//        Text(text ="Subidos",
-//            style= MaterialTheme.typography.titleMedium,
-//            textAlign = Center)
-        MyMessages(messages = searchUiState.itemList)
+        //val searchUiState by viewModel.searchUiState.collectAsState()
+        Icon(Icons.Outlined.EmojiEmotions,
+            "Subidos")
+        Text(text ="Subidos",
+            style= MaterialTheme.typography.titleMedium,
+            textAlign = Center)
+        //MyMessages(messages = searchUiState.itemList)
     }
 }
 
