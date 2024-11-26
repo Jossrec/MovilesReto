@@ -34,7 +34,6 @@ import com.example.reto.viewmodels.SharedViewModel
 import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.vista.AuthApp
 import com.example.reto.vista.Formulario_1ViewModel
-import com.example.reto.vista.InfoScreen
 import com.example.reto.vista.StartScreen
 import kotlinx.coroutines.delay
 
@@ -139,9 +138,6 @@ fun AppNavigation(
         }
         composable(NavScreen.Formulario72.name){
             FormScreen7(navController)
-        }
-        composable(NavScreen.InfoScreen.name){
-            InfoScreen(navController)
         }
 
     }
