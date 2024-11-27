@@ -81,6 +81,7 @@ fun FormScreen(
     ) { uris: List<Uri>? ->
         // Guarda los URIs de los archivos seleccionados
         selectedFileUris = uris ?: emptyList()
+        Cambio(valores.copy(Imagenes = selectedFileUris))
     }
 
     val isFormComplete by derivedStateOf {
@@ -296,6 +297,7 @@ fun FormScreen(
                         ) {
                             items(selectedFileUris.size) { index ->
                                 val uri = selectedFileUris[index]
+
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -330,6 +332,7 @@ fun FormScreen(
                                             selectedFileUris = selectedFileUris.toMutableList().apply {
                                                 removeAt(index)
                                             }
+                                            Cambio(valores.copy(Imagenes = selectedFileUris))
                                         }
                                     ) {
                                         Icon(

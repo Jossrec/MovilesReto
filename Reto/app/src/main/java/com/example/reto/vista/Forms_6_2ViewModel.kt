@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -71,6 +72,7 @@ data class Form6Details(
     val instalada: Boolean = false,
     val letreroDeCamara: Boolean = false,
     val prendida: Boolean = false,
+    val Imagenes: List<Uri> = listOf(),
     val observaciones: String = ""
 )
 
@@ -92,6 +94,7 @@ fun Form6Details.toItem(): Formulario_6 = Formulario_6(
     instalada = instalada,
     letreroDeCamara = letreroDeCamara,
     prendida = prendida,
+    Imagenes = Imagenes,
     observaciones = observaciones
 
 )
@@ -125,5 +128,6 @@ fun Formulario_6.toItemDetails(): Form6Details = Form6Details(
     instalada = instalada,
     letreroDeCamara = letreroDeCamara,
     prendida = prendida,
+    Imagenes = Imagenes,
     observaciones = observaciones
 )

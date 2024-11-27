@@ -187,14 +187,7 @@ fun FormScreen7(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
-
-
-
-
             Spacer(modifier = Modifier.height(16.dp))
-
-
             // Observaciones
 //            OutlinedTextField(
 //                value = observations,
@@ -206,8 +199,6 @@ fun FormScreen7(
 //            )
 
             Spacer(modifier = Modifier.height(16.dp))
-
-
             Spacer(modifier = Modifier.height(16.dp))
 
             // Botones Atrás y Enviar

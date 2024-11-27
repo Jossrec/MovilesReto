@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 /**
  * Database class with a singleton Instance object.
@@ -32,6 +33,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [Formulario_base::class, Formulario_7::class, Formulario_6::class,
     Formulario_5::class, Formulario_4::class, Formulario_3::class, Formulario_2::class, Formulario_1::class],
     version = 1, exportSchema = false)
+@TypeConverters(UriListConverter::class)
 abstract class InventoryDatabase : RoomDatabase() {
 
     abstract fun itemDaobase(): ItemDao

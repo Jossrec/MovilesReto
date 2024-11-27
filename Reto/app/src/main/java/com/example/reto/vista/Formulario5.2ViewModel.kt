@@ -1,5 +1,6 @@
 package com.example.reto.vista
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -65,6 +66,7 @@ data class Formulario_5Details(
     val Distancia: String = "",
     val estaturaBiomonitor: String = "",
     val Altura: String = "",
+    val Imagenes: List<Uri> = listOf(),
     val observaciones: String = ""
 )
 
@@ -82,6 +84,7 @@ fun Formulario_5Details.toItem(): Formulario_5 = Formulario_5(
     Distancia = Distancia,
     estaturaBiomonitor = estaturaBiomonitor,
     Altura = Altura,
+    Imagenes = Imagenes,
     observaciones = observaciones
 )
 
@@ -110,5 +113,6 @@ fun Formulario_5.toItemDetails(): Formulario_5Details = Formulario_5Details(
     Distancia = Distancia,
     estaturaBiomonitor = estaturaBiomonitor,
     Altura = Altura,
+    Imagenes = Imagenes,
     observaciones = observaciones
 )

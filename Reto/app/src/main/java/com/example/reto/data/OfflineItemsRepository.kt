@@ -21,7 +21,7 @@ class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
 
     override suspend fun getLastFormularioBaseId(): Int?= itemDao.getLastFormularioBaseId()
 
-    override suspend fun getNumberItems(): Int?= itemDao.getNumberItems()
+    override suspend fun getNumberItems(email: String): Int? = itemDao.getNumberItems(email)
 
     override suspend fun insertItem(item: Formulario_base) = itemDao.insert(item)
 

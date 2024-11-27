@@ -16,12 +16,15 @@
 
 package com.example.reto.data
 
+import android.net.Uri
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.Relation
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import com.example.reto.model.User
 
 /**
@@ -45,6 +48,19 @@ import com.example.reto.model.User
 //    val ventanasB: Formulario_7
 //    //val ventanasB: val ventanasB: Formulario_7
 //)
+
+class UriListConverter {
+
+    @TypeConverter
+    fun fromUriList(uriList: List<Uri>?): String? {
+        return uriList?.joinToString(",") { it.toString() }
+    }
+
+    @TypeConverter
+    fun toUriList(data: String?): List<Uri>? {
+        return data?.split(",")?.map { Uri.parse(it) }
+    }
+}
 
 @Entity(tableName = "formularios_base")
 data class Formulario_base(
@@ -72,7 +88,6 @@ data class Formulario_base(
     ],
     indices = [Index(value = ["formId"])]  // Esto ayuda a optimizar las búsquedas por la clave foránea
 )
-
 data class Formulario_1(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
@@ -83,6 +98,7 @@ data class Formulario_1(
     val nombreCientifico: String,
     val numeroIndividuos: Int,
     val TipoObservacion: String,
+    val Imagenes: List<Uri>,
     val observaciones: String
 )
 
@@ -110,6 +126,7 @@ data class Formulario_2(
     val numeroIndividuos: Int,
     val TipoObservacion: String,
     val AlturaObservacion: String,
+    val Imagenes: List<Uri>,
     val observaciones: String
 )
 
@@ -137,6 +154,7 @@ data class Formulario_3(
     val numeroIndividuos: Int,
     val TipoObservacion: String,
     val AlturaObservacion: String,
+    val Imagenes: List<Uri>,
     val observaciones: String
 )
 
@@ -163,6 +181,7 @@ data class Formulario_4(
     val Cobertura: String,
     val tipoCultivo: String,
     val Disturbio: String,
+    val Imagenes: List<Uri>,
     val observaciones: String
 )
 
@@ -194,6 +213,7 @@ data class Formulario_5(
     val Distancia: String,
     val estaturaBiomonitor: String,
     val Altura: String,
+    val Imagenes: List<Uri>,
     val observaciones: String
 )
 
@@ -229,6 +249,7 @@ data class Formulario_6(
     val instalada: Boolean,
     val letreroDeCamara: Boolean,
     val prendida: Boolean,
+    val Imagenes: List<Uri>,
     val observaciones: String
 )
 

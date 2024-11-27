@@ -1,5 +1,8 @@
 package com.example.reto.vista
 
+import android.annotation.SuppressLint
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,6 +14,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,21 +29,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.reto.R
 import com.example.reto.components.NavegacionInferior
+import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.GreenAwaq
 import com.example.reto.ui.theme.GreenAwaqOscuro
 import com.example.reto.ui.theme.White
 import com.example.reto.viewmodels.SharedViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navController: NavHostController,sharedViewModel: SharedViewModel) {
+fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier,
+               navController: NavHostController,
+               sharedViewModel: SharedViewModel) {
+
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val email by sharedViewModel.email.observeAsState("")
     val name = email.substringBefore('@')
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -135,14 +147,26 @@ fun HomeScreen(onLogout: () -> Unit, modifier: Modifier = Modifier, navControlle
                     .fillMaxSize()
                     .background(color = White)
             ) {
-                DashboardContent(Modifier.padding(top = 32.dp))
+                DashboardContent(Modifier.padding(top = 32.dp), email)
             }
         }
     )
 }
 
+@SuppressLint("CoroutineCreationDuringComposition", "ProduceStateDoesNotAssignValue")
 @Composable
-fun DashboardContent(modifier: Modifier = Modifier) {
+fun DashboardContent(modifier: Modifier = Modifier, email: String,
+                     viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+    val coroutineScope = rememberCoroutineScope()
+    viewModel.emailUsuario(email)
+    val number by produceState(initialValue = 0){
+        try {
+            value = viewModel.getnumbers()
+        } catch (e: Exception){
+            e.printStackTrace()
+            value = 0
+        }
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -151,7 +175,9 @@ fun DashboardContent(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Tarjeta de notificación
-        EmergencyMessageCard()
+        if(number != 0){
+            EmergencyMessageCard(number)
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -161,13 +187,13 @@ fun DashboardContent(modifier: Modifier = Modifier) {
             modifier = Modifier.size(200.dp)
         ) {
             CircularProgressIndicator(
-                progress = 0.6f,
+                progress = 0.0f,
                 modifier = Modifier.size(200.dp),
                 color = Color(0xFF4CAF50), // Verde oscuro
                 strokeWidth = 12.dp
             )
             Text(
-                text = "60%",
+                text = "0%",
                 fontSize = 40.sp,
                 color = Color(0xFF4CAF50), // Mismo color del indicador
                 fontWeight = FontWeight.Bold
@@ -185,7 +211,7 @@ fun DashboardContent(modifier: Modifier = Modifier) {
             // Columna "En Total"
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "5 Forms",
+                    text = "$number Forms",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -200,7 +226,7 @@ fun DashboardContent(modifier: Modifier = Modifier) {
             // Columna "Subidos"
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "3 Forms",
+                    text = "0 Forms",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF4CAF50) // Verde oscuro
@@ -215,7 +241,7 @@ fun DashboardContent(modifier: Modifier = Modifier) {
             // Columna "Guardados"
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "2 Forms",
+                    text = "$number Forms",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFD32F2F) // Rojo oscuro
@@ -231,7 +257,7 @@ fun DashboardContent(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun EmergencyMessageCard() {
+fun EmergencyMessageCard(number: Int) {
     // Define los colores
     val backgroundColor = Color(0xFFF8ECED) // Fondo de la tarjeta
     val textColor = Color(0xFFBC4790) // Color de las letras (#BC4790)
@@ -267,7 +293,7 @@ fun EmergencyMessageCard() {
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Tienes 2 formularios sin subir a la nube.",
+                    text = "Tienes $number formularios sin subir a la nube.",
                     color = textColor,
                     fontSize = 14.sp
                 )

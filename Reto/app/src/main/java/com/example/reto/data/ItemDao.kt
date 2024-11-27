@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.TypeConverters
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
@@ -47,11 +48,12 @@ interface ItemDao {
     @Query("SELECT * from formularios_base WHERE email = :email")
     fun getAllItems(email: String): Flow<List<Formulario_base>>
 
-    @Query("SELECT count(*) from formularios_base")
-    fun getNumberItems(): Int?
+    @Query("SELECT count(*) from formularios_base WHERE email = :email")
+    suspend fun getNumberItems(email: String): Int?
 }
 
 @Dao
+@TypeConverters(UriListConverter::class)
 interface ItemDao1 {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: Formulario_1)
@@ -70,6 +72,7 @@ interface ItemDao1 {
 }
 
 @Dao
+@TypeConverters(UriListConverter::class)
 interface ItemDao2 {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: Formulario_2)
@@ -88,6 +91,7 @@ interface ItemDao2 {
 }
 
 @Dao
+@TypeConverters(UriListConverter::class)
 interface ItemDao3 {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: Formulario_3)
@@ -106,6 +110,7 @@ interface ItemDao3 {
 }
 
 @Dao
+@TypeConverters(UriListConverter::class)
 interface ItemDao4 {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: Formulario_4)
@@ -124,6 +129,7 @@ interface ItemDao4 {
 }
 
 @Dao
+@TypeConverters(UriListConverter::class)
 interface ItemDao5 {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: Formulario_5)
@@ -142,6 +148,7 @@ interface ItemDao5 {
 }
 
 @Dao
+@TypeConverters(UriListConverter::class)
 interface ItemDao6 {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: Formulario_6)
