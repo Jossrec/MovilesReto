@@ -143,7 +143,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                     )
                 }
 
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(50.dp))
 
                 Box(
                     modifier = Modifier
