@@ -9,6 +9,7 @@ import androidx.room.Transaction
 import androidx.room.TypeConverters
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import java.text.Normalizer.Form
 
 //@Dao
 //interface ItemDao {
@@ -43,7 +44,7 @@ interface ItemDao {
     suspend fun getLastFormularioBaseId(): Int?
 
     @Query("SELECT * from formularios_base WHERE id = :id")
-    fun getItem(id: Int): Flow<Formulario_base>
+    suspend fun getItem(id: Int): Formulario_base
 
     @Query("SELECT * from formularios_base WHERE email = :email")
     fun getAllItems(email: String): Flow<List<Formulario_base>>

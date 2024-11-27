@@ -1,6 +1,7 @@
 package com.example.reto.data
 
 import kotlinx.coroutines.flow.Flow
+import java.text.Normalizer.Form
 
 /**
  * Repository that provides insert, update, delete, and retrieve of [Item] from a given data source.
@@ -34,7 +35,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ItemsRepository {
     fun getAllItemsStream(email: String): Flow<List<Formulario_base>>
-    fun getItemStream(id: Int): Flow<Formulario_base?>
+    suspend fun getItemStream(id: Int): Formulario_base
     suspend fun getNumberItems(email: String): Int?
     suspend fun getLastFormularioBaseId(): Int?
     suspend fun insertItem(item: Formulario_base)
