@@ -22,7 +22,7 @@ class TestItemsRepository : ItemsRepository {
     override suspend fun insertItem(item: Formulario_base) {
     }
 
-    override suspend fun deleteItem(item: Flow<Formulario_base?>) {
+    override suspend fun deleteItem(item: Formulario_base) {
     }
 
     override suspend fun updateItem(item: Formulario_base) {

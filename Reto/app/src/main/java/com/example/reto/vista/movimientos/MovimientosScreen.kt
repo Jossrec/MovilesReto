@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.EmojiEmotions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,10 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,7 +43,6 @@ import com.example.reto.ui.theme.AppViewModelProvider
 import com.example.reto.ui.theme.White
 import com.example.reto.viewmodels.SharedViewModel
 import com.example.reto.vista.SearchScreenViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun Todos(sharedViewModel: String,viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)){
@@ -131,15 +125,7 @@ fun MyMessages(messages: List<Formulario_base>, modifier: Modifier = Modifier) {
 
 
 @Composable
-fun MyComponent(message: Formulario_base, viewModel: SearchScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
-    // Estado para manejar la selección y visibilidad del menú
-    val coroutineScope = rememberCoroutineScope()
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOption by remember { mutableStateOf("") }
-
-    // Lista de opciones
-    val options = listOf("Borrar")
-
+fun MyComponent(message: Formulario_base) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -184,27 +170,10 @@ fun MyComponent(message: Formulario_base, viewModel: SearchScreenViewModel = vie
                 )
             }
 
-            IconButton(onClick = { expanded = true }) {
+            IconButton(onClick = { /* Acción del menú */ }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "Menú"
-                )
-            }
-        }
-        // Menú desplegable
-        if(expanded){
-            options.forEach{ option ->
-                DropdownMenuItem(
-                    text = { Text(option) },
-                    onClick = {
-                        selectedOption = option // Actualiza la opción seleccionada
-                        if(selectedOption == "Borrar"){
-                            coroutineScope.launch {
-                                viewModel.deleteItem(message.id)
-                            }
-                        }
-                        expanded = false // Cierra el menú
-                    }
                 )
             }
         }

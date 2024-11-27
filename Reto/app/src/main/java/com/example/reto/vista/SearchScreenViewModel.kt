@@ -1,9 +1,17 @@
 package com.example.reto.vista
 
+import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.reto.data.Formulario_base
 import com.example.reto.data.ItemsRepository
+import com.example.reto.data.ItemsRepository2
+import com.example.reto.data.ItemsRepository5
+import com.example.reto.viewmodels.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -41,15 +49,6 @@ class SearchScreenViewModel(private val itemsRepository: ItemsRepository) : View
                 initialValue = SearchUiState()
             )
 
-    suspend fun deleteItem(id: Int)
-    { viewModelScope.launch {
-            try {
-                itemsRepository.deleteItem(itemsRepository.getItemStream(id))
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
