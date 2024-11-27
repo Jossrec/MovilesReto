@@ -3,7 +3,6 @@ package com.example.reto.navigation
 enum class NavScreen {
     SearchScreen,
     HomeScreen,
-    EditInfoScreen,
     ProfileScreen,
     Intro,
     Start,
@@ -17,6 +16,6 @@ enum class NavScreen {
     Formulario52,
     Formulario62,
     Formulario72,
-    EditPasswordScreen
+    InfoScreen
 }
 

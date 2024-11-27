@@ -114,7 +114,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
 
-            ) {
+                ) {
                 // Foto de perfil, nombre, etc.
                 Column(
                     modifier = Modifier.padding(top = 50.dp),
@@ -130,7 +130,7 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = if (name.isNotEmpty())  "$name" else "Hola, Usuario",
+                        text = if (name.isNotEmpty()) "$name" else "Hola, Usuario",
                         fontWeight = FontWeight.W500,
                         fontSize = 50.sp,
                         color = Black
@@ -151,24 +151,48 @@ fun Profile(navController: NavController, currentCredentials: MutableState<Crede
                         .padding(16.dp, 70.dp),
                     contentAlignment = Alignment.BottomCenter // Asegura que el botón esté en la parte inferior
                 ) {
-                    Button(
-                        onClick = {
-                            currentCredentials.value = null
-
-                            navController.navigate("loginScreen") {
-                                popUpTo("loginScreen") { inclusive = true }
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth(0.8f) // Ajusta el ancho del botón al 80% del contenedor
-                            .height(70.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = GreenAwaq,
-                            contentColor = Black
-                        ),
-                        shape = RoundedCornerShape(16.dp)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp) // Espaciado entre botones
                     ) {
-                        Text("Cerrar Sesión", fontSize = 20.sp)
+                        // Botón "Info"
+                        Button(
+                            onClick = {
+                                // Acción del botón "Info"
+                                navController.navigate("InfoScreen")
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth(0.8f) // Ajusta el ancho del botón al 80% del contenedor
+                                .height(70.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = GreenAwaq,
+                                contentColor = Black
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Text("Info", fontSize = 20.sp)
+                        }
+
+                        // Botón "Cerrar Sesión"
+                        Button(
+                            onClick = {
+                                currentCredentials.value = null
+
+                                navController.navigate("loginScreen") {
+                                    popUpTo("loginScreen") { inclusive = true }
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth(0.8f) // Ajusta el ancho del botón al 80% del contenedor
+                                .height(70.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = GreenAwaq,
+                                contentColor = Black
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Text("Cerrar Sesión", fontSize = 20.sp)
+                        }
                     }
                 }
             }
